@@ -3,11 +3,13 @@ package leetcode.p890;
 import java.util.*;
 
 /**
- * 构造从字母到字母的双射，即 word 的每个字母需要映射到 pattern 的对应字母，并且 pattern 的每个字母也需要映射到 word 的对应字母。
+ * 构造从字母到字母的 双映射，即 word 的每个字母需要映射到 pattern 的对应字母，并且 pattern 的每个字母也需要映射到 word 的对应字母。
+ *
  * 我们可以编写一个函数 match(word,pattern)，仅当 word 中相同字母映射到 pattern 中的相同字母时返回 true。我们可以在遍历这两个字符串的同时，
  * 用一个数组记录 word 的每个字母 xx 需要映射到 pattern 的哪个字母上，如果 xx 已有映射，则需要检查对应字母是否相同。
  *
  * 如果 match(word,pattern) 和 match(pattern,word) 均为 true，则表示 word 与 pattern 匹配。
+ * （word 中的同一字母必须映射到 pattern 中的同一字母上；pattern 中的同一字母也必须映射到 word 中的同一字母上）
  */
 class Solution {
     public List<String> findAndReplacePattern(String[] words, String pattern) {
