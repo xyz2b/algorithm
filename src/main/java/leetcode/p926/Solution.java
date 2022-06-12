@@ -26,4 +26,12 @@ public class Solution {
 
         return ans;
     }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        String s = "00011000";
+        System.out.println(solution.minFlipsMonoIncr(s));
+        s = "00110";
+        System.out.println(solution.minFlipsMonoIncr(s));
+    }
 }
