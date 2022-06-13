@@ -2,6 +2,7 @@ package leetcode.p890;
 
 import java.util.*;
 
+// 双映射（word -> pattern、pattern -> word）
 /**
  * 构造从字母到字母的 双映射，即 word 的每个字母需要映射到 pattern 的对应字母，并且 pattern 的每个字母也需要映射到 word 的对应字母。
  *

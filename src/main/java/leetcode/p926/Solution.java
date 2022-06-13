@@ -1,5 +1,6 @@
 package leetcode.p926;
 
+// 前缀和
 public class Solution {
     public int minFlipsMonoIncr(String s) {
         // 计算字符串中，在每个位置之前有多少个1
