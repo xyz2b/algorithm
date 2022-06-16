@@ -69,7 +69,7 @@ public class Solution {
      *第二次循环
      * right超界，循环结束
      * */
-    // 类似滑动窗口
+    // 类似滑动窗口，双指针，left和right
     public int findPairs(int[] nums, int k) {
         Arrays.sort(nums);
         int rst = 0;
