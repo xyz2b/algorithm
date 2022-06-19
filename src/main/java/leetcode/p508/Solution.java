@@ -1,23 +1,9 @@
 package leetcode.p508;
 
-
-import java.util.*;
-
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode() {}
-    TreeNode(int val) { this.val = val; }
-
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
-    }
-}
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Solution {
     public int[] findFrequentTreeSum(TreeNode root) {
@@ -27,19 +13,23 @@ public class Solution {
 
         treeSum(root, sum);
 
+        // 元素和 出现的最大次数
         int maxCount = 0;
+        // 得到每个元素和出现的次数之后，再去判断元素和出现的最大次数
         for(Map.Entry<Integer, Integer> entry: sum.entrySet()) {
-            if (entry.getValue() > maxCount) {
-                maxCount = entry.getValue();
+            int k = entry.getKey(), v = entry.getValue();
+
+            if (v > maxCount) {
+                maxCount = v;
                 rst.clear();
-                rst.add(entry.getKey());
-            } else if (entry.getValue() == maxCount) {
-                rst.add(entry.getKey());
+                rst.add(k);
+            } else if (v == maxCount) {
+                rst.add(k);
             }
         }
 
         int[] rstA = new int[rst.size()];
-        for (int i=0; i < rst.size(); i++)         {
+        for (int i=0; i < rst.size(); i++) {
             rstA[i] = rst.get(i);
         }
 
@@ -52,8 +42,8 @@ public class Solution {
             return 0;
         }
 
-        int rightTreeSum = treeSum(node.right, sum);
         int leftTreeSum = treeSum(node.left, sum);
+        int rightTreeSum = treeSum(node.right, sum);
         int treeSum = rightTreeSum + leftTreeSum + node.val;
 
         if (sum.containsKey(treeSum)) {

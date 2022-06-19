@@ -1,8 +1,5 @@
 package leetcode.offer029;
 
-
-import sun.jvm.hotspot.memory.FileMapInfo;
-
 class Node {
     public int val;
     public Node next;
@@ -18,7 +15,6 @@ class Node {
         next = _next;
     }
 };
-
 
 class Solution {
     public Node insert(Node head, int insertVal) {
