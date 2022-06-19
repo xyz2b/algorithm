@@ -34,11 +34,16 @@ public class Solution {
                 rst.clear();
                 rst.add(entry.getKey());
             } else if (entry.getValue() == maxCount) {
-                rst.add(entry.getValue());
+                rst.add(entry.getKey());
             }
         }
 
-        return null;
+        int[] rstA = new int[rst.size()];
+        for (int i=0; i < rst.size(); i++)         {
+            rstA[i] = rst.get(i);
+        }
+
+        return rstA;
     }
 
     // 计算以node为根的树的所有元素和
