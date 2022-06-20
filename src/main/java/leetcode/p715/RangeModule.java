@@ -151,6 +151,7 @@ class RangeModule {
         System.out.println(rangeModule.toString());
     }
 
+    // 返回的是前驱的索引，为-1，表示没有找到前驱
     public int predecessor(List<Integer> nums, int v) {
         return predecessor(nums, v, 0, nums.size() - 1);
     }
@@ -177,6 +178,7 @@ class RangeModule {
         }
     }
 
+    // 返回的是后驱的索引，为数组长度，表示没有找到后驱
     public int successor(List<Integer> nums, int v) {
         return successor(nums, v, 0, nums.size() - 1);
     }
