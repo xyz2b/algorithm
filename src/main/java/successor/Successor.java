@@ -1,15 +1,9 @@
 package successor;
 
 public class Successor {
-    // 返回v在nums中后驱节点的值（前驱：大于v的最小值）
+    // 返回的是后驱的索引，为数组长度，表示没有找到后驱
     public int search(int[] nums, int v) {
-        // 后驱节点的索引，如果为nums.length，说明前驱就是自己
-        int index = search(nums, v, 0, nums.length - 1);
-        if (index == nums.length) {
-            return v;
-        } else {
-            return nums[index];
-        }
+        return search(nums, v, 0, nums.length - 1);
     }
 
     private int search(int[] nums, int target, int l, int r) {

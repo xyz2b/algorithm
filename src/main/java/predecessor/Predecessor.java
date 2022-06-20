@@ -1,15 +1,9 @@
 package predecessor;
 
 public class Predecessor {
-    // 返回v在nums中前驱节点的值（前驱：小于v的最大值）
+    // 返回的是前驱的索引，为-1，表示没有找到前驱
     public int search(int[] nums, int v) {
-        // 前驱节点的索引，如果为1，说明前驱就是自己
-        int index = search(nums, v, 0, nums.length - 1);
-        if (index == -1) {
-            return v;
-        } else {
-            return nums[index];
-        }
+        return search(nums, v, 0, nums.length - 1);
     }
 
     private int search(int[] nums, int target, int l, int r) {
