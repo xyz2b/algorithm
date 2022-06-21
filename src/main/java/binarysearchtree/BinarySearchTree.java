@@ -96,6 +96,27 @@ public class BinarySearchTree {
         }
     }
 
+    public int kMax(int k) {
+        int[] rst = new int[1];
+        rst[0] = -1;
+        kMax(root, k, rst);
+        return rst[0];
+    }
+
+    public void kMax(Node node, int k, int[] rst) {
+        if (node == null) {
+            return;
+        }
+
+        kMax(node.left, k, rst);
+        k--;
+        if (k == 0) {
+            rst[0] = node.e;
+            return;
+        }
+        kMax(node.right, k, rst);
+    }
+
     public static void main(String[] args) {
         BinarySearchTree binarySearchTree = new BinarySearchTree();
         int[] nums = new int[] {41, 22, 58, 15, 33, 50, 63, 13, 37, 42, 53};
@@ -103,8 +124,9 @@ public class BinarySearchTree {
             binarySearchTree.add(num);
         }
         binarySearchTree.preOder();
-        System.out.println(binarySearchTree.floor(100));
+        System.out.println(binarySearchTree.floor(53));
         System.out.println(binarySearchTree.ceil(13));
 
+        System.out.println(binarySearchTree.kMax(1));
     }
 }
