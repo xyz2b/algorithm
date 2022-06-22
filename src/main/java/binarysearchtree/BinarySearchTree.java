@@ -98,23 +98,25 @@ public class BinarySearchTree {
 
     public int kMax(int k) {
         int[] rst = new int[1];
+        int[] kK = new int[1];
+        kK[0] = k;
         rst[0] = -1;
-        kMax(root, k, rst);
+        kMax(root, kK, rst);
         return rst[0];
     }
 
-    public void kMax(Node node, int k, int[] rst) {
+    public void kMax(Node node, int[] kK, int[] rst) {
         if (node == null) {
             return;
         }
 
-        kMax(node.left, k, rst);
-        k--;
-        if (k == 0) {
+        kMax(node.left, kK, rst);
+        kK[0]--;
+        if (kK[0] == 0 && rst[0] == -1) {   // 二分搜索树的中序遍历的结果是顺序的，所以只需要在中序遍历打印元素值的时候（第一次打印是最小值，第二次打印是第二小值，以此类推，因为是顺序打印的），去做k值减减操作，当k为0时，就说明这就是第k小的值
             rst[0] = node.e;
             return;
         }
-        kMax(node.right, k, rst);
+        kMax(node.right, kK, rst);
     }
 
     public static void main(String[] args) {
@@ -127,6 +129,6 @@ public class BinarySearchTree {
         System.out.println(binarySearchTree.floor(53));
         System.out.println(binarySearchTree.ceil(13));
 
-        System.out.println(binarySearchTree.kMax(1));
+        System.out.println(binarySearchTree.kMax(12));
     }
 }
