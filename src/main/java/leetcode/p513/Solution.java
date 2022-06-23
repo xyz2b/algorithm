@@ -11,36 +11,37 @@ public class Solution {
     //      然后本层每遍历完一个元素，本层待遍历元素的数量就减一，当本层待遍历元素的数量为0时，当前层就遍历完毕，继续遍历下一层
     public int findBottomLeftValue(TreeNode root) {
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        int curLevelEleCount = 0;   // 本层待遍历元素个数
-        int nextLevelEleCount = 0;  // 下一层待遍历元素个数
+
+        int curLevelNodeNum = 0;   // 当前层待遍历元素个数
+        int nextLevelNodeNum = 0;  // 下一层待遍历元素个数
         int curLevelLeftEle = 0;    // 当前层最左侧的元素
-        int flag = 0;               // 当前遍历的元素 是否是 新的一层最左边
+        int newLevelFlag = 0;               // 是否为新的一层的标识（新的一层，就是从最左边开始遍历的，所以只要是新的一层，就是一层最左边的元素。这个标识即代表当前遍历的元素 是否是 新的一层最左边）
 
         queue.add(root);
-        curLevelEleCount++;
+        curLevelNodeNum++;
         curLevelLeftEle = root.val;
 
         while(!queue.isEmpty()) {
             TreeNode node = queue.remove();
-            if(flag == 1) { // flag=1 代表当前从队列中取出的元素，即当前遍历的元素，就是当前层最左边的元素，需要记录下来
+            if(newLevelFlag == 1) { // newLevelFlag=1 代表当前从队列中取出的元素，即当前遍历的元素，就是当前层最左边的元素，需要记录下来
                 curLevelLeftEle = node.val;
-                flag = 0;
+                newLevelFlag = 0;
             }
-            curLevelEleCount--; // 从队列中取出了一个当前层待遍历元素，所以本层待遍历元素减1
+            curLevelNodeNum--; // 从队列中取出了一个当前层待遍历元素，所以本层待遍历元素减1
 
             if(node.left != null) {
                 queue.add(node.left);
-                nextLevelEleCount++;    // 将当前层遍历元素的孩子节点加入到队列中，所以下一层待遍历元素要加1
+                nextLevelNodeNum++;    // 将当前层遍历元素的孩子节点加入到队列中，所以下一层待遍历元素要加1
             }
             if(node.right != null) {
                 queue.add(node.right);
-                nextLevelEleCount++;    // 将当前层遍历元素的孩子节点加入到队列中，所以下一层待遍历元素要加1
+                nextLevelNodeNum++;    // 将当前层遍历元素的孩子节点加入到队列中，所以下一层待遍历元素要加1
             }
 
-            if(curLevelEleCount == 0){  // 如果当前层待遍历元素为0，说明当前层遍历完毕，当前层的元素已经从队列中全部取出，之后从队列中取出的元素就是下一层的元素
-                curLevelEleCount = nextLevelEleCount;   // 因为要开始遍历下一层了，所以将下一层待遍历元素数量 设置为当前层要遍历的元素数量
-                nextLevelEleCount = 0;  // 清空下一层待遍历元素数量
-                flag = 1;   // 设置flag=1，代表队列中下一个待遍历的元素就是下一层最左边的元素
+            if(curLevelNodeNum == 0){  // 如果当前层待遍历元素为0，说明当前层遍历完毕，当前层的元素已经从队列中全部取出，之后从队列中取出的元素就是下一层的元素
+                curLevelNodeNum = nextLevelNodeNum;   // 因为要开始遍历下一层了，所以将下一层待遍历元素数量 设置为当前层要遍历的元素数量
+                nextLevelNodeNum = 0;  // 清空下一层待遍历元素数量
+                newLevelFlag = 1;   // 设置flag=1，代表队列中下一个待遍历的元素就是下一层最左边的元素
             }
         }
         return curLevelLeftEle;

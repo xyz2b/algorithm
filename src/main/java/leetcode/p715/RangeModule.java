@@ -10,7 +10,7 @@ class RangeModule {
     TreeMap<Integer, Integer> intervals;
 
     public RangeModule() {
-        intervals = new TreeMap<>();
+        intervals = new TreeMap<Integer, Integer>();
     }
 
     /**
