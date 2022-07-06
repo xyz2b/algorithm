@@ -119,8 +119,8 @@ public class SegmentTree {
      * @param treeIndex 根节点
      * @param l 根节点所代表的区间左端点
      * @param r 根节点所代表的区间右端点
-     * @param index
-     * @param e
+     * @param index 需要更新区间的端点，更新[index, index]区间所代表的值
+     * @param e 更新之后的值
      * */
     public void set(int treeIndex, int l, int r, int index, int e) {
         if (l == r) {
