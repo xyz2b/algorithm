@@ -1,5 +1,7 @@
 package leetcode.p676;
 
+// 字典树
+// 递归+回溯
 public class MagicDictionary {
     // 字典树
     class Node {
