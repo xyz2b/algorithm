@@ -9,9 +9,9 @@ public class Solution {
         // 逆时针走的距离
         int counterclockwise = 0;
 
-        // 顺时针
+        // 顺时针走当前所处于的位置
         int i = start;
-        // 逆时针
+        // 逆时针走当前所处于的位置
         int j = start;
 
         // 标识顺时针是否到达终点
