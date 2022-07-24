@@ -18,17 +18,19 @@ public class Solution {
         int clockwiseFlag = 0;
         // 标识逆时针是否达到终点
         int counterclockwiseFlag = 0;
-        // 因为distance[i] 表示编号为 i 的车站和编号为 (i + 1) % n 的车站之间的距离，所以逆时针走的时候，从j 到 j-1的距离，在因为distance[j-1]上，所以这里的判断条件是j < destination就是说明逆时针走到了终点并且距离累加上了
+        // 因为distance[i] 表示编号为 i 的车站和编号为 (i + 1) % n 的车站之间的距离，所以逆时针走的时候，从j 到 j-1的距离，在distance[j-1]上，所以这里的判断条件是j < destination就是说明逆时针走到了终点并且距离累加上了
+        // 顺时针走，i == destination，就代表到达了终点
         while (i != destination || j >= destination) {
             // 如果顺时针还未到达终点，继续累加距离往前走
             if (clockwiseFlag == 0) {
+                // 顺时针走的时候，从i 到 i+1的距离在在distance[i]上，所以先加距离，再将i往前挪一步
                 clockwise += distance[i];
                 i = (i + 1) % n;
             }
 
             // 如果逆时针还未到达终点，继续累加距离往后走
             if (counterclockwiseFlag == 0) {
-                // 逆时针走的时候，从j 到 j-1的距离，在因为distance[j-1]上，所以需要先将j往后挪一步，然后再加上当前j所表示的距离（即从j 到 j-1的距离）
+                // 逆时针走的时候，从j 到 j-1的距离，在distance[j-1]上，所以需要先将j往后挪一步，然后再加上当前j所表示的距离（即从j 到 j-1的距离）
                 j = j == 0 ? n : j - 1;
                 counterclockwise += distance[j];
             }
