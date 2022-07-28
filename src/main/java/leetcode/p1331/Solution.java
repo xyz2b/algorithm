@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+// 排序+哈希表
 public class Solution {
     public int[] arrayRankTransform(int[] arr) {
         int[] temp = Arrays.copyOf(arr, arr.length);
