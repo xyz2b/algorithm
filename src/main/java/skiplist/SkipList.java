@@ -39,6 +39,8 @@ public class SkipList<E extends Comparable<E>> {
 
     public void add(E e) {
         List<SkipListNode> updates = new ArrayList<>(MAX_LEVEL);
+        // updates数组中存放的是每一层小于且最接近 target 的元素节点
+        // 添加元素时，该数组初始化时的值是虚拟头节点，因为如果某一层不存在 小于且最接近 target 的元素节点（即这一层没有元素节点），那么其实就是插入到虚拟头节点之后
         for(int i = 0; i < MAX_LEVEL; i++) {
             updates.add(head);
         }
@@ -49,7 +51,7 @@ public class SkipList<E extends Comparable<E>> {
             while (cur.forwards.get(i) != null && cur.forwards.get(i).e.compareTo(e) < 0) {
                 cur = cur.forwards.get(i);
             }
-            // 每一层查找的最后一个节点
+            // 每一层查找的最后一个节点（每一层小于且最接近 target 的元素节点）
             updates.set(i, cur);
             // 下降一层
         }
@@ -60,14 +62,18 @@ public class SkipList<E extends Comparable<E>> {
         SkipListNode newNode = new SkipListNode(lv, e);
         newNode.backwards = cur;
         for(int i = 0; i < lv; i++) {
-            // 对第 i 层的状态进行更新，将当前元素的 forward 指向新的节点
+            // 将新节点插入到 小于且最接近 target 元素节点的后面（类似链表的插入，将新节点每一层的forward指针指向 每一层小于且最接近 target 元素节点，将每一层小于且最接近 target 元素节点的forward指针指向新节点）
+            // 将新节点第 i 层的 forward 指针指向 第 i 层小于且最接近 target 元素节点
             newNode.forwards.set(i, updates.get(i).forwards.get(i));
+            // 对第 i 层的状态进行更新，将第 i 层小于且最接近 target 元素节点的 forward 指向新的节点
             updates.get(i).forwards.set(i, newNode);
         }
     }
 
     public boolean erase(E e) {
         List<SkipListNode> updates = new ArrayList<>(MAX_LEVEL);
+        // updates数组中存放的是每一层小于且最接近 target 的元素节点
+        // 在删除节点时，该数组初始化的值是为空节点
         for(int i = 0; i < MAX_LEVEL; i++) {
             updates.add(new SkipListNode());
         }
@@ -91,12 +97,11 @@ public class SkipList<E extends Comparable<E>> {
         }
 
         for(int i = 0; i < level; i++) {
-            // 每一层查找的最后一个节点 在当前层 不指向 当前要删除的节点，说明删除这个节点，对其他节点没影响，就不需要更新它们的forward指针
-            // 只有每一层查找的最后一个节点在 当前层 才会指向要删除的这个节点
+            // 每一层小于且最接近 target 的元素节点 在第i层 不指向 当前要删除的节点，说明在第i层删除这个节点，对其他节点没影响，就不需要更新它们的forward指针
             if(updates.get(i).forwards.get(i) != cur) {
                 break;
             }
-            // 将 每一层查找的最后一个节点 在当前层的 forward 指针 指向 被删除节点在当前层的 forward 指针
+            // 将 每一层小于且最接近 target 的元素节点 在第i层的 forward 指针 更新指向为 被删除节点在第i层的 forward 指针所指向的节点
             updates.get(i).forwards.set(i, cur.forwards.get(i));
         }
         // 更新最大层数
