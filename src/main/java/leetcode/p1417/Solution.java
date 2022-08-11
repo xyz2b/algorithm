@@ -55,9 +55,11 @@ public class Solution {
         if (Math.abs(sumDigit - sumAlpha) > 1) {
             return "";
         }
+        // 如果数字的数量大于字母的数量，那么偶数位置放的就是数字
         boolean flag = sumDigit > sumAlpha;
         char[] arr = s.toCharArray();
         for (int i = 0, j = 1; i < s.length(); i += 2) {
+            // 如果当前遍历的偶数位置不是数字而是字母，那么就在后面的奇数位置中找到第一个为数字的字符（奇数位置应该为字母），然后和当前遍历的偶数位置的字母进行交换
             if (Character.isDigit(arr[i]) != flag) {
                 while (Character.isDigit(arr[j]) != flag) {
                     j += 2;
