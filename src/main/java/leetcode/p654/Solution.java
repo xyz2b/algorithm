@@ -47,6 +47,7 @@ class Solution {
         return maxIndex;
     }
 
+    // 单调栈，没看懂
     public TreeNode constructMaximumBinaryTree2(int[] nums) {
         int n = nums.length;
         Deque<Integer> stack = new ArrayDeque<Integer>();
