@@ -11,6 +11,7 @@ public class Solution {
             map.put(arr[i], i);
         }
 
+        // 计算pieces中元素的总数量
         int piecesLengths = 0;
         boolean flag = true;
         for(int i = 0; i < pieces.length; i++) {
@@ -30,12 +31,12 @@ public class Solution {
                     break;
                 }
 
-                if(pieces[i][j] != arr[index + 1]) {    // pieces[i]中元素和arr中连续位置的元素不一致，直接退出
+                if(pieces[i][j] != arr[index + 1]) {    // pieces[i]中第一个元素之后的元素和arr中连续位置的元素存在不一致，直接退出
                     flag = false;
                     break;
                 }
 
-                index++;    // 增加pieces[i]下一个元素和arr数组中紧挨着的下一个元素进行对比
+                index++;    // pieces[i]下一个元素和arr数组中紧挨着的下一个元素进行对比
             }
 
             if(!flag) {
