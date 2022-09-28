@@ -23,6 +23,7 @@ public class Solution {
             // 从最小堆拿出来的数，就是从小到大排列的，从最小堆中取出k个数，那么第k个数就是从小到大第k个元素
             long cur = queue.poll();
             rst = (int) cur;
+            // 计算下一波的数字（就是拿当前数字*{3,5,7}去掉重复的元素，加入堆中）
             for(long factor : factors) {
                 long next = factor * cur;
                 if(set.add(next)) {
