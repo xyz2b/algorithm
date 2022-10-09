@@ -5,21 +5,22 @@ import java.util.Random;
 public class QuickSort {
 
     public void quickSort(int[] data) {
-        quickSort(data, 0, data.length - 1);
+        Random random = new Random();
+        quickSort(data, 0, data.length - 1, random);
     }
 
-    public void quickSort(int[] data, int l, int r) {
+    public void quickSort(int[] data, int l, int r, Random random) {
         if (l >= r) {
             return;
         }
 
         // random select one pivot
-        int i = new Random().nextInt(r - l + 1) + l;
+        int i = random.nextInt(r - l + 1) + l;
         swap(data, i, l);
 
         int partition = partition(data, l , r);
-        quickSort(data, l, partition - 1);
-        quickSort(data, partition + 1, r);
+        quickSort(data, l, partition - 1, random);
+        quickSort(data, partition + 1, r, random);
     }
 
     private int partition(int[] data, int l, int r) {
