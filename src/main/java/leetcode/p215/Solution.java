@@ -13,6 +13,7 @@ public class Solution {
 
         for(int i = k; i < nums.length; i++) {
             if(!pq.isEmpty() && pq.peek() < nums[i]) {
+                // 如果是自实现的堆，可以使用replace方法，将堆的根节点(最小值)替换成nums[i]的值
                 pq.poll();
                 pq.offer(nums[i]);
             }

@@ -62,6 +62,7 @@ public class Solution {
 
         for(int i = k; i < arr.length; i++) {
             if(!pq.isEmpty() && arr[i] < pq.peek()) {
+                // 如果是自实现的堆，可以使用replace方法，将堆的根节点(最大值)替换成nums[i]的值
                 pq.poll();
                 pq.offer(arr[i]);
             }
