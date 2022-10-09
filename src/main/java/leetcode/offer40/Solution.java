@@ -52,7 +52,7 @@ public class Solution {
         return k;
     }
 
-    // 堆
+    // 最大堆
     public int[] getLeastNumbers1(int[] arr, int k) {
         PriorityQueue<Integer> pq = new PriorityQueue<>((x, y) -> y - x);
 
