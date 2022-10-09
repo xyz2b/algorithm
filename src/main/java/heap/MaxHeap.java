@@ -19,7 +19,7 @@ public class MaxHeap {
     public MaxHeap(List<Integer> list) {
         this.list = new ArrayList<>(list);
 
-        // 找到最后一个非叶子结点，即最底层最后一个叶子节点的父节点
+        // 找到最后一个非叶子结点，即最底层最后一个叶子节点的父节点，对这个节点往前一直到根节点的所有节点执行shiftDown操作
         int x = parent(getSize() - 1);
         for(int i = x; i >= 0; i--) {
             // 下沉
