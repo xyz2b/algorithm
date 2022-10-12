@@ -11,6 +11,22 @@ public class InsertionSort {
         }
     }
 
+    public void sort2(int[] nums) {
+        for (int i = 1; i < nums.length; i++) {
+            // 将nums[i]插入到合适的位置
+            int temp = nums[i];
+            int j;
+            for (j = i; j > 0; j--) {
+                if (temp < nums[j-1]) {
+                    nums[j] = nums[j-1];
+                } else {
+                    break;
+                }
+            }
+            nums[j] = temp;
+        }
+    }
+
     private void swap(int[] nums, int src, int dst) {
         int temp = nums[src];
         nums[src] = nums[dst];
@@ -30,7 +46,7 @@ public class InsertionSort {
     public static void main(String[] args) {
         int[] data = {4, 453, 532, 3412312, 5364, 7, 31};
         InsertionSort insertionSort = new InsertionSort();
-        insertionSort.sort(data);
+        insertionSort.sort2(data);
         System.out.println(insertionSort.toString(data));
     }
 }
