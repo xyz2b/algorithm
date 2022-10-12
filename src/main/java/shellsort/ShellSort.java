@@ -24,7 +24,7 @@ public class ShellSort {
                     nums[j] = temp;
                 }
             }
-            // 缩小一倍间隔
+            // 缩小一倍间隔继续分组
             interval = interval / 2;
         }
     }
