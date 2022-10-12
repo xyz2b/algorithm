@@ -1,15 +1,15 @@
 package shellsort;
 
-// 将元素按照固定分隔分组，对每个分组都执行插入排序，然后再缩小一倍间隔继续分组，继续对每个分组执行插入排序，直到分组间隔为1，再执行一次插入排序，就完成了排序过程
+// 将多个元素按照固定间隔分组，对每个分组都执行插入排序，然后再缩小一倍间隔继续分组，继续对每个分组执行插入排序，直到分组间隔为1，再执行一次插入排序，就完成了排序过程
 public class ShellSort {
     public void sort(int[] nums) {
-        // 间隔
+        // 分组间隔
         int interval = nums.length / 2;
         // 间隔最终会为1，间隔为1再进行插入排序后就完成了排序过程
         while (interval > 0) {
             // 遍历多个分组的起始元素，[0, interval-1]
             for(int start = 0; start < interval; start++) {
-                // 对每个分组执行插入排序，每个分组中的元素间隔为interval（data[start, start+interval, start+2interval, start+3interval, ...]）
+                // 对每个分组执行插入排序，每个分组中的元素间隔为interval（即对，data[start, start+interval, start+2interval, start+3interval, ...]，执行插入排序）
                 for(int i = start + interval; i < nums.length; i += interval) {
                     // 将nums[i]插入到合适的位置
                     int temp = nums[i];
