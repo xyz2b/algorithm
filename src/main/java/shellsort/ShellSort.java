@@ -56,7 +56,7 @@ public class ShellSort {
     }
 
     public void sort3(int[] nums) {
-        // 分组间隔
+        // 分组间隔（使用不同的步长序列来优化希尔排序的性能）
         int interval = 1;
         while (interval < nums.length) interval = interval * 3 + 1;
         // 间隔最终会为1，间隔为1再进行插入排序后就完成了排序过程
