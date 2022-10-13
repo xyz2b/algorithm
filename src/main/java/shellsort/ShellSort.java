@@ -55,6 +55,32 @@ public class ShellSort {
         }
     }
 
+    public void sort3(int[] nums) {
+        // 分组间隔
+        int interval = 1;
+        while (interval < nums.length) interval = interval * 3 + 1;
+        // 间隔最终会为1，间隔为1再进行插入排序后就完成了排序过程
+        while (interval > 0) {
+            // 对于多个分组的元素，混着处理，处理完一个分组的元素，直接处理下一个分组的元素，只需要在内层循环找到当前处理的元素所属于分组的元素进行比较即可（内层循环不需要改变）
+            for(int i = interval; i < nums.length; i ++) {
+                // 将nums[i]插入到合适的位置
+                int temp = nums[i];
+                int j;
+                for(j = i; j >= interval; j -= interval) {
+                    if(temp < nums[j - interval]) {
+                        nums[j] = nums[j - interval];
+                    } else {
+                        break;
+                    }
+                }
+                nums[j] = temp;
+            }
+
+            // 缩小一倍间隔继续分组
+            interval = interval / 3;
+        }
+    }
+
     private void swap(int[] data, int src, int dst) {
         int temp = data[src];
         data[src] = data[dst];
@@ -74,7 +100,7 @@ public class ShellSort {
     public static void main(String[] args) {
         int[] data = {4, 453, 532, 3412312, 5364, 7, 31};
         ShellSort shellSort = new ShellSort();
-        shellSort.sort(data);
+        shellSort.sort3(data);
         System.out.println(shellSort.toString(data));
     }
 }
