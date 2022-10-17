@@ -198,7 +198,7 @@ public class SegmentTree {
 
         // 因为可能修改完之后，左右孩子的值发生了变化，至于是左孩子还是右孩子的值发生变化不用管
         // 对于当前节点，只需要重新merge一下左右孩子的值即可
-        tree[treeIndex] = tree[leftChildIndex] + tree[rightChildIndex];
+        tree[treeIndex] = merge.merge(tree[leftChildIndex], tree[rightChildIndex]);
     }
 
     // 从treeIndex节点向子节点传播懒标记，[l, r]是treeIndex所代表的区间，即treeIndex所代表区间内的节点之前没有进行更新
