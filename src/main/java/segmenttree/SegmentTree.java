@@ -1,7 +1,5 @@
 package segmenttree;
 
-import java.util.Arrays;
-
 public class SegmentTree {
     private int[] tree;
     private int[] data;
@@ -88,7 +86,7 @@ public class SegmentTree {
             return tree[treeIndex];
         }
 
-        pushDown(treeIndex, l, r);
+        pushDownAdd(treeIndex, l, r);
 
         int mid = l + (r - l) / 2;
         int leftChildIndex = leftChild(treeIndex);
@@ -151,6 +149,71 @@ public class SegmentTree {
         tree[treeIndex] = merge.merge(tree[leftChildIndex], tree[rightChildIndex]);
     }
 
+//    /**
+//     * 将[left,right]区间中对应的值都设置为e
+//     * @param left 更新区间的左边界
+//     * @param right 更新区间的右边界
+//     * @param e 更新后的值
+//     * */
+//    public void set(int left, int right, int e) {
+//        set(0, 0, data.length - 1, left, right, e);
+//    }
+//
+//    /**
+//     * 在treeIndex根节点所代表的[l, r]区间内，更新[left,right]区间中对应的值为e
+//     * (data数组中的索引就是线段树中的区间端点)
+//     * @param treeIndex 根节点
+//     * @param l 根节点所代表的区间左端点
+//     * @param r 根节点所代表的区间右端点
+//     * @param left 更新区间的左边界
+//     * @param right 更新区间的右边界
+//     * @param e 更新之后的值
+//     * */
+//    public void set(int treeIndex, int l, int r, int left, int right, int e) {
+//        // 正好需要更新的区间是treeIndex所代表的区间，则直接更新treeIndex所代表区间的值，然后设置treeIndex的lazy标记，标识treeIndex所表示的区间中每个节点的值都需要设置为e
+//        if (l == left && right == r) {
+//            lazy[treeIndex] = e;
+//            // 因为treeIndex节点所代表的区间中每个叶子节点的值都设置为了e
+//            tree[treeIndex] = (right - left + 1) * e;
+//            return;
+//        }
+//
+//        pushDownSet(treeIndex, l, r);
+//
+//        int mid = l + (r - l) / 2;
+//        int leftChildIndex = leftChild(treeIndex);
+//        int rightChildIndex = rightChild(treeIndex);
+//
+//        // 全在右孩子[mid+1, r]中
+//        if (left >= mid + 1) {
+//            set(rightChildIndex, mid + 1, r, left, right, e);
+//        } else if(right <= mid) { // 全在左孩子[l, mid]中
+//            set(leftChildIndex, l, mid, left, right, e);
+//        } else {    // 一部分在左孩子中，一部分在右孩子中
+//            set(leftChildIndex, l, mid, left, mid, e);
+//            set(rightChildIndex, mid + 1, r, mid + 1, right, e);
+//        }
+//
+//        // 因为可能修改完之后，左右孩子的值发生了变化，至于是左孩子还是右孩子的值发生变化不用管
+//        // 对于当前节点，只需要重新merge一下左右孩子的值即可
+//        tree[treeIndex] = merge.merge(tree[leftChildIndex], tree[rightChildIndex]);
+//    }
+
+    // 从treeIndex节点向子节点传播懒标记，[l, r]是treeIndex所代表的区间，即treeIndex所代表区间内的节点之前没有进行更新
+    private void pushDownSet(int treeIndex, int l, int r) {
+        // 当该节点存在懒标记，才开始向子节点传播懒标记
+        if(lazy[treeIndex] != 0) {
+            int mid = l + (r - l) / 2;
+            lazy[leftChild(treeIndex)] = lazy[rightChild(treeIndex)] = lazy[treeIndex];
+            // treeIndex左孩子所代表的区间为[l, mid]
+            tree[leftChild(treeIndex)] = (mid - l + 1) * lazy[leftChild(treeIndex)];
+            // treeIndex右孩子所代表的区间为[mid + 1, r]
+            tree[rightChild(treeIndex)] = (r - mid) * lazy[rightChild(treeIndex)];
+            // treeIndex的懒标记已经传播给子节点，去除其懒标记
+            lazy[treeIndex] = 0;
+        }
+    }
+
     /**
      * 将[left,right]区间中对应的值都加e
      * @param left 更新区间的左边界
@@ -180,7 +243,7 @@ public class SegmentTree {
             return;
         }
 
-        pushDown(treeIndex, l, r);
+        pushDownAdd(treeIndex, l, r);
 
         int mid = l + (r - l) / 2;
         int leftChildIndex = leftChild(treeIndex);
@@ -202,7 +265,7 @@ public class SegmentTree {
     }
 
     // 从treeIndex节点向子节点传播懒标记，[l, r]是treeIndex所代表的区间，即treeIndex所代表区间内的节点之前没有进行更新
-    private void pushDown(int treeIndex, int l, int r) {
+    private void pushDownAdd(int treeIndex, int l, int r) {
         // 当该节点存在懒标记，才开始向子节点传播懒标记
         if(lazy[treeIndex] != 0) {
             int mid = l + (r - l) / 2;
