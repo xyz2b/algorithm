@@ -23,12 +23,12 @@ public class BinarySearchTree {
 
     public void add(int e) {
         root = add(root, e);
-        size++;
     }
 
     // 向以node为根的二分搜索树中插入元素e，返回插入元素e之后的根
     public Node add(Node node, int e) {
         if (node == null) {
+            size++;
             return new Node(e);
         }
 
@@ -43,7 +43,6 @@ public class BinarySearchTree {
 
     public void delete(int e) {
         root = delete(root, e);
-        size--;
     }
 
     private Node delete(Node node, int e) {
@@ -63,22 +62,20 @@ public class BinarySearchTree {
                 node.left = null;
                 size--;
                 return leftNode;
-            }
-            if (node.left == null) { // 待删除只有右孩子
+            } else if (node.left == null) { // 待删除节点只有右孩子
                 Node rightNode = node.right;
                 node.right = null;
                 size--;
                 return rightNode;
+            } else { // 待删除节点既有左孩子又有右孩子
+                // 找到比待删除节点大的最小节点（后继），即待删除节点右子树的最小节点
+                // 用这个节点顶替待删除的节点
+                Node successor = findMin(node.right);
+                successor.right = delMin(node.right);
+                successor.left = node.left;
+                node.left = node.right = null;
+                return successor;
             }
-
-            // 待删除节点既有左孩子又有右孩子
-            // 找到比待删除节点大的最小节点（后继），即待删除节点右子树的最小节点
-            // 用这个节点顶替待删除的节点
-            Node successor = findMin(node.right);
-            successor.right = delMin(node.right);
-            successor.left = node.left;
-            node.left = node.right = null;
-            return successor;
         }
     }
 
@@ -138,17 +135,17 @@ public class BinarySearchTree {
         return node;
     }
 
-    public void preOder() {
-        preOder(root);
+    public void inOrder() {
+        inOrder(root);
     }
 
-    public void preOder(Node node) {
+    public void inOrder(Node node) {
         if (node == null) {
             return;
         }
-        preOder(node.left);
+        inOrder(node.left);
         System.out.println(node.e);
-        preOder(node.right);
+        inOrder(node.right);
     }
 
     public int floor(int e) {
@@ -222,7 +219,7 @@ public class BinarySearchTree {
         for(int num : nums) {
             binarySearchTree.add(num);
         }
-        binarySearchTree.preOder();
+        binarySearchTree.inOrder();
         System.out.println(binarySearchTree.floor(53));
         System.out.println(binarySearchTree.ceil(13));
 
