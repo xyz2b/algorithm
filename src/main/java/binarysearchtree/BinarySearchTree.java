@@ -41,6 +41,103 @@ public class BinarySearchTree {
         return node;
     }
 
+    public void delete(int e) {
+        root = delete(root, e);
+        size--;
+    }
+
+    private Node delete(Node node, int e) {
+        if(node == null) {
+            return null;
+        }
+
+        if(node.e > e) {
+            node.left = delete(node.left, e);
+            return node;
+        } else if (node.e < e) {
+            node.right = delete(node.right, e);
+            return node;
+        } else { // node.e == e
+            if(node.right == null) {    // 待删除节点只有左孩子
+                Node leftNode = node.left;
+                node.left = null;
+                size--;
+                return leftNode;
+            }
+            if (node.left == null) { // 待删除只有右孩子
+                Node rightNode = node.right;
+                node.right = null;
+                size--;
+                return rightNode;
+            }
+
+            // 待删除节点既有左孩子又有右孩子
+            // 找到比待删除节点大的最小节点（后继），即待删除节点右子树的最小节点
+            // 用这个节点顶替待删除的节点
+            Node successor = findMin(node.right);
+            successor.right = delMin(node.right);
+            successor.left = node.left;
+            node.left = node.right = null;
+            return successor;
+        }
+    }
+
+    public int findMin() {
+        return findMin(root).e;
+    }
+
+    private Node findMin(Node node) {
+        if(node.left == null) {
+            return node;
+        }
+        return findMin(node.left);
+    }
+
+    public int findMax() {
+        return findMax(root).e;
+    }
+
+    private Node findMax(Node node) {
+        if(node.right == null) {
+            return node;
+        }
+        return findMin(node.right);
+    }
+
+    public int delMin() {
+        int v = findMin(root).e;
+        root = delMin(root);
+        return v;
+    }
+
+    private Node delMin(Node node) {
+        if(node.left == null) {
+            Node rightNode = node.right;
+            node.right = null;
+            size--;
+            return rightNode;
+        }
+        node.left = delMin(node.left);
+        return node;
+    }
+
+    public int delMax() {
+        int v = findMax(root).e;
+        root = delMax(root);
+        return v;
+    }
+
+    private Node delMax(Node node) {
+        if(node.right == null) {
+            Node leftNode = node.left;
+            node.left = null;
+            size--;
+            return leftNode;
+        }
+        node.right = delMin(node.right);
+        return node;
+    }
+
     public void preOder() {
         preOder(root);
     }
