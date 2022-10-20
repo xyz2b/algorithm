@@ -2,6 +2,7 @@ package twothreetree;
 
 public class TwoThreeTree {
     class Node {
+        // 如果是2节点，只有leftElement、left、right有用，如果是3节点leftElement和rightElement、left、middle和right都有用
         private int leftElement;
         private int rightElement;
         private boolean threeNode;
@@ -10,6 +11,7 @@ public class TwoThreeTree {
         private Node middle;
         private Node right;
 
+        // 是否是由4节点分裂出来的根节点（2节点）（3节点再融合一个元素就是4节点，此时就需要进行分裂，分裂之后的根节点就是2节点）
         private boolean split;
 
         public Node(int e) {
@@ -82,10 +84,13 @@ public class TwoThreeTree {
             // 都没有走到上面的分支，说明最终插入的位置为node的空叶子节点，由于23树中新节点不能插入到空叶子节点的位置，所以插入位置应当为当前node，当前node是3节点
             // 插入的位置是一个3节点，先融合再分裂
             if(e < node.leftElement) {
+                size++;
                 return new Node(node.leftElement, new Node(e), new Node(node.rightElement), true);
             } else if (e > node.leftElement && e < node.rightElement) {
+                size++;
                 return new Node(e, new Node(node.leftElement), new Node(node.rightElement), true);
             } else if (e > node.rightElement){
+                size++;
                 return new Node(node.rightElement, new Node(node.leftElement), new Node(e), true);
             }
 
@@ -141,14 +146,63 @@ public class TwoThreeTree {
         return node;
     }
 
+    public int getSize() {
+        return size;
+    }
+
+    public boolean contain(int e) {
+        return contain(root, e);
+    }
+
+    public boolean contain(Node node, int e) {
+        if(node == null) {
+            return false;
+        }
+
+        if(node.threeNode) {
+            if(e < node.leftElement) {
+                return contain(node.left, e);
+            } else if (e > node.leftElement && e < node.rightElement) {
+                return contain(node.middle, e);
+            } else if (e > node.rightElement){
+               return contain(node.right, e);
+            } else {
+                return true;
+            }
+        } else {
+            if(e < node.leftElement) {
+                return contain(node.left, e);
+            } else if (e > node.leftElement) {
+                return contain(node.right, e);
+            } else {
+                return true;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         TwoThreeTree twoThreeTree = new TwoThreeTree();
+        System.out.println(twoThreeTree.contain(1));
+        System.out.println(twoThreeTree.getSize());
         twoThreeTree.add(35);
+        System.out.println(twoThreeTree.contain(1));
+        System.out.println(twoThreeTree.contain(35));
+        System.out.println(twoThreeTree.getSize());
         twoThreeTree.add(15);
+        System.out.println(twoThreeTree.contain(1));
+        System.out.println(twoThreeTree.contain(15));
+        System.out.println(twoThreeTree.getSize());
         twoThreeTree.add(12);
+        System.out.println(twoThreeTree.getSize());
         twoThreeTree.add(10);
+        System.out.println(twoThreeTree.getSize());
         twoThreeTree.add(9);
+        System.out.println(twoThreeTree.getSize());
         twoThreeTree.add(8);
+        System.out.println(twoThreeTree.getSize());
         twoThreeTree.add(7);
+        System.out.println(twoThreeTree.getSize());
+        System.out.println(twoThreeTree.contain(1));
+        System.out.println(twoThreeTree.contain(10));
     }
 }
