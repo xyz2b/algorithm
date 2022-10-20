@@ -94,7 +94,7 @@ public class TwoThreeTree {
             ret = node;
         }
 
-        // 融合3节点分裂出来的根节点
+        // 融合3节点分裂出来的根节点，怎么判断子节点是三节点分裂出来的
 
 
         return ret;
