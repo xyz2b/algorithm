@@ -58,7 +58,7 @@ public class TwoThreeTree {
                     return node;
                 }
             } else if (e > node.leftElement && e < node.rightElement) {
-                // 1. 分裂的根节点在当前3节点的中间，继续分裂出去的根是下层分裂的根节点，3节点的左元素作为其左孩子（下层分裂的根节点的左孩子作为其右孩子，3节点的左孩子作为其左孩子），右元素作为其右孩子（下层分裂的根节点的右孩子作为其左孩子，3节点的右孩子作为其右孩子）
+                // 2. 分裂的根节点在当前3节点的中间，继续分裂出去的根是下层分裂的根节点，3节点的左元素作为其左孩子（下层分裂的根节点的左孩子作为其右孩子，3节点的左孩子作为其左孩子），右元素作为其右孩子（下层分裂的根节点的右孩子作为其左孩子，3节点的右孩子作为其右孩子）
                 if(node.middle != null) {
                     Node middleNode = add(node.middle, e);
                     if(middleNode.split) {
@@ -69,7 +69,7 @@ public class TwoThreeTree {
                     return node;
                 }
             } else if(e > node.rightElement){
-                // 1. 分裂的根节点在当前3节点的右侧，继续分裂出去的根是3节点的右元素，左元素作为右元素的左孩子（当前3节点的左、中孩子，变成其左、右孩子），下层分裂的根节点作为右元素的右孩子
+                // 3. 分裂的根节点在当前3节点的右侧，继续分裂出去的根是3节点的右元素，左元素作为右元素的左孩子（当前3节点的左、中孩子，变成其左、右孩子），下层分裂的根节点作为右元素的右孩子
                 if (node.right != null) {
                     Node rightNode = add(node.right, e);
                     if(rightNode.split) {
@@ -82,7 +82,7 @@ public class TwoThreeTree {
             }
 
             // 都没有走到上面的分支，说明最终插入的位置为node的空叶子节点，由于23树中新节点不能插入到空叶子节点的位置，所以插入位置应当为当前node，当前node是3节点
-            // 插入的位置是一个3节点，先融合再分裂
+            // 插入的位置是一个3节点，先融合再分裂，并返回分裂之后树的新的根节点
             if(e < node.leftElement) {
                 size++;
                 return new Node(node.leftElement, new Node(e), new Node(node.rightElement), true);
@@ -98,13 +98,13 @@ public class TwoThreeTree {
             if (e > node.leftElement) {
                 if(node.right != null) {
                     Node rightNode = add(node.right, e);
-                    if(rightNode.split) {
+                    if(rightNode.split) { // 因为当前节点是2节点，所以直接融合右孩子分裂出来的新的根节点即可
                         rightNode.split = false;
                         node.rightElement = rightNode.leftElement;
                         node.right = rightNode.right;
                         node.middle = rightNode.left;
                         node.threeNode = true;
-                    } else {
+                    } else {    // 右孩子没有分裂
                         node.right = rightNode;
                     }
                     return node;
@@ -112,14 +112,14 @@ public class TwoThreeTree {
             } else if (e < node.leftElement) {
                 if(node.left != null) {
                     Node leftNode = add(node.left, e);
-                    if(leftNode.split) {
+                    if(leftNode.split) { // 因为当前节点是2节点，所以直接融合左孩子分裂出来的新的根节点即可
                         leftNode.split = false;
                         node.rightElement = node.leftElement;
                         node.leftElement = leftNode.leftElement;
                         node.left = leftNode.left;
                         node.middle = leftNode.right;
                         node.threeNode = true;
-                    } else {
+                    } else {    // 左孩子没有分裂
                         node.left = leftNode;
                     }
                     return node;
@@ -127,7 +127,7 @@ public class TwoThreeTree {
             }
 
             // 都没有走到上面的分支，说明最终插入的位置为node的空叶子节点，由于23树中新节点不能插入到空叶子节点的位置，所以插入位置应当为当前node，当前node是2节点
-            // 插入的位置是一个2节点，直接融合即可
+            // 插入的位置是一个2节点，直接融合即可，然后返回融合后的节点
             if(e > node.leftElement) {
                 node.rightElement = e;
                 node.threeNode = true;
@@ -141,8 +141,6 @@ public class TwoThreeTree {
                 return node;
             }
         }
-
-        // 融合3节点分裂出来的根节点，怎么判断子节点是三节点分裂出来的
         return node;
     }
 
