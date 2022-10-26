@@ -25,4 +25,26 @@ public class MonotonicQueue {
         }
         queue.offerFirst(e);
     }
+
+    public int poll() {
+        if(queue.isEmpty()) {
+            throw new ArrayIndexOutOfBoundsException("queue is empty");
+        }
+        return queue.pollFirst();
+    }
+
+    public int peek() {
+        if(queue.isEmpty()) {
+            throw new ArrayIndexOutOfBoundsException("queue is empty");
+        }
+        return queue.peekFirst();
+    }
+
+    public int size() {
+        return queue.size();
+    }
+
+    public boolean isEmpty() {
+        return queue.isEmpty();
+    }
 }
