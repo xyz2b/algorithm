@@ -64,9 +64,9 @@ public class NumArraySQRT {
     }
 
     public void update(int index, int val) {
-        int sub =  val - data[index];
+        int old = data[index];
         data[index] = val;
-        p[index / psize] += sub;
+        p[index / psize] = p[index / psize] + val - old;
     }
 
     public static void main(String[] args) {
