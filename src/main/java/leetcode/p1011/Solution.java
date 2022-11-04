@@ -7,7 +7,8 @@ public class Solution {
         // 搜索的左右边界，船的装载能力
         // 最小为最大货物的重量(不然这个货物就没法运输)，最大为 所有货物的总重量
         int l = Arrays.stream(weights).max().getAsInt(), r = Arrays.stream(weights).sum();
-        // 对船的装载能力对应的运输时间进行二分搜索，找到 <= days的最大值
+        // 因为transferTime是{单调函数(只有满足单调性，才能使用二分搜索，二分搜索前提是有序)}，weight越大，用时越少，即船的载重量越大，运输花费的时间就越少
+        // 所以可以对船的装载能力对应的运输时间进行二分搜索，找到 <= days的最大值
         while (l < r) {
             int mid = l + (r - l) / 2;
             if(transferTime(weights, mid) <= days) {
@@ -19,6 +20,7 @@ public class Solution {
         return l;
     }
 
+    // 单调函数，weight越大，用时越少
     private int transferTime(int[] weights, int weight) {
         int days = 0;
         int w = weight;
