@@ -20,28 +20,29 @@ public class Solution {
         return l;
     }
 
-    // 单调函数，weight越大，用时越少
-    private int transferTime(int[] weights, int weight) {
-        int days = 0;
-        int w = weight;
-        for(int i = 0; i < weights.length; i++) {
-            if(w - weights[i] == 0) {   // 装上这批货船装满了，运输完之后，清空货仓，第二天继续装货
-                days++; // 这里的days++加的是当前这批货物运走的一天
-                w = weight;
-            } else if (w - weights[i] <= 0) {   // 此时船剩余空间不足以装这批货了，需要等第二天船清空之后，然后再把这批货装上
-                days++;
-                w = weight - weights[i];
-                if(i == weights.length - 1) {   // 因为这里的days++加的是上一批货物运走的那一天，如果最后一批货物走到这里，说明这批货物单独装船需要再花费一天
-                    days++;
-                }
-            } else {    // 船没满，就直接装上这批货，再继续装下一批货
-                w = w - weights[i];
-                if(i == weights.length - 1) {   // 如果最后几批货物都装上了船，但是船还没满，就会走到这里，但是这一天的时间是没有加上的
-                    days++;
-                }
+    // 单调函数，船的载重k越大，用时越少
+    private int transferTime(int[] weights, int k) {
+        // cur 为当前传送带的载重；res 为最终的返回结果
+        int cur = 0, res = 0;
+
+        // 遍历 weights 中的每一个元素
+        for(int weight: weights)
+            // 如果当前的重量加上当前的货物没有超过 k，
+            // 把当前货物重量加在 cur 上
+            if(cur + weight <= k)
+                cur += weight;
+            else{
+                // 否则的话，相当于从当前的货物开始，我们需要新的一天运输
+                // res ++，同时，cur 更新为当前的重量
+                res ++;
+                cur = weight;
             }
-        }
-        return days;
+
+        // 最后还要做一次 res ++，因为在这里 cur 肯定不为零，还记录着最后一天需要运送的货物重量
+        // 最后一天，要加到 res 中，所以 res ++
+        res ++;
+
+        return res;
     }
 
     public static void main(String[] args) {
