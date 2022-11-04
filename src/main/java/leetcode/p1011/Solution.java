@@ -27,7 +27,7 @@ public class Solution {
 
         // 遍历 weights 中的每一个元素
         for(int weight: weights)
-            // 如果当前的重量加上当前的货物没有超过 k，
+            // 如果当前的重量加上当前的货物没有超过 k，即没有超过船的载重量
             // 把当前货物重量加在 cur 上
             if(cur + weight <= k)
                 cur += weight;
