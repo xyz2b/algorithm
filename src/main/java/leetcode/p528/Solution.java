@@ -3,13 +3,14 @@ package leetcode.p528;
 import java.util.Random;
 
 public class Solution {
-    // 根据任务的权重决定给其发放几张ticket票据
+    // 根据任务的权重决定给其发放几张ticket票据，权重为几就发放几张ticket票据
     // tickets数组的索引为任务序号，值为该任务所具有的票据起始号码，该任务所具有的票据结束号码是下一个任务票据的起始号码-1
-    // 其实就是计算权重数组w的前缀和
+    // tickets数组的值其实就是计算任务权重数组w的前缀和
     // tickets数组会比权重数组长度大一，因为它最后一个元素存储的是最后一个任务票据的结束号码+1，同时数组最后一个元素也是发放的票据总数，该数组最后一个元素不对应到任何一个任务
     private int[] tickets;
     private Random rnd;
 
+    // w数组的索引是任务编号，值为对应任务的权重
     public Solution(int[] w) {
         tickets = new int[w.length + 1];
 
@@ -28,6 +29,7 @@ public class Solution {
         // 随机选择一个ticket，[0, ticketsNum)
         int nextTicket = rnd.nextInt(ticketsNum);
 
+        // tickets是单调递增的，所以可以二分搜索法在其中找寻符合某个条件的值
         // 二分搜索法在tickets数组中找到 <= nextTicket的最大值 其对应的索引 就是选中的任务索引
         // 所选择的ticket落到了该任务所具有的ticket的范围内，所以该任务就具有上面选中的ticket
         return searchLower(tickets, 0, tickets.length - 1, nextTicket);
