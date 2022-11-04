@@ -32,7 +32,23 @@ public class Solution {
         // tickets是单调递增的，所以可以二分搜索法在其中找寻符合某个条件的值
         // 二分搜索法在tickets数组中找到 <= nextTicket的最大值 其对应的索引 就是选中的任务索引
         // 所选择的ticket落到了该任务所具有的ticket的范围内，所以该任务就具有上面选中的ticket
-        return searchLower(tickets, 0, tickets.length - 1, nextTicket);
+        int l = 0, r = tickets.length - 1;
+        while (l < r) {
+            // 当l 和 r 挨着时会出现死循环，如果它俩挨着时，mid就等于l，而且下面会对l进行调整，l有可能就会等于mid，就会一直循环
+            // 所以这里需要使用上取整，下取整就是直接/2
+            int mid = l + (r - l + 1) / 2;
+
+            if(tickets[mid] <= nextTicket) {
+                // mid也可能是解，但是要找解的最大值，所以还要继续往下找有没有更大的
+                l = mid;
+            } else {
+                // mid不是可能的解，已经超出了nextTicket
+                r = mid - 1;
+            }
+        }
+
+        return l;
+//        return searchLower(tickets, 0, tickets.length - 1, nextTicket);
 
     }
 
