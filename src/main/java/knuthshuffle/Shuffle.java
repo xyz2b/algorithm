@@ -25,6 +25,14 @@ public class Shuffle {
         }
     }
 
+    public void shuffle2(int[] arr) {
+        Random random = new Random();
+        for(int i = 0; i < arr.length; i++) {
+            int choseIndex = random.nextInt(arr.length - i) + i;
+            swap(arr, choseIndex, i);
+        }
+    }
+
     private void swap(int[] arr, int x, int y) {
         int temp = arr[x];
         arr[x] = arr[y];
@@ -32,9 +40,9 @@ public class Shuffle {
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[] {1,2,3,4,5,6};
+        int[] arr = new int[] {1,2,3};
         Shuffle shuffle = new Shuffle();
-        shuffle.shuffle(arr);
+        shuffle.shuffle2(arr);
 
         for(int i : arr) {
             System.out.println(i);
