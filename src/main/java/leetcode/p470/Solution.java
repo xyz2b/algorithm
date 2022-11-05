@@ -18,6 +18,9 @@ public class Solution extends SolBase {
     // 给矩阵的每个行列从0开始编号，作为矩阵的值
     // 矩阵值和矩阵行列编号的关系，t = (a - 1) * 7 + (b - 1)
     // t为[0,39]接受，返回 t % 10 + 1
+
+    // 期望
+    // E = 40/49 * 1 + 9/49 * (1 + E)
     public int rand10() {
         int a = rand7(), b = rand7();
 
