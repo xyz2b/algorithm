@@ -9,12 +9,12 @@ public class Solution {
     private int[] nums;
 
     public Solution(int[] nums) {
-        this.nums = nums;
+        this.nums = nums.clone();
         this.rnd = new Random();
     }
 
     public int[] reset() {
-        return nums;
+        return nums.clone();
     }
 
     public int[] shuffle() {
