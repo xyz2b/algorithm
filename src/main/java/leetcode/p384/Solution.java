@@ -21,8 +21,8 @@ public class Solution {
         int[] rst = Arrays.copyOf(nums, nums.length);
         for (int i = nums.length - 1; i >= 0; i--) {
             // 注意random是[0, i+1)，所以这里是i+1而不是i
-            int choseIndex = rnd.nextInt(i + 1);
-            swap(rst, choseIndex, i);
+            int chooseIndex = rnd.nextInt(i + 1);
+            swap(rst, chooseIndex, i);
         }
         return rst;
     }

@@ -20,16 +20,16 @@ public class Shuffle {
     public void shuffle(int[] arr) {
         Random random = new Random();
         for(int i = arr.length - 1; i >= 0; i--) {
-            int choseIndex = random.nextInt(i + 1);
-            swap(arr, choseIndex, i);
+            int chooseIndex = random.nextInt(i + 1);
+            swap(arr, chooseIndex, i);
         }
     }
 
     public void shuffle2(int[] arr) {
         Random random = new Random();
         for(int i = 0; i < arr.length; i++) {
-            int choseIndex = random.nextInt(arr.length - i) + i;
-            swap(arr, choseIndex, i);
+            int chooseIndex = random.nextInt(arr.length - i) + i;
+            swap(arr, chooseIndex, i);
         }
     }
 
