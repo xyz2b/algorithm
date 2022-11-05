@@ -22,16 +22,12 @@ public class Solution extends SolBase {
     // 期望
     // E = 40/49 * 1 + 9/49 * (1 + E)
     public int rand10() {
-        int a = rand7(), b = rand7();
+        int t = 0;
 
-        int t = (a - 1) * 7 + (b - 1);
-
-        while (t > 39 || t < 0) {
-            a = rand7();
-            b = rand7();
-
+        do {
+            int a = rand7(), b = rand7();
             t = (a - 1) * 7 + (b - 1);
-        }
+        } while (t > 39 || t < 0);
 
         return t % 10 + 1;
     }
