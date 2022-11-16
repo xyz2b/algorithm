@@ -6,7 +6,8 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 // 图的邻接表表示法
-public class AdjSet {
+// 暂时只支持无向无权图
+public class Graph {
     // 顶点数(vertex count)
     private int V;
     // 边数(edge count)
@@ -14,7 +15,7 @@ public class AdjSet {
     // 邻接矩阵
     private TreeSet<Integer>[] adj;
 
-    public AdjSet(String filename) {
+    public Graph(String filename) {
         File file = new File(filename);
         try (Scanner scanner = new Scanner(file)){
             V = scanner.nextInt();
@@ -54,7 +55,7 @@ public class AdjSet {
         }
     }
 
-    private void validateVertex(int v) {
+    public void validateVertex(int v) {
         if(v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + v + " is invalid");
 
@@ -103,7 +104,7 @@ public class AdjSet {
     }
 
     public static void main(String[] args) {
-        AdjSet adjSet = new AdjSet("g.txt");
-        System.out.println(adjSet);
+        Graph graph = new Graph("g.txt");
+        System.out.println(graph);
     }
 }
