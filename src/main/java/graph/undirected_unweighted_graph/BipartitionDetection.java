@@ -2,6 +2,17 @@ package graph.undirected_unweighted_graph;
 
 import java.util.ArrayList;
 
+/**
+ * 二分图检测
+ * 通过染色实现，相邻两个节点需要染成不同的颜色
+ * 顶点v可以分成不相交的两个部分
+ * 所有的边的两个端点隶属于不同部分
+ *
+ * 处理匹配问题
+ * 一部分是学生
+ * 一部分是课程
+ * 两部分之间的连线代表某个学生喜欢某一个课程
+ * */
 public class BipartitionDetection {
     private Graph G;
     private boolean[] visited;
