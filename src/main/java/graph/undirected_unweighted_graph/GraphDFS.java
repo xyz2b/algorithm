@@ -2,6 +2,7 @@ package graph.undirected_unweighted_graph;
 
 import java.util.ArrayList;
 
+// // 类比树的深度优先遍历，只是多加了visited信息
 public class GraphDFS {
     private Graph G;
     private boolean[] visited;

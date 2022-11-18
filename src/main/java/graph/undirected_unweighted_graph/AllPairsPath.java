@@ -3,15 +3,15 @@ package graph.undirected_unweighted_graph;
 // 所有点对路径问题，对应英文 All Pairs (Vertices) Path (Problem)
 public class AllPairsPath {
     private Graph G;
-    // 我们定义一个 SingleSourcePath 的数组，存储每一个顶点对应的单源路径问题的解
-    private SingleSourcePath[] paths;
+    // 我们定义一个 SingleSourcePathDFS 的数组，存储每一个顶点对应的单源路径问题的解
+    private SingleSourcePathDFS[] paths;
 
     public AllPairsPath(Graph G) {
         this.G = G;
 
-        paths = new SingleSourcePath[G.V()];
+        paths = new SingleSourcePathDFS[G.V()];
         for(int v = 0; v < G.V(); v++) {
-            paths[v] = new SingleSourcePath(G, v);
+            paths[v] = new SingleSourcePathDFS(G, v);
         }
     }
 

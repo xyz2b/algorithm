@@ -1,10 +1,12 @@
 package graph.undirected_unweighted_graph;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Queue;
 
 // 单源路径
-public class SingleSourcePath {
+public class SingleSourcePathBFS {
     private Graph G;
     private boolean[] visited;
     // 路径的源头
@@ -12,7 +14,7 @@ public class SingleSourcePath {
     // 当前节点的上一个节点
     private int[] pre;
 
-    public SingleSourcePath(Graph G, int s) {
+    public SingleSourcePathBFS(Graph G, int s) {
         G.validateVertex(s);
 
         this.G = G;
@@ -22,15 +24,24 @@ public class SingleSourcePath {
         for(int i = 0; i < pre.length; i++) {
             pre[i] = -1;
         }
-        dfs(s, s);
+        bfs(s);
     }
 
-    private void dfs(int v, int parent) {
-        visited[v] = true;
-        pre[v] = parent;
-        for(int w : G.adj(v)) {
-            if(!visited[w]) {
-                dfs(w, v);
+    private void bfs(int s) {
+        Queue<Integer> queue = new ArrayDeque<>();
+        queue.add(s);
+        visited[s] = true;
+        pre[s] = s;
+
+        while (!queue.isEmpty()) {
+            int v = queue.remove();
+
+            for(int w : G.adj(v)) {
+                if(!visited[w]) {
+                    queue.add(w);
+                    visited[w] = true;
+                    pre[w] = v;
+                }
             }
         }
     }
@@ -57,5 +68,10 @@ public class SingleSourcePath {
         return path;
     }
 
+    public static void main(String[] args) {
+        Graph graph = new Graph("g.txt");
+        SingleSourcePathBFS path = new SingleSourcePathBFS(graph, 0);
+        System.out.println(path.path(5));
 
+    }
 }
