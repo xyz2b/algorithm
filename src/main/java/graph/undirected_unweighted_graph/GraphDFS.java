@@ -1,11 +1,15 @@
 package graph.undirected_unweighted_graph;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Queue;
 import java.util.Stack;
 
 // // 类比树的深度优先遍历，只是多加了visited信息
+/**
+ * dfs和bfs非递归写法只有所用的容器不同，其他完全一样
+ * dfs用的是栈，bfs用的是队列
+ * 即放入和取出元素的顺序不同
+ * 还可以把容器换成随机队列，那结果就变成了随机遍历
+ * */
 public class GraphDFS {
     private Graph G;
     private boolean[] visited;
