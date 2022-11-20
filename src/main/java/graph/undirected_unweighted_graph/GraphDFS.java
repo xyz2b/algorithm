@@ -1,6 +1,9 @@
 package graph.undirected_unweighted_graph;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Queue;
+import java.util.Stack;
 
 // // 类比树的深度优先遍历，只是多加了visited信息
 public class GraphDFS {
@@ -28,6 +31,24 @@ public class GraphDFS {
             }
         }
         post.add(v);
+    }
+
+    private void dfsNonRecursive(int s) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(s);
+        visited[s] = true;
+
+        while (!stack.isEmpty()) {
+            int v = stack.pop();
+            pre.add(v);
+
+            for(int w : G.adj(v)) {
+                if(!visited[w]) {
+                    stack.push(w);
+                    visited[w] = true;
+                }
+            }
+        }
     }
 
     public ArrayList<Integer> pre() {
