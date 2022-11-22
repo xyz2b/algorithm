@@ -11,6 +11,9 @@ public class CCBFS {
     private int[] visited;
     // 联通分量的个数
     private int ccCount = 0;
+    // 每个联通分量的顶点数
+    private ArrayList<Integer> ccVCount = new ArrayList<>();
+
 
     public CCBFS(Graph G) {
         this.G = G;
@@ -20,16 +23,19 @@ public class CCBFS {
 
         for(int v = 0; v < G.V(); v++) {
             if(visited[v] == -1) {
-                bfs(v, ccCount);
+                int vCount = bfs(v, ccCount);
+                // 每次进入该逻辑都是一个新的联通分量
+                ccVCount.add(vCount);
                 ccCount++;
             }
         }
     }
 
-    private void bfs(int s, int ccid) {
+    private int bfs(int s, int ccid) {
         Queue<Integer> queue = new ArrayDeque<>();
         queue.add(s);
         visited[s] = ccid;
+        int vCount = 1;
 
         while (!queue.isEmpty()) {
             int v = queue.remove();
@@ -38,9 +44,11 @@ public class CCBFS {
                 if(visited[w] == -1) {
                     queue.add(w);
                     visited[w] = ccid;
+                    vCount++;
                 }
             }
         }
+        return vCount;
     }
 
     // 联通分量的个数
@@ -69,17 +77,27 @@ public class CCBFS {
         return res;
     }
 
+    public Iterable<Integer> ccVCount() {
+        return ccVCount;
+    }
+
     public static void main(String[] args) {
         Graph graph = new Graph("g.txt");
         CCBFS ccbfs = new CCBFS(graph);
         for(ArrayList<Integer> cc : ccbfs.components()) {
             System.out.println(cc);
         }
+        for(int vCount : ccbfs.ccVCount()) {
+            System.out.println(vCount);
+        }
         System.out.println("==========================");
         Graph graph2 = new Graph("g2.txt");
         CCBFS ccbfs2 = new CCBFS(graph2);
         for(ArrayList<Integer> cc : ccbfs2.components()) {
             System.out.println(cc);
+        }
+        for(int vCount : ccbfs2.ccVCount()) {
+            System.out.println(vCount);
         }
     }
 }
