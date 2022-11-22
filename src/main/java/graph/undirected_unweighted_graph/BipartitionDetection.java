@@ -29,6 +29,7 @@ public class BipartitionDetection {
         for(int i = 0; i < colors.length; i++) {
             colors[i] = -1;
         }
+        // 每一个联通分量都要判断是不是二分图
         // 因为需要所有连通分量都要满足二分图性质，所以这里需要从所有顶点都进行遍历
         for(int v = 0; v < G.V(); v++) {
             if (!visited[v]) {

@@ -9,6 +9,7 @@ public class CycleDetectionDFS {
     public CycleDetectionDFS(Graph G) {
         this.G = G;
         visited = new boolean[G.V()];
+        // 每一个联通分量都要判断是否有环
         for(int v = 0; v < G.V(); v++) {
             if(!visited[v]) {
                 if(dfs(v, v))

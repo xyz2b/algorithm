@@ -9,6 +9,8 @@ public class CCDFS {
     private int[] visited;
     // 联通分量的个数
     private int ccCount = 0;
+    // 每个联通分量的顶点数
+    private ArrayList<Integer> ccVCount = new ArrayList<>();
 
     public CCDFS(Graph G) {
         this.G = G;
@@ -18,19 +20,24 @@ public class CCDFS {
 
         for(int v = 0; v < G.V(); v++) {
             if(visited[v] == -1) {
-                dfs(v, ccCount);
+                int vCount = dfs(v, ccCount);
+                // 每次进入该逻辑都是一个新的联通分量
+                ccVCount.add(vCount);
                 ccCount++;
             }
         }
     }
 
-    private void dfs(int v, int ccid) {
+    // v顶点所在联通分量的顶点数
+    private int dfs(int v, int ccid) {
         visited[v] = ccid;
+        int vCount = 1;
         for(int w : G.adj(v)) {
             if(visited[w] == -1) {
-                dfs(w, ccid);
+                vCount += dfs(w, ccid);
             }
         }
+        return vCount;
     }
 
     // 联通分量的个数
@@ -59,17 +66,27 @@ public class CCDFS {
         return res;
     }
 
+    public Iterable<Integer> ccVCount() {
+        return ccVCount;
+    }
+
     public static void main(String[] args) {
         Graph graph = new Graph("g.txt");
         CCDFS ccdfs = new CCDFS(graph);
         for(ArrayList<Integer> cc : ccdfs.components()) {
             System.out.println(cc);
         }
+        for(int vCount : ccdfs.ccVCount()) {
+            System.out.println(vCount);
+        }
         System.out.println("==========================");
         Graph graph2 = new Graph("g2.txt");
         CCDFS ccdfs2 = new CCDFS(graph2);
         for(ArrayList<Integer> cc : ccdfs2.components()) {
             System.out.println(cc);
+        }
+        for(int vCount : ccdfs2.ccVCount()) {
+            System.out.println(vCount);
         }
     }
 }
