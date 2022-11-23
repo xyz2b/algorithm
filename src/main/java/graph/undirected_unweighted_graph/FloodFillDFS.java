@@ -1,8 +1,6 @@
 package graph.undirected_unweighted_graph;
 
-import java.util.HashSet;
-
-public class FloodFill {
+public class FloodFillDFS {
     private boolean[][] visited;
 
     private int[][] grid;
