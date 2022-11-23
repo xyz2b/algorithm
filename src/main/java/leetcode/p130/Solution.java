@@ -64,18 +64,19 @@ public class Solution {
         return x >= 0 && x < R && y >= 0 && y < C;
     }
 
-    public String toString(char[][] boards) {
+    @Override
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-        for(int i = 0; i < boards.length; i++) {
+        for(int i = 0; i < board.length; i++) {
             sb.append("[");
-            for(int j = 0; j < boards[0].length; j++) {
-                sb.append(boards[i][j]);
-                if(j != boards[0].length - 1) {
+            for(int j = 0; j < board[0].length; j++) {
+                sb.append(board[i][j]);
+                if(j != board[0].length - 1) {
                     sb.append(", ");
                 }
             }
-            if(i != boards.length - 1) {
+            if(i != board.length - 1) {
                 sb.append("]\n");
             }
         }
@@ -88,6 +89,6 @@ public class Solution {
         char[][] boards = {{'X'}};
         Solution solution = new Solution();
         solution.solve(boards);
-        System.out.println(solution.toString(boards));
+        System.out.println(solution);
     }
 }
