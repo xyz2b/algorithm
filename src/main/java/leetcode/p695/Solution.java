@@ -64,6 +64,7 @@ public class Solution {
         for(int v = 0; v < G.length; v++) {
             int x = v / C, y = v % C;
 
+            // 遍历图的时候，因为对不是陆地的顶点不感兴趣 ，所以顶点如果不是陆地直接忽略，不是陆地的顶点不进行dfs
             if(!visited[v] && grid[x][y] == 1) {
                 rst = Math.max(dfs(v), rst);
             }
