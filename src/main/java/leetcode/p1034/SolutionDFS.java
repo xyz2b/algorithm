@@ -3,7 +3,7 @@ package leetcode.p1034;
 // 某个联通分量的边界
 // 要么在整个gird的边界
 // 要么顶点的上下左右不同色
-public class Solution {
+public class SolutionDFS {
     private int[][] grid;
     private int R;
     private int C;
@@ -25,6 +25,7 @@ public class Solution {
         return grid;
     }
 
+    // [x,y]为顶点的联通分量，vColor是该联通分量的值，newColor是该联通分量的边界需要替换的值
     private void dfs(int x, int y, int vColor, int newColor) {
         visited[x][y] = true;
 
@@ -87,7 +88,7 @@ public class Solution {
         int row = 0;
         int col = 0;
         int color = 3;
-        Solution solution = new Solution();
+        SolutionDFS solution = new SolutionDFS();
         solution.colorBorder(gird, row, col, color);
         System.out.println(solution);
     }

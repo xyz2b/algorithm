@@ -1,7 +1,10 @@
 package leetcode.p733;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 // 将image中[sr,sc]所在的联通分量的值都替换为color
-public class Solution {
+public class SolutionBFS {
     private int[][] image;
     private int R;
     private int C;
@@ -19,21 +22,32 @@ public class Solution {
         visited = new boolean[R][C];
 
         int vColor = image[sr][sc];
-        dfs(sr, sc, vColor, color);
+        bfs(sr, sc, vColor, color);
 
         return image;
     }
 
-    private void dfs(int x, int y, int vColor, int newColor) {
+    private void bfs(int x, int y, int vColor, int newColor) {
+        Queue<int[]> queue = new ArrayDeque<>();
+        queue.add(new int[]{x,y});
         visited[x][y] = true;
         image[x][y] = newColor;
 
-        for(int d = 0; d < 4; d++) {
-            int nextx = x + dirs[d][0];
-            int nexty = y + dirs[d][1];
+        // 向该顶点的四个方向找寻
+        // 这里其实相当于在遍历邻接顶点，只是这里还不能确定四周的点是否为邻接顶点，还需要判断其是否是邻接顶点(grid[x][y] == 1)
+        while (!queue.isEmpty()) {
+            int[] point = queue.remove();
+            x = point[0];
+            y = point[1];
 
-            if(inArea(nextx, nexty) && !visited[nextx][nexty] && image[nextx][nexty] == vColor) {
-                dfs(nextx, nexty, vColor, newColor);
+            for(int d = 0; d < 4; d++) {
+                int nextx = x + dirs[d][0];
+                int nexty = y + dirs[d][1];
+                if(inArea(nextx, nexty) && !visited[nextx][nexty] && image[nextx][nexty] == vColor) {
+                    queue.add(new int[] {nextx, nexty});
+                    visited[nextx][nexty] = true;
+                    image[nextx][nexty] = newColor;
+                }
             }
         }
     }
@@ -68,7 +82,7 @@ public class Solution {
         int sr = 1;
         int sc = 1;
         int color = 2;
-        Solution solution = new Solution();
+        SolutionBFS solution = new SolutionBFS();
         solution.floodFill(image, sr, sc, color);
         System.out.println(solution);
     }
