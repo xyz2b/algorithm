@@ -1,6 +1,6 @@
 package leetcode.p733;
 
-// 将[sr,sc]所在的联通分量的值都替换掉
+// 将image中[sr,sc]所在的联通分量的值都替换为color
 public class Solution {
     private int[][] image;
     private int R;
