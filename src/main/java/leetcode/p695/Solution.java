@@ -31,6 +31,8 @@ import java.util.TreeSet;
  *     nexty=y+dirs[d][1];
  * }
  * */
+
+// 各个联通分量的顶点数的最大值
 public class Solution {
     // 邻接矩阵表示法的图
     // G.length就是图的顶点数V
