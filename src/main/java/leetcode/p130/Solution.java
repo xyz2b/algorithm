@@ -23,8 +23,6 @@ public class Solution {
             if(!visited[i][0] && board[i][0] == 'O') {
                 dfs(i, 0, false);
             }
-        }
-        for(int i = 0; i < R; i++) {
             if(!visited[i][C-1] && board[i][C-1] == 'O') {
                 dfs(i, C-1, false);
             }
@@ -33,8 +31,6 @@ public class Solution {
             if(!visited[0][j] && board[0][j] == 'O') {
                 dfs(0, j, false);
             }
-        }
-        for(int j = 1; j < C; j++) {
             if(!visited[R-1][j] && board[R-1][j] == 'O') {
                 dfs(R-1, j, false);
             }

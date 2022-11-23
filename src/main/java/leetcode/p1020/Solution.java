@@ -24,8 +24,6 @@ public class Solution {
             if(!visited[i][0] && grid[i][0] == 1) {
                 dfs(i, 0);
             }
-        }
-        for(int i = 0; i < R; i++) {
             if(!visited[i][C-1] && grid[i][C-1] == 1) {
                 dfs(i, C-1);
             }
@@ -34,8 +32,6 @@ public class Solution {
             if(!visited[0][j] && grid[0][j] == 1) {
                 dfs(0, j);
             }
-        }
-        for(int j = 1; j < C; j++) {
             if(!visited[R-1][j] && grid[R-1][j] == 1) {
                 dfs(R-1, j);
             }
