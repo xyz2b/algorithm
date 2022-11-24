@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Queue;
 
 // BFS求解的单源路径，就是从s到t的最短路径，这是广度优先遍历的特性
-// Unweighted Single Source Shortest Path
 public class UnWeightShortPathFloodFill {
     private int[][] gird;
     private int R;
