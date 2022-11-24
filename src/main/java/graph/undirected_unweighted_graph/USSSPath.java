@@ -7,7 +7,7 @@ import java.util.Queue;
 
 // BFS求解的单源路径，就是从s到t的最短路径，这是广度优先遍历的特性
 // Unweighted Single Source Shortest Path
-public class USSSPaht {
+public class USSSPath {
     private Graph G;
     private boolean[] visited;
     // 路径的源头
@@ -17,7 +17,7 @@ public class USSSPaht {
     // 记录当前节点距离源点的距离
     private int[] distances;
 
-    public USSSPaht(Graph G, int s) {
+    public USSSPath(Graph G, int s) {
         G.validateVertex(s);
 
         this.G = G;
@@ -83,7 +83,7 @@ public class USSSPaht {
 
     public static void main(String[] args) {
         Graph graph = new Graph("g.txt");
-        USSSPaht path = new USSSPaht(graph, 0);
+        USSSPath path = new USSSPath(graph, 0);
         System.out.println(path.path(5));
 
     }
