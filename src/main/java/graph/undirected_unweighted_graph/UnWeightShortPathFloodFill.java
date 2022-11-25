@@ -32,6 +32,7 @@ public class UnWeightShortPathFloodFill {
 
         this.visited = new boolean[R][C];
         this.distance = new int[R][C];
+//        this.pre = new int[R*C];
         this.pre = new int[R][C][2];
         for(int i = 0; i < R; i++) {
             for (int j = 0; j < C; j++) {
@@ -39,12 +40,45 @@ public class UnWeightShortPathFloodFill {
                 pre[i][j] = null;
             }
         }
+//        for(int i = 0; i < pre.length; i++) {
+//            pre[i] = -1;
+//        }
 
         // gird[x][y]==0：路径途经的所有单元格都的值都是0
         if(gird[sx][sy] == 0) {
             bfs(sx, sy, tx, ty);
         }
     }
+
+//    private void bfs2(int sx, int sy, int tx, int ty) {
+//        Queue<Integer> queue = new ArrayDeque<>();
+//        int s = sx * C + sy;
+//        queue.add(s);
+//        visited[sx][sy] = true;
+//        distance[sx][sy] = 0;
+//        pre[s] = s;
+//
+//        while (!queue.isEmpty()) {
+//            int v = queue.poll();
+//            int vx = v / C, vy = v % C;
+//            for(int d = 0; d < 8; d++) {
+//                int nextx = vx + dirs[d][0];
+//                int nexty = vy + dirs[d][1];
+//
+//                if(inArea(nextx, nexty) && !visited[nextx][nexty] && gird[nextx][nexty] == 0) {
+//                    int w = nextx * C + nexty;
+//                    queue.add(w);
+//                    visited[nextx][nexty] = true;
+//                    pre[w] = v;
+//                    distance[nextx][nexty] = distance[vx][vy] + 1;
+//
+//                    if (nextx == tx && nexty == ty) {
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private void bfs(int sx, int sy, int tx, int ty) {
         Queue<int[]> queue = new ArrayDeque<>();
