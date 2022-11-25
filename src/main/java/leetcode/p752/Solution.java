@@ -31,6 +31,8 @@ public class Solution {
         return distance.get(target) != null ? distance.get(target) : -1;
     }
 
+    private int[] dirs = {-1, 1};
+
     private void bfs(String s) {
         Queue<String> queue = new ArrayDeque<>();
         queue.offer(s);
@@ -40,6 +42,37 @@ public class Solution {
         while (!queue.isEmpty()) {
             String v = queue.poll();
 
+            for(int i = 0; i < 4; i++) {
+                char c = v.charAt(i);
+
+                // 每一位都可以+1或-1，0-1=9，9+1=0
+                for(int d = 0; d < 2; d++) {
+                    char nextc;
+                    if(c == '9' && dirs[d] == 1) {
+                        nextc = '0';
+                    } else if (c == '0' && dirs[d] == -1) {
+                        nextc = '9';
+                    } else {
+                        nextc = (char) (c + dirs[d]);
+                    }
+
+                    StringBuilder sb = new StringBuilder(v);
+                    sb.setCharAt(i, nextc);
+                    String w = sb.toString();
+                    if(!visited.contains(w) && !deadends.contains(w)) {
+                        queue.offer(w);
+                        visited.add(w);
+                        distance.put(w, distance.get(v) + 1);
+                    }
+                }
+            }
         }
+    }
+
+    public static void main(String[] args) {
+        String[] deadends = {"0201","0101","0102","1212","2002"};
+        String target = "0202";
+        Solution solution = new Solution();
+        System.out.println(solution.openLock(deadends, target));
     }
 }
