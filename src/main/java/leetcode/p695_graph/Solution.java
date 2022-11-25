@@ -1,10 +1,7 @@
-package leetcode.p695;
+package leetcode.p695_graph;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.TreeSet;
 
 /**
  * 二维->一维
@@ -32,7 +29,8 @@ import java.util.TreeSet;
  * }
  * */
 
-// 各个联通分量的顶点数的最大值
+// 岛屿的面积就是图的联通分量包含的顶点数
+// 求岛屿的最大面积就是求各个联通分量所包含的顶点数的最大值
 public class Solution {
     // 邻接矩阵表示法的图
     // G.length就是图的顶点数V

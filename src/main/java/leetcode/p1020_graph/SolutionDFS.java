@@ -1,4 +1,4 @@
-package leetcode.p1020;
+package leetcode.p1020_graph;
 
 // 飞地的顶点总数量，即不挨着边界的联通分量的顶点总数
 public class SolutionDFS {

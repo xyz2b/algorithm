@@ -1,4 +1,4 @@
-package leetcode.p733;
+package leetcode.p733_graph;
 
 // 将image中[sr,sc]所在的联通分量的值都替换为color
 public class SolutionDFS {

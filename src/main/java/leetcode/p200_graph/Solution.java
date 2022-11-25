@@ -1,6 +1,6 @@
-package leetcode.p200;
+package leetcode.p200_graph;
 
-// 联通分量个数
+// 岛屿数量就是图的联通分量个数
 public class Solution {
     private boolean[][] visited;
     private char[][] grid;

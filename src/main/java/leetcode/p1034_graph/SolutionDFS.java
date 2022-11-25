@@ -1,4 +1,4 @@
-package leetcode.p1034;
+package leetcode.p1034_graph;
 
 // 某个联通分量的边界
 // 要么在整个gird的边界

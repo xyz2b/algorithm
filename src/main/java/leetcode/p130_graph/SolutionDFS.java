@@ -1,10 +1,7 @@
-package leetcode.p130;
-
-import java.util.ArrayDeque;
-import java.util.Queue;
+package leetcode.p130_graph;
 
 // 同p1020，飞地，找到不挨着边界的联通分量，将其中的值都替换掉
-public class SolutionBFS {
+public class SolutionDFS {
     private char[][] board;
     private int R;
     private int C;
@@ -24,18 +21,18 @@ public class SolutionBFS {
         // 可以先将这些边界的顶点的联通分量给遍历完，然后再去遍历非边界的顶点，剩下的联通分量就是飞地了
         for(int i = 0; i < R; i++) {
             if(!visited[i][0] && board[i][0] == 'O') {
-                bfs(i, 0, false);
+                dfs(i, 0, false);
             }
             if(!visited[i][C-1] && board[i][C-1] == 'O') {
-                bfs(i, C-1, false);
+                dfs(i, C-1, false);
             }
         }
         for(int j = 1; j < C; j++) {
             if(!visited[0][j] && board[0][j] == 'O') {
-                bfs(0, j, false);
+                dfs(0, j, false);
             }
             if(!visited[R-1][j] && board[R-1][j] == 'O') {
-                bfs(R-1, j, false);
+                dfs(R-1, j, false);
             }
         }
 
@@ -43,37 +40,22 @@ public class SolutionBFS {
         for(int i = 1; i < R-1; i++) {
             for (int j = 1; j < C-1; j++) {
                 if(!visited[i][j] && board[i][j] == 'O') {
-                    bfs(i, j, true);
+                    dfs(i, j, true);
                 }
             }
         }
     }
 
-    private void bfs(int x, int y, boolean isReplace) {
-        Queue<int[]> queue = new ArrayDeque<>();
-        queue.add(new int[]{x,y});
+    private void dfs(int x, int y, boolean isReplace) {
         visited[x][y] = true;
         if(isReplace) {
             board[x][y] = 'X';
         }
-
-        // 向该顶点的四个方向找寻
-        // 这里其实相当于在遍历邻接顶点，只是这里还不能确定四周的点是否为邻接顶点，还需要判断其是否是邻接顶点(grid[x][y] == 1)
-        while (!queue.isEmpty()) {
-            int[] point = queue.remove();
-            x = point[0];
-            y = point[1];
-
-            for(int d = 0; d < 4; d++) {
-                int nextx = x + dirs[d][0];
-                int nexty = y + dirs[d][1];
-                if(inArea(nextx, nexty) && !visited[nextx][nexty] && board[nextx][nexty] == 'O') {
-                    queue.add(new int[] {nextx, nexty});
-                    visited[nextx][nexty] = true;
-                    if(isReplace) {
-                        board[nextx][nexty] = 'X';
-                    }
-                }
+        for(int d = 0; d < 4; d++) {
+            int nextx = x + dirs[d][0];
+            int nexty = y + dirs[d][1];
+            if(inArea(nextx, nexty) && !visited[nextx][nexty] && board[nextx][nexty] == 'O') {
+                dfs(nextx, nexty, isReplace);
             }
         }
     }
@@ -105,7 +87,7 @@ public class SolutionBFS {
     public static void main(String[] args) {
 //        char[][] boards = {{'X','X','X','X'},{'X','O','O','X'},{'X','X','O','X'},{'X','O','X','X'}};
         char[][] boards = {{'X'}};
-        SolutionBFS solution = new SolutionBFS();
+        SolutionDFS solution = new SolutionDFS();
         solution.solve(boards);
         System.out.println(solution);
     }

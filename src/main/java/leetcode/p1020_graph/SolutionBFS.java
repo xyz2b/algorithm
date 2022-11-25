@@ -1,4 +1,4 @@
-package leetcode.p1020;
+package leetcode.p1020_graph;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

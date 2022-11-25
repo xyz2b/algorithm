@@ -1,4 +1,4 @@
-package leetcode.p733;
+package leetcode.p733_graph;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
