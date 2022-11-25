@@ -5,10 +5,9 @@ import java.util.*;
 // 状态转移-->图
 // bfs最短路径
 public class Solution {
-    private HashSet<String> visited;
     private HashMap<String, Integer> distance;
 
-    private HashSet<String> deadends;
+    private HashSet<String> deadset;
     private String source;
     private String target;
 
@@ -16,55 +15,66 @@ public class Solution {
     // target目标顶点
     // "0000"起始顶点
     public int openLock(String[] deadends, String target) {
-        this.deadends = new HashSet<>(deadends.length);
-        this.deadends.addAll(Arrays.asList(deadends));
+        this.deadset = new HashSet<>(deadends.length);
+        this.deadset.addAll(Arrays.asList(deadends));
 
         this.target = target;
         this.source = "0000";
-        this.visited = new HashSet<>();
         this.distance = new HashMap<>();
 
-        if(!this.deadends.contains(source)) {
-            bfs(source);
-        }
+        if(deadset.contains(target)) return -1;
+        if(deadset.contains(source)) return -1;
+        if(target.equals(source)) return 0;
+
+        bfs(source);
 
         return distance.get(target) != null ? distance.get(target) : -1;
     }
 
-    private int[] dirs = {-1, 1};
-
     private void bfs(String s) {
         Queue<String> queue = new ArrayDeque<>();
         queue.offer(s);
-        visited.add(s);
         distance.put(s, 0);
 
         while (!queue.isEmpty()) {
-            String v = queue.poll();
+            String curs = queue.poll();
 
+            char[] curarray = curs.toCharArray();
+            ArrayList<String> nextss = new ArrayList<>();
+            // 计算下一个可能的结果，转动一位转盘，总共有4个转盘
             for(int i = 0; i < 4; i++) {
-                char c = v.charAt(i);
+                // 保存下需要修改的位
+                char o = curarray[i];
 
                 // 每一位都可以+1或-1，0-1=9，9+1=0
-                for(int d = 0; d < 2; d++) {
-                    char nextc;
-                    if(c == '9' && dirs[d] == 1) {
-                        nextc = '0';
-                    } else if (c == '0' && dirs[d] == -1) {
-                        nextc = '9';
-                    } else {
-                        nextc = (char) (c + dirs[d]);
-                    }
 
-                    StringBuilder sb = new StringBuilder(v);
-                    sb.setCharAt(i, nextc);
-                    String w = sb.toString();
-                    if(!visited.contains(w) && !deadends.contains(w)) {
-                        queue.offer(w);
-                        visited.add(w);
-                        distance.put(w, distance.get(v) + 1);
+                // +1
+                // curarray[i] - '0' 将一位数字字符转成数字，9+1=10 --> %10 --> 0
+                curarray[i] = Character.forDigit((curarray[i] - '0' + 1) % 10, 10);
+                nextss.add(new String(curarray));
+
+                // 恢复位
+                curarray[i] = o;
+
+                // -1
+                // curarray[i] - '0' 将一位数字字符转成数字，-1可以转换为+9再%10
+                curarray[i] = Character.forDigit((curarray[i] - '0' + 9) % 10, 10);
+                nextss.add(new String(curarray));
+
+                // 恢复位
+                curarray[i] = o;
+            }
+
+            for(String nexts : nextss) {
+                if(!distance.containsKey(nexts) && !deadset.contains(nexts)) {
+                    queue.offer(nexts);
+                    distance.put(nexts, distance.get(curs) + 1);
+
+                    if(nexts.equals(target)) {
+                        break;
                     }
                 }
+
             }
         }
     }
