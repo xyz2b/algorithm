@@ -1,4 +1,4 @@
-package leetcode.p752;
+package leetcode.p752_graph;
 
 import java.util.*;
 
