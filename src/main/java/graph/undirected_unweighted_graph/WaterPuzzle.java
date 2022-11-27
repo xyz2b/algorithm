@@ -98,7 +98,7 @@ public class WaterPuzzle {
             path.add(new int[] {x, y});
             cur = pre[cur];
         }
-        path.add(new int[] {0, 0});
+        path.add(new int[] {s / 10, s % 10});
 
         Collections.reverse(path);
         return path;
