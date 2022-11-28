@@ -5,6 +5,7 @@ import java.util.*;
 // 状态转移-->图
 // 从一个状态转移到另一个状态，就是图的两个顶点之间的边
 // 求状态转移的最短路径就是使用bfs求无权图两个顶点之间的最短路径
+// 字符串表示状态，就需要使用Hash Set作为visited，使用HashMap作为记录距离的信息和pre等
 public class Solution {
     private HashMap<String, Integer> distance;
 
