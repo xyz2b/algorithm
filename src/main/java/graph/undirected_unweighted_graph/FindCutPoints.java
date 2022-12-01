@@ -1,21 +1,9 @@
 package graph.undirected_unweighted_graph;
 
 import java.util.ArrayList;
+import java.util.List;
 
-// 桥也称为割边(cut edges)
-public class FindBridges {
-    class Edge {
-        private int v, w;
-        public Edge(int v, int w) {
-            this.v = v;
-            this.w = w;
-        }
-
-        @Override
-        public String toString() {
-            return String.format("%d-%d", v, w);
-        }
-    }
+public class FindCutPoints {
     private Graph G;
     private boolean[] visited;
 
@@ -26,9 +14,9 @@ public class FindBridges {
     // 节点的oder值 == 当前遍历的节点数
     private int cnt;
 
-    private ArrayList<Edge> res;
+    private ArrayList<Integer> res;
 
-    public FindBridges(Graph G) {
+    public FindCutPoints(Graph G) {
         this.G = G;
         res = new ArrayList<>();
         visited = new boolean[G.V()];
@@ -47,6 +35,8 @@ public class FindBridges {
         order[v] = cnt;
         low[v] = order[v];
         cnt++;
+
+        int child = 0;
         for(int w : G.adj(v)) {
             if(!visited[w]) {
                 dfs(w, v);
@@ -56,10 +46,16 @@ public class FindBridges {
                     low[v] = low[w];
                 }
 
-                // 考察 v-w 的边，通过v的子节点w，可以到达比v的order值还小的节点，说明v-w这条边不是桥
-                // 如果 通过v的子节点w，不能到达比v的order值还小的节点，即通过v的子节点w到达不了v的祖先节点，说明v-w这个边就是桥
-                if(low[w] > order[v]) { // v-w边是桥
-                    res.add(new Edge(v, w));
+                // 如果v有一个孩子节点w，满足low[w] >= order[v]，则v是割点
+                // 特殊情况：根节点 (v节点如果有父亲的话，它一定不是根节点)
+                if(v != parent && low[w] >= order[v]) {
+                    res.add(v);
+                }
+
+                child++;
+                if (v == parent && child > 1) {
+                    // v是根节点，并且v的DFS遍历树中孩子节点数量大于1(因为是要在v的DFS遍历树中，所以v不能是已访问过的节点)，去掉根节点联通分量数量就会变化，即表示根节点也是割点
+                    res.add(v);
                 }
             } else if (w != parent) { // visited[w]，说明有环了，所以v-w边不可能是桥
                 if(low[w] < low[v])
@@ -69,7 +65,7 @@ public class FindBridges {
         }
     }
 
-    public Iterable<Edge> bridges() {
+    public Iterable<Integer> bridges() {
         return res;
     }
 }
