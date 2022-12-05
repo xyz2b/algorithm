@@ -1,9 +1,7 @@
 package graph.undirected_unweighted_graph;
 
-import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Stack;
 
 public class HamiltonLoop {
     private Graph G;
