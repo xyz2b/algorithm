@@ -1,6 +1,7 @@
 package graph.undirected_unweighted_graph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class HamiltonLoop {
@@ -16,6 +17,7 @@ public class HamiltonLoop {
         this.G = G;
         visited = 0;
         pre = new int[G.V()];
+        Arrays.fill(pre, -1);
         end = -1;
         dfs(0, G.V(), 0);
     }
