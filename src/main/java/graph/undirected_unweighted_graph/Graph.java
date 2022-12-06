@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 // 图的邻接表表示法
 // 暂时只支持无向无权图
-public class Graph {
+public class Graph implements Cloneable {
     // 顶点数(vertex count)
     private int V;
     // 边数(edge count)
@@ -87,6 +87,32 @@ public class Graph {
     public int degree(int v) {
         validateVertex(v);
         return adj[v].size();
+    }
+
+    public void removeEdge(int v, int w) {
+        validateVertex(v);
+        validateVertex(w);
+
+        adj[v].remove(w);
+        adj[w].remove(v);
+    }
+
+    @Override
+    protected Object clone() {
+        try {
+            Graph cloned = (Graph) super.clone();
+            cloned.adj = new TreeSet[V];
+            for(int v = 0 ; v < V; v++) {
+                cloned.adj[v] = new TreeSet<>();
+                for(int w : adj(v)) {
+                    cloned.adj[v].add(w);
+                }
+            }
+            return cloned;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
