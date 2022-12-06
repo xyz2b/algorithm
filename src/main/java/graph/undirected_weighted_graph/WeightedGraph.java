@@ -1,30 +1,34 @@
-package graph.undirected_unweighted_graph;
+package graph.undirected_weighted_graph;
+
+import graph.undirected_unweighted_graph.Graph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
-// 图的邻接表表示法
-// 暂时只支持无向无权图
-public class Graph implements Cloneable {
+// 无向带权图
+public class WeightedGraph implements Cloneable {
     // 顶点数(vertex count)
     private int V;
     // 边数(edge count)
     private int E;
     // 邻接表
-    private TreeSet<Integer>[] adj;
+    // key为与顶点相连的顶点，value为这两个顶点所构成的边的权值
+    private TreeMap<Integer, Integer>[] adj;
 
-    public Graph(String filename) {
+    public WeightedGraph(String filename) {
         File file = new File(filename);
         try (Scanner scanner = new Scanner(file)){
             V = scanner.nextInt();
             if(V < 0) {
                 throw new IllegalArgumentException("V must be non-negative");
             }
-            adj = new TreeSet[V];
+            adj = new TreeMap[V];
             for(int i = 0; i < V; i++) {
-                adj[i] = new TreeSet<>();
+                adj[i] = new TreeMap<>();
             }
             E = scanner.nextInt();
             if(E < 0) {
@@ -36,6 +40,7 @@ public class Graph implements Cloneable {
                 validateVertex(a);
                 int b = scanner.nextInt();
                 validateVertex(b);
+                int weight = scanner.nextInt();
 
                 // 只处理简单图，无自环边，无平行边
                 // 自环边
@@ -44,11 +49,11 @@ public class Graph implements Cloneable {
                 }
                 // 平行边
                 // 实际在解决算法问题时，可能有些情况下有平行边，比如解决最短路径时，此时这条边上的权值就选取最小的那个权值
-                if(adj[a].contains(b)) {
+                if(adj[a].containsKey(b)) {
                     throw new IllegalArgumentException("Parallel Edges are Detected!");
                 }
-                adj[a].add(b);
-                adj[b].add(a);
+                adj[a].put(b, weight);
+                adj[b].put(a, weight);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -74,13 +79,20 @@ public class Graph implements Cloneable {
     public boolean hasEdge(int v, int w) {
         validateVertex(v);
         validateVertex(w);
-        return adj[v].contains(w);
+        return adj[v].containsKey(w);
     }
 
     // 和顶点v相连的顶点集合
     public Iterable<Integer> adj(int v) {
         validateVertex(v);
-        return adj[v];
+        return adj[v].keySet();
+    }
+
+    // 返回v--w两个顶点所构成边的权值
+    public int getWeight(int v, int w) {
+        if(hasEdge(v, w))
+            return adj[v].get(w);
+        throw new IllegalArgumentException(String.format("No edge %d--%d", v, w));
     }
 
     // 返回顶点v的度，即顶点v有多少个邻边，即顶点v有多少个相邻的顶点
@@ -100,12 +112,12 @@ public class Graph implements Cloneable {
     @Override
     protected Object clone() {
         try {
-            Graph cloned = (Graph) super.clone();
-            cloned.adj = new TreeSet[V];
+            WeightedGraph cloned = (WeightedGraph) super.clone();
+            cloned.adj = new TreeMap[V];
             for(int v = 0 ; v < V; v++) {
-                cloned.adj[v] = new TreeSet<>();
-                for(int w : adj(v)) {
-                    cloned.adj[v].add(w);
+                cloned.adj[v] = new TreeMap<>();
+                for(Map.Entry<Integer, Integer> entry : adj[v].entrySet()) {
+                    cloned.adj[v].put(entry.getKey(), entry.getValue());
                 }
             }
             return cloned;
@@ -121,8 +133,8 @@ public class Graph implements Cloneable {
         sb.append(String.format("V = %d, E = %d\n", V, E));
         for(int v = 0; v < V; v++) {
             sb.append(String.format("%d : ", v));
-            for (int w : adj[v]) {
-                sb.append(String.format("%d ", w));
+            for (Map.Entry<Integer, Integer> entry : adj[v].entrySet()) {
+                sb.append(String.format("(%d: %d)", entry.getKey(), entry.getValue()));
             }
             sb.append('\n');
         }
@@ -130,7 +142,7 @@ public class Graph implements Cloneable {
     }
 
     public static void main(String[] args) {
-        Graph graph = new Graph("g.txt");
-        System.out.println(graph);
+        WeightedGraph weightedGraph = new WeightedGraph("gw.txt");
+        System.out.println(weightedGraph);
     }
 }
