@@ -4,18 +4,6 @@ import java.util.ArrayList;
 
 // 桥也称为割边(cut edges)
 public class FindBridges {
-    class Edge {
-        private int v, w;
-        public Edge(int v, int w) {
-            this.v = v;
-            this.w = w;
-        }
-
-        @Override
-        public String toString() {
-            return String.format("%d-%d", v, w);
-        }
-    }
     private Graph G;
     private boolean[] visited;
 
