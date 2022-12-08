@@ -37,7 +37,7 @@ public class Prim {
 
         while (!minHeap.isEmpty()){
             WeightEdge minEdge = minHeap.poll();
-            // 不合法的横切边
+            // 不合法的横切边，true-false才是合法的横切边
             if(visited[minEdge.getV()] && visited[minEdge.getW()]) {
                 continue;
             }
