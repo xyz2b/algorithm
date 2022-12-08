@@ -21,6 +21,7 @@ public class Kruskal {
         // 联通分量的个数大于1，说明这个图不是联通图
         if(cc.count() > 1) return;
 
+        // Kruskal
         // 因为每次要找最小的边，所以需要对图的边进行排序
         // 先将所有边加入列表
         ArrayList<WeightEdge> edges = new ArrayList<>();
