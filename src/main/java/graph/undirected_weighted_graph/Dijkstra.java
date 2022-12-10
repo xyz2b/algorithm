@@ -1,6 +1,7 @@
 package graph.undirected_weighted_graph;
 
 import java.util.Arrays;
+import java.util.PriorityQueue;
 
 public class Dijkstra {
     private WeightedGraph G;
@@ -8,6 +9,20 @@ public class Dijkstra {
 
     private int[] distance;
     private boolean[] visited;
+
+    public class Node implements Comparable<Node> {
+        public int v, distance;
+
+        public Node(int v, int distance) {
+            this.v = v;
+            this.distance = distance;
+        }
+
+        @Override
+        public int compareTo(Node another) {
+            return distance - another.distance;
+        }
+    }
 
     public Dijkstra(WeightedGraph G, int s) {
         this.G = G;
@@ -18,25 +33,19 @@ public class Dijkstra {
         visited = new boolean[G.V()];
 
         distance[s] = 0;
-        while (true) {
-            int curdis = Integer.MAX_VALUE, cur = -1;
-            for(int v = 0; v < distance.length; v++) {
-                if(!visited[v] && distance[v] < curdis) {
-                    curdis = distance[v];
-                    cur = v;
-                }
-            }
-
-            // 说明所有顶点都遍历完了，退出循环
-            if(cur == -1) {
-                break;
-            }
+        PriorityQueue<Node> pq = new PriorityQueue<>();
+        pq.add(new Node(s, 0));
+        while (!pq.isEmpty()) {
+            int cur = pq.remove().v;
+            // 已经确定是最短路径之后的顶点，直接丢掉
+            if(visited[cur]) continue;
 
             visited[cur] = true;
             for(int w : G.adj(cur)) {
                 if(!visited[w]) {
                     if(distance[cur] + G.getWeight(cur, w) < distance[w]) {
                         distance[w] = distance[cur] + G.getWeight(cur, w);
+                        pq.add(new Node(w, distance[w]));
                     }
                 }
             }
