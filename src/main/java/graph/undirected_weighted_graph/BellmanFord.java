@@ -45,13 +45,15 @@ public class BellmanFord {
         pre = new int[G.V()];
         Arrays.fill(pre, -1);
 
+        dis[0] = 0;
         // 遍历V-1次 所有边 进行松弛操作
         for(int i = 0; i < G.V() - 1; i++) {
             // 遍历所有边
             for(int v = 0; v < G.V(); v++) {
                 for(int w : G.adj(v)) {
                     // 松弛操作
-                    if(dis[v] + G.getWeight(v, w) < dis[w]) {
+                    // 正无穷 + 正负值 = 正无穷，因为这里是用Integer.MAX_VALUE作为正无穷，所以需要过滤掉
+                    if(dis[v] != Integer.MAX_VALUE && dis[v] + G.getWeight(v, w) < dis[w]) {
                         dis[w] = dis[v] + G.getWeight(v, w);
                         pre[w] = v;
                     }
@@ -63,7 +65,7 @@ public class BellmanFord {
         for(int v = 0; v < G.V(); v++) {
             for(int w : G.adj(v)) {
                 // 松弛操作
-                if(dis[v] + G.getWeight(v, w) < dis[w]) {
+                if(dis[v] != Integer.MAX_VALUE && dis[v] + G.getWeight(v, w) < dis[w]) {
                     hashNegativeCycle = true;
                 }
             }
@@ -74,7 +76,7 @@ public class BellmanFord {
         return hashNegativeCycle;
     }
 
-    public int disTo(int t) {
+    public int distTo(int t) {
         G.validateVertex(t);
         return dis[t];
     }
@@ -100,6 +102,12 @@ public class BellmanFord {
     }
 
     public static void main(String[] args) {
-
+        WeightedGraph g = new WeightedGraph("gw2.txt");
+        BellmanFord bellmanFord = new BellmanFord(g, 0);
+        for(int v = 0; v < g.V(); v++) {
+            System.out.print(bellmanFord.distTo(v) + " ");
+        }
+        System.out.println();
+        System.out.println(bellmanFord.path(3));
     }
 }
