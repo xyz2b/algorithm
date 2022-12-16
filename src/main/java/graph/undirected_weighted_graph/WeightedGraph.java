@@ -102,6 +102,10 @@ public class WeightedGraph implements Cloneable {
         validateVertex(v);
         validateVertex(w);
 
+        if(adj[v].containsKey(w)) {
+            E--;
+        }
+
         adj[v].remove(w);
         adj[w].remove(v);
     }

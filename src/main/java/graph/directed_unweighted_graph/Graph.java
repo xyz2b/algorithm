@@ -130,9 +130,15 @@ public class Graph implements Cloneable {
         validateVertex(v);
         validateVertex(w);
 
+        if(adj[v].contains(w)) {
+            E--;
+            if(directed) {
+                outDegrees[v]--;
+                inDegrees[w]--;
+            }
+        }
+
         adj[v].remove(w);
-        outDegrees[v]--;
-        inDegrees[w]--;
         if(!directed) {
             adj[w].remove(v);
         }
