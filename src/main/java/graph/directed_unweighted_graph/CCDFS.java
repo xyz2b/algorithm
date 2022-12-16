@@ -1,21 +1,19 @@
 package graph.directed_unweighted_graph;
 
-import graph.undirected_unweighted_graph.Graph;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
 // 同无向图
 // 联通分量，即一个图中不连通的子图的个数（联通：可以从一个顶点经过若干条边到达另一个顶点）
 public class CCDFS {
-    private graph.undirected_unweighted_graph.Graph G;
+    private Graph G;
     private int[] visited;
     // 联通分量的个数
     private int ccCount = 0;
     // 每个联通分量的顶点数
     private ArrayList<Integer> ccVCount = new ArrayList<>();
 
-    public CCDFS(graph.undirected_unweighted_graph.Graph G) {
+    public CCDFS(Graph G) {
         this.G = G;
         visited = new int[G.V()];
         // -1表示还未遍历过，相同数值的顶点之间是存在连接的，不同数值的顶点之间不存在连接
@@ -74,7 +72,7 @@ public class CCDFS {
     }
 
     public static void main(String[] args) {
-        graph.undirected_unweighted_graph.Graph graph = new graph.undirected_unweighted_graph.Graph("g.txt");
+        Graph graph = new Graph("g.txt");
         CCDFS ccdfs = new CCDFS(graph);
         for(ArrayList<Integer> cc : ccdfs.components()) {
             System.out.println(cc);
@@ -83,7 +81,7 @@ public class CCDFS {
             System.out.println(vCount);
         }
         System.out.println("==========================");
-        graph.undirected_unweighted_graph.Graph graph2 = new Graph("g2.txt");
+       Graph graph2 = new Graph("g2.txt");
         CCDFS ccdfs2 = new CCDFS(graph2);
         for(ArrayList<Integer> cc : ccdfs2.components()) {
             System.out.println(cc);

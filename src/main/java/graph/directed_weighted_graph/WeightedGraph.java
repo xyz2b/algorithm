@@ -24,6 +24,7 @@ public class WeightedGraph implements Cloneable {
     }
 
     public WeightedGraph(String filename, boolean directed) {
+        this.directed = directed;
         File file = new File(filename);
         try (Scanner scanner = new Scanner(file)){
             V = scanner.nextInt();

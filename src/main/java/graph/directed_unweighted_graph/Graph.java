@@ -22,6 +22,7 @@ public class Graph implements Cloneable {
     }
 
     public Graph(String filename, boolean directed) {
+        this.directed = directed;
         File file = new File(filename);
         try (Scanner scanner = new Scanner(file)){
             V = scanner.nextInt();
@@ -179,5 +180,8 @@ public class Graph implements Cloneable {
     public static void main(String[] args) {
         Graph graph = new Graph("ug.txt", true);
         System.out.println(graph);
+        for(int v = 0; v < graph.V(); v++) {
+            System.out.println(graph.inDegree(v) + " " + graph.outDegree(v));
+        }
     }
 }
