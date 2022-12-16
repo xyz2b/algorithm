@@ -1,6 +1,7 @@
 package graph.directed_unweighted_graph;
 
 // 不同于无向图
+// 有向无环图DAG（Directed Acyclic Graph）
 public class DirectedCycleDetectionDFS {
     private Graph G;
     private boolean[] visited;
