@@ -60,8 +60,10 @@ public class WeightedGraph implements Cloneable {
                     throw new IllegalArgumentException("Parallel Edges are Detected!");
                 }
                 adj[a].put(b, weight);
-                outDegrees[a]++;
-                inDegrees[b]++;
+                if(directed) {
+                    outDegrees[a]++;
+                    inDegrees[b]++;
+                }
                 if(!directed) {
                     adj[b].put(a, weight);
                 }

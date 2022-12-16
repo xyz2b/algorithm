@@ -57,8 +57,10 @@ public class Graph implements Cloneable {
                     throw new IllegalArgumentException("Parallel Edges are Detected!");
                 }
                 adj[a].add(b);
-                outDegrees[a]++;
-                inDegrees[b]++;
+                if(directed) {
+                    outDegrees[a]++;
+                    inDegrees[b]++;
+                }
                 if(!directed) {
                     adj[b].add(a);
                 }
