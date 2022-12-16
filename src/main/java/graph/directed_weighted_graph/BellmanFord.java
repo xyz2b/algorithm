@@ -1,12 +1,13 @@
-package graph.undirected_weighted_graph;
+package graph.directed_weighted_graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+// 同无向图
 /**
  * 松弛操作（Relaxation）
- * 假设dis[v]是从s到v的经过边数不超过k的最短距离
+ * 假设dis[v]是从s到v的 经过边数不超过k的最短距离
  *  if(dis[a] + ab < dis[b])
  *      dis[b] = dis[a] + ab
  * 找到从s到b的经过边数不超过k+1的最短距离
@@ -102,16 +103,17 @@ public class BellmanFord {
     }
 
     public static void main(String[] args) {
-        WeightedGraph g = new WeightedGraph("gw2.txt");
+        WeightedGraph g = new WeightedGraph("wg2.txt", true);
         BellmanFord bellmanFord = new BellmanFord(g, 0);
         if (!bellmanFord.hashNegativeCycle) {
             for(int v = 0; v < g.V(); v++) {
                 System.out.print(bellmanFord.distTo(v) + " ");
             }
             System.out.println();
-            System.out.println(bellmanFord.path(3));
+            System.out.println(bellmanFord.path(1));
         } else {
             System.out.println("exist negative cycle");
         }
+
     }
 }
