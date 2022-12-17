@@ -156,5 +156,15 @@ public class StringSubMatch {
         String t = "aabaacdd";
         StringSubMatch stringSubMatch = new StringSubMatch();
         System.out.println(stringSubMatch.search3(s, t));
+
+
+        String t2 = "babab";
+        StringBuilder sb = new StringBuilder();
+        sb.append("string: " + t2 + ", lps: [");
+        for(int i : stringSubMatch.getLps(t2)) {
+            sb.append(i + ", ");
+        }
+        sb.append("]");
+        System.out.println(sb.toString());
     }
 }
