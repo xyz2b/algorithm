@@ -71,6 +71,41 @@ public class Graph implements Cloneable {
         }
     }
 
+
+    public Graph(TreeSet<Integer>[] adj, boolean directed) {
+        this.adj = adj;
+        this.V = adj.length;
+        this.directed = directed;
+        this.E = 0;
+
+        this.inDegrees = new int[V];
+        this.outDegrees = new int[V];
+        for(int v = 0; v < V; v ++) {
+            for(int w : adj[v]) {
+                inDegrees[v]++;
+                outDegrees[w]++;
+                E++;
+            }
+        }
+
+        if(!directed) E /= 2;
+    }
+
+    public Graph reverseGraph() {
+        TreeSet<Integer>[] radj = new TreeSet[V];
+        for (int v = 0; v < V; v++) {
+            radj[v] = new TreeSet<>();
+        }
+
+        for (int v = 0; v < V; v++) {
+            for (int w : adj[v]) {
+                radj[w].add(v);
+            }
+        }
+
+        return new Graph(radj, directed);
+    }
+
     public boolean directed() {
         return directed;
     }
