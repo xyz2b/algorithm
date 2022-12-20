@@ -35,42 +35,74 @@ public class WeightedGraph implements Cloneable {
             for(int i = 0; i < V; i++) {
                 adj[i] = new TreeMap<>();
             }
-            E = scanner.nextInt();
-            if(E < 0) {
+            int e  = scanner.nextInt();
+            if(e < 0) {
                 throw new IllegalArgumentException("V must be non-negative");
             }
+            this.E = 0;
 
             inDegrees = new int[V];
             outDegrees = new int[V];
 
-            for(int i = 0; i < E; i++) {
+            for(int i = 0; i < e; i++) {
                 int a = scanner.nextInt();
                 validateVertex(a);
                 int b = scanner.nextInt();
                 validateVertex(b);
                 int weight = scanner.nextInt();
 
-                // 只处理简单图，无自环边，无平行边
-                // 自环边
-                if(a == b) {
-                    throw new IllegalArgumentException("Self Loop is Detected!");
-                }
-                // 平行边
-                // 实际在解决算法问题时，可能有些情况下有平行边，比如解决最短路径时，此时这条边上的权值就选取最小的那个权值
-                if(adj[a].containsKey(b)) {
-                    throw new IllegalArgumentException("Parallel Edges are Detected!");
-                }
-                adj[a].put(b, weight);
-                if(directed) {
-                    outDegrees[a]++;
-                    inDegrees[b]++;
-                }
-                if(!directed) {
-                    adj[b].put(a, weight);
-                }
+                addEdge(a, b, weight);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    public WeightedGraph(int V, boolean directed) {
+        this.V = V;
+        this.directed = directed;
+        this.E = 0;
+
+        this.adj = new TreeMap[V];
+        for(int v = 0; v < V; v++) {
+            adj[v] = new TreeMap<>();
+        }
+    }
+
+    public void addEdge(int a, int b, int w) {
+        validateVertex(a);
+        validateVertex(b);
+
+        // 只处理简单图，无自环边，无平行边
+        // 自环边
+        if(a == b) {
+            throw new IllegalArgumentException("Self Loop is Detected!");
+        }
+        // 平行边
+        // 实际在解决算法问题时，可能有些情况下有平行边，比如解决最短路径时，此时这条边上的权值就选取最小的那个权值
+        if(adj[a].containsKey(b)) {
+            throw new IllegalArgumentException("Parallel Edges are Detected!");
+        }
+        adj[a].put(b, w);
+        if(directed) {
+            outDegrees[a]++;
+            inDegrees[b]++;
+        }
+        if(!directed) {
+            adj[b].put(a, w);
+        }
+        this.E++;
+    }
+
+    public void updateWeight(int a, int b, int w) {
+        validateVertex(a);
+        validateVertex(b);
+        if(!hasEdge(a, b))
+            throw new IllegalArgumentException(String.format("No edge %d--%d", a, b));
+
+        adj[a].put(b, w);
+        if(!directed) {
+            adj[b].put(a, w);
         }
     }
 
