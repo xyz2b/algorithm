@@ -117,6 +117,7 @@ public class MaxFlow {
         if(!network.hasEdge(v, w))
             throw new IllegalArgumentException(String.format("No edge %d--%d", v, w));
 
+        // v-w的最大流量就是残量图中逆向边w-v的值
         return rG.getWeight(w, v);
     }
 }
