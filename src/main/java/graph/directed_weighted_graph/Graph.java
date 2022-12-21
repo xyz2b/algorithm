@@ -2,28 +2,26 @@ package graph.directed_weighted_graph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.TreeSet;
 
-// 无向带权图
-public class WeightedGraph implements Cloneable {
+// 图的邻接表表示法
+// 暂时只支持无向无权图
+public class Graph implements Cloneable {
     // 顶点数(vertex count)
     private int V;
     // 边数(edge count)
     private int E;
     // 邻接表
-    // key为与顶点相连的顶点，value为这两个顶点所构成的边的权值
-    private TreeMap<Integer, Integer>[] adj;
+    private TreeSet<Integer>[] adj;
+    private boolean directed;
     private int inDegrees[];
     private int outDegrees[];
-    private boolean directed;
-
-    public WeightedGraph(String filename) {
+    public Graph(String filename) {
         this(filename, false);
     }
 
-    public WeightedGraph(String filename, boolean directed) {
+    public Graph(String filename, boolean directed) {
         this.directed = directed;
         File file = new File(filename);
         try (Scanner scanner = new Scanner(file)){
@@ -31,81 +29,81 @@ public class WeightedGraph implements Cloneable {
             if(V < 0) {
                 throw new IllegalArgumentException("V must be non-negative");
             }
-            adj = new TreeMap[V];
+            adj = new TreeSet[V];
             for(int i = 0; i < V; i++) {
-                adj[i] = new TreeMap<>();
+                adj[i] = new TreeSet<>();
             }
-            int e  = scanner.nextInt();
-            if(e < 0) {
+            E = scanner.nextInt();
+            if(E < 0) {
                 throw new IllegalArgumentException("V must be non-negative");
             }
-            this.E = 0;
 
             inDegrees = new int[V];
             outDegrees = new int[V];
 
-            for(int i = 0; i < e; i++) {
+            for(int i = 0; i < E; i++) {
                 int a = scanner.nextInt();
                 validateVertex(a);
                 int b = scanner.nextInt();
                 validateVertex(b);
-                int weight = scanner.nextInt();
 
-                addEdge(a, b, weight);
+                // 只处理简单图，无自环边，无平行边
+                // 自环边
+                if(a == b) {
+                    throw new IllegalArgumentException("Self Loop is Detected!");
+                }
+                // 平行边
+                // 实际在解决算法问题时，可能有些情况下有平行边，比如解决最短路径时，此时这条边上的权值就选取最小的那个权值
+                if(adj[a].contains(b)) {
+                    throw new IllegalArgumentException("Parallel Edges are Detected!");
+                }
+                adj[a].add(b);
+                if(directed) {
+                    outDegrees[a]++;
+                    inDegrees[b]++;
+                }
+                if(!directed) {
+                    adj[b].add(a);
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public WeightedGraph(int V, boolean directed) {
-        this.V = V;
+
+    public Graph(TreeSet<Integer>[] adj, boolean directed) {
+        this.adj = adj;
+        this.V = adj.length;
         this.directed = directed;
         this.E = 0;
-        inDegrees = new int[V];
-        outDegrees = new int[V];
 
-        this.adj = new TreeMap[V];
-        for(int v = 0; v < V; v++) {
-            adj[v] = new TreeMap<>();
+        this.inDegrees = new int[V];
+        this.outDegrees = new int[V];
+        for(int v = 0; v < V; v ++) {
+            for(int w : adj[v]) {
+                inDegrees[v]++;
+                outDegrees[w]++;
+                E++;
+            }
         }
+
+        if(!directed) E /= 2;
     }
 
-    public void addEdge(int a, int b, int w) {
-        validateVertex(a);
-        validateVertex(b);
+    public Graph reverseGraph() {
+        TreeSet<Integer>[] radj = new TreeSet[V];
+        for (int v = 0; v < V; v++) {
+            radj[v] = new TreeSet<>();
+        }
 
-        // 只处理简单图，无自环边，无平行边
-        // 自环边
-        if(a == b) {
-            throw new IllegalArgumentException("Self Loop is Detected!");
+        for (int v = 0; v < V; v++) {
+            for (int w : adj[v]) {
+                radj[w].add(v);
+            }
         }
-        // 平行边
-        // 实际在解决算法问题时，可能有些情况下有平行边，比如解决最短路径时，此时这条边上的权值就选取最小的那个权值
-        if(adj[a].containsKey(b)) {
-            throw new IllegalArgumentException("Parallel Edges are Detected!");
-        }
-        adj[a].put(b, w);
-        if(directed) {
-            outDegrees[a]++;
-            inDegrees[b]++;
-        }
-        if(!directed) {
-            adj[b].put(a, w);
-        }
-        this.E++;
-    }
 
-    public void updateWeight(int a, int b, int w) {
-        validateVertex(a);
-        validateVertex(b);
-        if(!hasEdge(a, b))
-            throw new IllegalArgumentException(String.format("No edge %d--%d", a, b));
-
-        adj[a].put(b, w);
-        if(!directed) {
-            adj[b].put(a, w);
-        }
+        return new Graph(radj, directed);
     }
 
     public boolean directed() {
@@ -130,20 +128,13 @@ public class WeightedGraph implements Cloneable {
     public boolean hasEdge(int v, int w) {
         validateVertex(v);
         validateVertex(w);
-        return adj[v].containsKey(w);
+        return adj[v].contains(w);
     }
 
     // 和顶点v相连的顶点集合
     public Iterable<Integer> adj(int v) {
         validateVertex(v);
-        return adj[v].keySet();
-    }
-
-    // 返回v--w两个顶点所构成边的权值
-    public int getWeight(int v, int w) {
-        if(hasEdge(v, w))
-            return adj[v].get(w);
-        throw new IllegalArgumentException(String.format("No edge %d--%d", v, w));
+        return adj[v];
     }
 
     // 返回顶点v的度，即顶点v有多少个邻边，即顶点v有多少个相邻的顶点
@@ -175,7 +166,7 @@ public class WeightedGraph implements Cloneable {
         validateVertex(v);
         validateVertex(w);
 
-        if(adj[v].containsKey(w)) {
+        if(adj[v].contains(w)) {
             E--;
             if(directed) {
                 outDegrees[v]--;
@@ -192,12 +183,12 @@ public class WeightedGraph implements Cloneable {
     @Override
     protected Object clone() {
         try {
-            WeightedGraph cloned = (WeightedGraph) super.clone();
-            cloned.adj = new TreeMap[V];
+            Graph cloned = (Graph) super.clone();
+            cloned.adj = new TreeSet[V];
             for(int v = 0 ; v < V; v++) {
-                cloned.adj[v] = new TreeMap<>();
-                for(Map.Entry<Integer, Integer> entry : adj[v].entrySet()) {
-                    cloned.adj[v].put(entry.getKey(), entry.getValue());
+                cloned.adj[v] = new TreeSet<>();
+                for(int w : adj(v)) {
+                    cloned.adj[v].add(w);
                 }
             }
             return cloned;
@@ -213,8 +204,8 @@ public class WeightedGraph implements Cloneable {
         sb.append(String.format("V = %d, E = %d, directed = %b\n", V, E, directed));
         for(int v = 0; v < V; v++) {
             sb.append(String.format("%d : ", v));
-            for (Map.Entry<Integer, Integer> entry : adj[v].entrySet()) {
-                sb.append(String.format("(%d: %d)", entry.getKey(), entry.getValue()));
+            for (int w : adj[v]) {
+                sb.append(String.format("%d ", w));
             }
             sb.append('\n');
         }
@@ -222,7 +213,10 @@ public class WeightedGraph implements Cloneable {
     }
 
     public static void main(String[] args) {
-        WeightedGraph weightedGraph = new WeightedGraph("wg.txt", true);
-        System.out.println(weightedGraph);
+        Graph graph = new Graph("ug.txt", true);
+        System.out.println(graph);
+        for(int v = 0; v < graph.V(); v++) {
+            System.out.println(graph.inDegree(v) + " " + graph.outDegree(v));
+        }
     }
 }

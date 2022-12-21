@@ -85,7 +85,7 @@ public class MaxFlow {
             if(cur == t) break;
 
             for(int next : rG.adj(cur)) {
-                if(pre[cur] == -1 && rG.getWeight(cur, next) > 0) {
+                if(pre[next] == -1 && rG.getWeight(cur, next) > 0) {
                     pre[next] = cur;
                     queue.add(next);
                 }
@@ -119,5 +119,11 @@ public class MaxFlow {
 
         // v-w的最大流量就是残量图中逆向边w-v的值
         return rG.getWeight(w, v);
+    }
+
+    public static void main(String[] args) {
+        WeightedGraph g = new WeightedGraph("network2.txt", true);
+        MaxFlow mf = new MaxFlow(g,0 ,3);
+        System.out.println(mf.result());
     }
 }
