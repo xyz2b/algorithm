@@ -58,5 +58,9 @@ public class BipartitionMatching {
         Graph g = new Graph("network.txt", false);
         BipartitionMatching bm = new BipartitionMatching(g);
         System.out.println(bm.maxMatching);
+
+        Graph g2 = new Graph("network3.txt", false);
+        BipartitionMatching bm2 = new BipartitionMatching(g2);
+        System.out.println(bm2.maxMatching());
     }
 }
