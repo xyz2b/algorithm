@@ -1,7 +1,7 @@
 package leetcode.p75;
 
 public class Solution {
-    // 由于数组中只有三种取值，排序可以使用桶排序
+    // 由于数组中只有三种取值，排序可以使用计数排序
     public void sortColors(int[] nums) {
         int[] bucket = new int[3];
 
