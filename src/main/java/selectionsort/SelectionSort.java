@@ -1,7 +1,5 @@
 package selectionsort;
 
-import insertionsort.InsertionSort;
-
 public class SelectionSort {
     public void sort(int[] nums) {
         sort(nums, 0, nums.length - 1);
