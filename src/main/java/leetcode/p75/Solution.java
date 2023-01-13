@@ -18,4 +18,34 @@ public class Solution {
             }
         }
     }
+
+    // 三路快排
+    public void sortColors2(int[] nums) {
+        // [0, zero] == 0;
+        int zero = -1;
+
+        // [two, n - 1] == 2;
+        int two = nums.length;
+
+        // [zero + 1, i - 1] == 1
+        int i = 0;
+        while(i < two) {
+            if(nums[i] == 0) {
+                zero++;
+                swap(nums, i, zero);
+                i++;
+            } else if (nums[i] == 2) {
+                two--;
+                swap(nums, i, two);
+            } else {    // nums[i] == 1;
+                i++;
+            }
+        }
+    }
+
+    private void swap(int[] nums, int x, int y) {
+        int temp = nums[x];
+        nums[x] = nums[y];
+        nums[y] = temp;
+    }
 }
