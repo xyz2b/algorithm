@@ -59,4 +59,28 @@ public class Solution {
 
         return rst;
     }
+
+    // 滑动窗口
+    public int lengthOfLongestSubstring3(String s) {
+        if(s.length() ==  0) {
+            return 0;
+        }
+        int[] freq = new int[256];
+        int l = 0, r = -1; // 滑动窗口为s[l, r]
+        int rst = 0;
+
+        while (l < s.length()) {
+            if(r + 1 < s.length() && freq[s.charAt(r+1)] == 0) {
+                r++;
+                freq[s.charAt(r)]++;
+            } else {
+                freq[s.charAt(l)]--;
+                l++;
+            }
+
+            rst = Math.max(rst, r - l + 1);
+        }
+
+        return rst;
+    }
 }
