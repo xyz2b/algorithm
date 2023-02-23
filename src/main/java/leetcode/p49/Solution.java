@@ -12,19 +12,17 @@ public class Solution {
 
         int[] count = new int[26];
         // 统计每个字符串中的字符数量
-        for(int i = 0; i < strs.length; i++) {
-            String str = strs[i];
-
+        for(String str : strs) {
             // 统计字符串str中各个字母的数量
             Arrays.fill(count, 0);
-            for(int j = 0; j < str.length(); j++) {
-                char c = str.charAt(j);
+            for(int i = 0; i < str.length(); i++) {
+                char c = str.charAt(i);
                 count[c - 'a']++;
             }
 
             // 构造hash的key，key为每个小写字母出现的次数拼接而成
             StringBuilder sb = new StringBuilder("");
-            for(int j = 0; j < 26; j++) {
+            for(int i = 0; i < 26; i++) {
                 sb.append('#');
                 sb.append(count[i]);
             }
