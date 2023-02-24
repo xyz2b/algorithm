@@ -4,13 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Solution {
+    // 查找表，每个点一张查找表，key为某个点到其他所有点之间的距离，value为到这个点距离值为key的其他点的个数
     public int numberOfBoomerangs(int[][] points) {
         if(points.length < 3) return 0;
 
         int rst = 0;
 
         for(int i = 0; i < points.length; i++) {
-            // key为pointI到pointJ之间的距离，value为该距离出现了几次
+            // key为pointI到pointJ之间的距离，value为到点pointI距离值为key的点pointJ有多少个
+            // 每个点pointI都有这样的一张查找表
             Map<Integer, Integer> distances = new HashMap<>();
             for(int j = 0; j < points.length; j++) {
                 if(i != j) {
