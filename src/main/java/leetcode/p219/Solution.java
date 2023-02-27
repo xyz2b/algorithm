@@ -1,7 +1,9 @@
 package leetcode.p219;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Solution {
     // 滑动窗口 + 查找表
@@ -32,6 +34,25 @@ public class Solution {
             }
         }
 
+        return false;
+    }
+
+    // 滑动窗口(固定窗口大小) + 查找表
+    // 滑动窗口就是固定k个元素，在这个固定大小的滑动窗口中看是否有相同的两个元素，如果有就有解
+    public boolean containsNearbyDuplicate2(int[] nums, int k) {
+        Set<Integer> record = new HashSet<>();
+
+        for(int i = 0; i < nums.length; i++) {
+            if(record.contains(nums[i])) {
+                return true;
+            }
+            record.add(nums[i]);
+
+            // 窗口中最多有k个元素，然后在这个窗口中判断是否有相同的两个数，如果有就是有解
+            if(record.size() == k + 1) {    // 如果窗口大小大于k，就移除掉窗口开头的数(nums[i-k])，窗口大小为k时，窗口区间为[i - k + 1, i]，窗口大小为k+1时，窗口区间为[i-k, i]
+                record.remove(nums[i - k]);
+            }
+        }
         return false;
     }
 
