@@ -39,6 +39,7 @@ public class Solution {
 
     // 滑动窗口(固定窗口大小) + 查找表
     // 滑动窗口就是固定k个元素，在这个固定大小的滑动窗口中看是否有相同的两个元素，如果有就有解
+    // 同p3，p3滑动窗口是不固定的，该题滑动窗口是固定的
     public boolean containsNearbyDuplicate2(int[] nums, int k) {
         Set<Integer> record = new HashSet<>();
 

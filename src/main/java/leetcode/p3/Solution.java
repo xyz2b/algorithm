@@ -60,7 +60,7 @@ public class Solution {
         return rst;
     }
 
-    // 滑动窗口
+    // // 滑动窗口(窗口大小不固定) + 查找表freq
     public int lengthOfLongestSubstring3(String s) {
         if(s.length() ==  0) {
             return 0;
