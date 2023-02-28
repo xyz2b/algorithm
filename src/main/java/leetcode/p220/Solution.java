@@ -24,6 +24,7 @@ public class Solution {
 
             record.add(nums[i]);
 
+            // 保持record中最多有indexDiff个元素
             // 固定窗口，大小为indexDiff，满了，就将最左边的值删除
             if(record.size() == indexDiff + 1) {
                 record.remove(nums[i - indexDiff]);
