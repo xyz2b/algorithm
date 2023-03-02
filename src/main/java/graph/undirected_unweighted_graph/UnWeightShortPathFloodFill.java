@@ -59,8 +59,8 @@ public class UnWeightShortPathFloodFill {
 //        pre[s] = s;
 //
 //        while (!queue.isEmpty()) {
-//            int v = queue.poll();
-//            int vx = v / C, vy = v % C;
+//            int Solution = queue.poll();
+//            int vx = Solution / C, vy = Solution % C;
 //            for(int d = 0; d < 8; d++) {
 //                int nextx = vx + dirs[d][0];
 //                int nexty = vy + dirs[d][1];
@@ -69,7 +69,7 @@ public class UnWeightShortPathFloodFill {
 //                    int w = nextx * C + nexty;
 //                    queue.add(w);
 //                    visited[nextx][nexty] = true;
-//                    pre[w] = v;
+//                    pre[w] = Solution;
 //                    distance[nextx][nexty] = distance[vx][vy] + 1;
 //
 //                    if (nextx == tx && nexty == ty) {

@@ -5,11 +5,11 @@ import java.util.Arrays;
 
 // 同无向图
 /**
- * 初始，如果v-w有边，dis[v][w]=vw；dis[v][v]=0，否则dis[v][w]=正无穷
+ * 初始，如果v-w有边，dis[Solution][w]=vw；dis[Solution][Solution]=0，否则dis[Solution][w]=正无穷
  *
  * 遍历所有的点对v-w，然后判断如果从v-w的路径上再多经过一个点t，得到的距离会不会比之前v-w的距离短
  *
- * 判断有没有负权环：只需要判断dis[v][v]是不是小于0即可，即自己到自己的距离是不是小于0，如果小于0，说明就有负权环
+ * 判断有没有负权环：只需要判断dis[Solution][Solution]是不是小于0即可，即自己到自己的距离是不是小于0，如果小于0，说明就有负权环
  * */
 public class Floyed {
     private WeightedGraph G;

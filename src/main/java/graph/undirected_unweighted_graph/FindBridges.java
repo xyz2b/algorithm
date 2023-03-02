@@ -7,8 +7,8 @@ public class FindBridges {
     private Graph G;
     private boolean[] visited;
 
-    // order[v]表示顶点v在DFS的访问顺序
-    // low[v]表示DFS过程中，顶点v能到达的最小order值
+    // order[Solution]表示顶点v在DFS的访问顺序
+    // low[Solution]表示DFS过程中，顶点v能到达的最小order值
     private int[] order;
     private int[] low;
     // 节点的oder值 == 当前遍历的节点数
@@ -44,9 +44,9 @@ public class FindBridges {
                     low[v] = low[w];
                 }
 
-                // 考察 v-w 的边，通过v的子节点w，可以到达比v的order值还小的节点，说明v-w这条边不是桥
+                // 考察 Solution-w 的边，通过v的子节点w，可以到达比v的order值还小的节点，说明v-w这条边不是桥
                 // 如果 通过v的子节点w，不能到达比v的order值还小的节点，即通过v的子节点w到达不了v的祖先节点，说明v-w这个边就是桥
-                if(low[w] > order[v]) { // v-w边是桥
+                if(low[w] > order[v]) { // Solution-w边是桥
                     res.add(new Edge(v, w));
                 }
             } else if (w != parent) { // visited[w]，说明有环了，所以v-w边不可能是桥

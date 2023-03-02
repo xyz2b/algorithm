@@ -7,7 +7,7 @@ import java.util.Collections;
 // 同无向图
 /**
  * 松弛操作（Relaxation）
- * 假设dis[v]是从s到v的 经过边数不超过k的最短距离
+ * 假设dis[Solution]是从s到v的 经过边数不超过k的最短距离
  *  if(dis[a] + ab < dis[b])
  *      dis[b] = dis[a] + ab
  * 找到从s到b的经过边数不超过k+1的最短距离

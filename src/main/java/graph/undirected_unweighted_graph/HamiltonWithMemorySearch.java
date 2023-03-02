@@ -10,7 +10,7 @@ public class HamiltonWithMemorySearch {
 
     private int start, end;
 
-    // 记住(visited, v)这个二元组对应的值
+    // 记住(visited, Solution)这个二元组对应的值
     // 该题中记忆的是 以v为顶点 且visited 所对应的 HamiltonPath 的数量
     private int[][] memo;
 
@@ -51,7 +51,7 @@ public class HamiltonWithMemorySearch {
     }
 
     private int dfs(int v, int visited, int left) {
-        // 二元组(visited, v)已经出现过了，说明之前遍历过了，直接返回即可
+        // 二元组(visited, Solution)已经出现过了，说明之前遍历过了，直接返回即可
         if(memo[visited][v] != -1) return memo[visited][v];
 
         int x = v / C, y = v % C;

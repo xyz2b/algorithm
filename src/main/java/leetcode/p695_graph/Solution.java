@@ -8,8 +8,8 @@ import java.util.HashSet;
  * (x,y) -> x*C+y
  *
  * 一维->二维
- * v -> x = v/C
- *      y = v%C
+ * Solution -> x = Solution/C
+ *      y = Solution%C
  * C为二维的列数 data[0].length
  *
  * 四联通

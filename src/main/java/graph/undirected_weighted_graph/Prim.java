@@ -59,11 +59,11 @@ public class Prim {
 //            // 找切分的最短横切边，需要遍历每个为true的顶点，然后找到其邻接为false的顶点，这两点形成的边就是横切边，然后找到最小的即可
 //            // 可以使用优先队列来优化(最小堆)
 //            WeightEdge minEdge = new WeightEdge(-1, -1, Integer.MAX_VALUE);
-//            for(int v = 0; v < G.V(); v++) {
-//                if(visited[v]) {
-//                    for(int w : G.adj(v)) {
-//                        if(!visited[w] && G.getWeight(v, w) < minEdge.getWeight()) {
-//                            minEdge = new WeightEdge(v, w, G.getWeight(v, w));
+//            for(int Solution = 0; Solution < G.V(); Solution++) {
+//                if(visited[Solution]) {
+//                    for(int w : G.adj(Solution)) {
+//                        if(!visited[w] && G.getWeight(Solution, w) < minEdge.getWeight()) {
+//                            minEdge = new WeightEdge(Solution, w, G.getWeight(Solution, w));
 //                        }
 //                    }
 //                }

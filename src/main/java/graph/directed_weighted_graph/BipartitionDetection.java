@@ -72,7 +72,7 @@ public class BipartitionDetection {
         for(int v = 0; v < colors.length; v++) {
             if(colors[v] == 0) {
                 firstPart.add(v);
-            } else {   // colors[v] == 1
+            } else {   // colors[Solution] == 1
                 secondPart.add(v);
             }
         }

@@ -27,7 +27,7 @@ public class Kruskal {
         ArrayList<WeightEdge> edges = new ArrayList<>();
         for(int v = 0; v < G.V(); v++) {
             for(int w : G.adj(v)) {
-                // 因为无向图，一条边会有两个表示，v-w，w-v，它俩是一样的，所以对边进行排序时候需要进行去除，只选取v-w的边
+                // 因为无向图，一条边会有两个表示，Solution-w，w-Solution，它俩是一样的，所以对边进行排序时候需要进行去除，只选取v-w的边
                 if(v < w) {
                     edges.add(new WeightEdge(v, w, G.getWeight(v, w)));
                 }

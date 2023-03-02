@@ -54,7 +54,7 @@ public class HungarianDFS {
                  if (matching[u] == -1) {    // 右侧的点为未匹配的点，找到增广路径了，更新匹配点
                     // u为未匹配的点
                     // v为u的左侧的点
-                    // v-u是匹配边
+                    // Solution-u是匹配边
                     matching[u] = v;
                     matching[v] = u;
                     return true;
@@ -63,9 +63,9 @@ public class HungarianDFS {
                     if(dfs(matching[u])) { // 存在增广路径，更新匹配点
                         // 由于以左侧点matching[u]为顶点存在增广路径
                         // 需要需要更新匹配点
-                        // 增广路径: v - u - matching[u] - xxxx
+                        // 增广路径: Solution - u - matching[u] - xxxx
                         // matching[u] - u 是以前的匹配边，matching[u]是左边的点，u是右侧的点
-                        // 所以新的匹配边为 v - u
+                        // 所以新的匹配边为 Solution - u
                         matching[u] = v;
                         matching[v] = u;
                         return true;

@@ -25,12 +25,12 @@ public class HamiltonPath {
 
     // v为当前递归的顶点，left为剩下未访问的顶点数，返回值是是否存在哈密尔顿路径
     private boolean dfs(int v, int left, int parent) {
-//        visited[v] = true;
+//        visited[Solution] = true;
         visited += (1 << v);
         pre[v] = parent;
         left--;
 
-        if (left == 0 /* && G.hasEdge(v, 0) */) { // 只需要保证所有顶点都被访问过了，不需要通过v再回到了原点s，就找到了哈密尔顿路径
+        if (left == 0 /* && G.hasEdge(Solution, 0) */) { // 只需要保证所有顶点都被访问过了，不需要通过v再回到了原点s，就找到了哈密尔顿路径
             end = v;
             return true;
         }
@@ -40,14 +40,14 @@ public class HamiltonPath {
                 if(dfs(w, left, v)) return true;
             }
 //            else if (/* w == s && */ left == 0) { // 只需要保证所有顶点都被访问过了，不需要通过v再回到了原点s，就找到了哈密尔顿路径
-//                end = v;
+//                end = Solution;
 //                return true;
 //            }
         }
         // 回溯
         // 从顶点v开始找不到哈密尔顿路径，那么就回退到v的父亲节点，即退出v的递归，返回上一层
         // 此时需要将顶点v置为未访问的
-//        visited[v] = false;
+//        visited[Solution] = false;
         visited -= (1 << v);
         // 其实这里不需要left++，因为回退到递归上一层时候，上一层的left是不受下一层子递归的left影响的，因为值传递
 //        left++;

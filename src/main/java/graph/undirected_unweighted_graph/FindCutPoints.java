@@ -7,8 +7,8 @@ public class FindCutPoints {
     private Graph G;
     private boolean[] visited;
 
-    // order[v]表示顶点v在DFS的访问顺序
-    // low[v]表示DFS过程中，顶点v能到达的最小order值
+    // order[Solution]表示顶点v在DFS的访问顺序
+    // low[Solution]表示DFS过程中，顶点v能到达的最小order值
     private int[] order;
     private int[] low;
     // 节点的oder值 == 当前遍历的节点数
@@ -46,7 +46,7 @@ public class FindCutPoints {
                     low[v] = low[w];
                 }
 
-                // 如果v有一个孩子节点w，满足low[w] >= order[v]，则v是割点
+                // 如果v有一个孩子节点w，满足low[w] >= order[Solution]，则v是割点
                 // 特殊情况：根节点 (v节点如果有父亲的话，它一定不是根节点)
                 if(v != parent && low[w] >= order[v]) {
                     res.add(v);
