@@ -110,9 +110,115 @@ public class Solution {
         return rst;
     }
 
+    // 简化逻辑，逻辑更清晰
+    public ListNode sortList2(ListNode head) {
+        if (head == null) {
+            return head;
+        }
+        int length = 0;
+        ListNode node = head;
+        // 计算链表节点数
+        while (node != null) {
+            length++;
+            node = node.next;
+        }
+
+        ListNode dummyHead = new ListNode(Integer.MIN_VALUE, head);
+        // 自底向上的归并排序
+        for (int sz = 1; sz < length; sz <<= 1) {
+            ListNode pre = dummyHead, cur = dummyHead.next;
+            while (cur != null) {
+                // 找到长度为sz的第一条链表list1
+                // 找到list1首位节点
+                // 首节点为cur
+                ListNode head1 = cur;
+                // list2尾结点为遍历sz个节点或者遍历到待排序链表结尾
+                for(int i = 1; i < sz; i++) {
+                    if(cur.next == null) {
+                        break;
+                    }
+                    cur = cur.next;
+                }
+                ListNode tail1 = cur;
+
+                // 找到相邻的长度为sz的第二条链表list2
+                // 找到list2首位节点
+                // 首节点为上一个子链表尾结点的next
+                ListNode head2 = tail1.next;
+
+                // 断开list1和后面节点的连接
+                tail1.next = null;
+
+                cur = head2;
+                // 找到list2尾结点
+                for(int i = 1; i < sz; i++) {
+                    // 可能list2本身就是空的
+                    if(cur == null || cur.next == null) {
+                        break;
+                    }
+                    cur = cur.next;
+                }
+                ListNode tail2 = cur;
+
+                // list2不为空的情况，list2为空就是遍历到待排序链表的末尾了，不需要继续遍历了
+                if(tail2 != null) {
+                    // 下一个待遍历子链表的首节点
+                    ListNode next = tail2.next;
+                    // cur需要更新为
+                    cur = next;
+
+                    // 断开list2和后面节点的连接
+                    tail2.next = null;
+                }
+
+                // merge两条链表，然后将merge后的新链表，连接到pre后面
+                ListNode merged = mergeTwoLists(head1, head2);
+                pre.next = merged;
+
+                // 找到merge之后的新链表尾部，即下一个待遍历的子链表的pre节点
+                while (pre.next != null) {
+                    pre = pre.next;
+                }
+            }
+        }
+
+        ListNode rst = dummyHead.next;
+        dummyHead.next = null;
+        return rst;
+    }
+
+    private ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode dummyHead = new ListNode();
+        ListNode rstCur = dummyHead;
+
+        ListNode cur1 = list1;
+        ListNode cur2 = list2;
+
+        while (cur1 != null || cur2 != null) {
+            int cur1Value = cur1 != null ? cur1.val : Integer.MAX_VALUE;
+            int cur2Value = cur2 != null ? cur2.val : Integer.MAX_VALUE;
+
+            if(cur1Value <= cur2Value) {
+                rstCur.next = cur1;
+                rstCur = cur1;
+
+                if(cur1 != null) cur1 = cur1.next;
+            } else {
+                rstCur.next = cur2;
+                rstCur = cur2;
+
+                if(cur2 != null) cur2 = cur2.next;
+            }
+        }
+
+        ListNode rst = dummyHead.next;
+        dummyHead.next = null;
+        return rst;
+    }
+
     public static void main(String[] args) {
         ListNode head = LinkedList.createLinkedList(new int[] {-1,5,3,4,0});
         Solution solution = new Solution();
-        System.out.println(LinkedList.linkedListToString(solution.sortList(head)));
+        System.out.println(LinkedList.linkedListToString(solution.sortList2(head)));
     }
 }
