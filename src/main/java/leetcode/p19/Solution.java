@@ -4,6 +4,7 @@ import leetcode.p206.ListNode;
 import leetcode.p206.LinkedList;
 
 public class Solution {
+    // 链表中删除一个节点，要知道待删除节点的前一个节点，对于头结点就需要设立一个虚拟头结点，方便操作
     // 双指针
     // 找到和left指针(初始为虚拟头指针)差距为n的节点，然后在此设立一个指针，叫right指针
     // 然后共同往后移动left指针和right指针，当right指针指向节点的下一个节点为null时，即遍历到了链表尾部，left指针此时指向链表倒数第n个节点的前一个节点
