@@ -67,7 +67,40 @@ public class Solution {
 
         // 最终路径为/的情况，此时stack是空的，不忘栈中压入一个空字符串，最后得到的字符串是空，而不是/
         if(stack.isEmpty()) {
-            stack.push("");
+            stack.offerLast("");
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.append("/");
+            sb.append(stack.pollFirst());
+        }
+        return sb.toString();
+    }
+
+    // 先用'/'分割
+    public String simplifyPath2(String path) {
+        String[] names = path.split("/");
+        Deque<String> stack = new ArrayDeque<String>();
+
+        for(String name : names) {
+            if("..".equals(name)) {
+                // ..，从栈中弹出前一个目录，丢弃，如果栈为空，则不做操作
+                if(!stack.isEmpty()) {
+                    stack.pollLast();
+                }
+            } else if (".".equals(name)) {
+                // .不做任何操作
+            } else if(name.length() > 0){    // 普通字符串，分割出来的可能有""字符串，需要考虑一下
+                stack.offerLast(name);
+            } else {    // 空字符串不做任何操作，略过
+
+            }
+        }
+
+        // 最终路径为/的情况，此时stack是空的，不忘栈中压入一个空字符串，最后得到的字符串是空，而不是/
+        if(stack.isEmpty()) {
+            stack.offerLast("");
         }
 
         StringBuilder sb = new StringBuilder();
