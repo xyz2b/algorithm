@@ -20,4 +20,39 @@ public class Solution {
         rst.add(node.val);
         inorder(node.right, rst);
     }
+
+    // 非递归
+    public List<Integer> inorderTraversal2(TreeNode root) {
+        List<Integer> rst = new ArrayList<>();
+        if (root == null) return rst;
+
+        Stack<Command> stack = new Stack<>();
+        stack.push(new Command(Command.CMD_GO, root));
+        while (!stack.isEmpty()) {
+            Command cmd = stack.pop();
+
+            if(cmd.cmd == Command.CMD_PRINT) {
+                rst.add(cmd.node.val);
+            } else { // cmd.cmd == Command.CMD_GO
+                if(cmd.node.right != null) stack.push(new Command(Command.CMD_GO, cmd.node.right));
+                stack.push(new Command(Command.CMD_PRINT, cmd.node));
+                if(cmd.node.left != null) stack.push(new Command(Command.CMD_GO, cmd.node.left));
+            }
+        }
+
+        return rst;
+    }
+}
+
+class Command {
+    public static final int CMD_PRINT = 0;
+    public static final int CMD_GO = 1;
+
+    int cmd;
+    TreeNode node;
+
+    public Command(int cmd, TreeNode node) {
+        this.cmd = cmd;
+        this.node = node;
+    }
 }
