@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// 最小堆，堆中的每个节点的值都小于其所有的子节点的值（完全二叉树）
 public class MinHeap{
 
     private List<Integer> data;
