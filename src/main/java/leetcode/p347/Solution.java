@@ -12,31 +12,29 @@ public class Solution {
         }
 
         // 优先队列，最小堆，前k大元素
-        Queue<Map.Entry<Integer, Integer>> entries = new PriorityQueue<>(k, (Map.Entry<Integer, Integer> entry1, Map.Entry<Integer, Integer> entry2) -> {
+        Queue<Map.Entry<Integer, Integer>> pq = new PriorityQueue<>(k, (Map.Entry<Integer, Integer> entry1, Map.Entry<Integer, Integer> entry2) -> {
             int count1 = entry1.getValue();
             int count2 = entry2.getValue();
             return count1 - count2;
         });
 
-        int index = 0;
         for(Map.Entry<Integer, Integer> entry : freq.entrySet()) {
-            if(index < k) {
-                entries.add(entry);
-            } else {
-                Map.Entry<Integer, Integer> minEntry = entries.peek();
+            if(pq.size() == k) {   // 优先队列中已经有k个元素了，就需要挤掉一个元素
+                Map.Entry<Integer, Integer> minEntry = pq.peek();
 
                 if(entry.getValue() > minEntry.getValue()) {    // 如果当前元素比堆顶元素大(比最小的大)，就把堆顶元素删除，将当前元素加入堆
-                    entries.poll();
-                    entries.add(entry);
+                    pq.poll();
+                    pq.add(entry);
                 }
+            } else {
+                pq.add(entry);
             }
-            index++;
         }
 
-        int[] rst = new int[entries.size()];
+        int[] rst = new int[pq.size()];
         int i = 0;
-        while (!entries.isEmpty()) {
-            Map.Entry<Integer, Integer> entry = entries.poll();
+        while (!pq.isEmpty()) {
+            Map.Entry<Integer, Integer> entry = pq.poll();
             rst[i] = entry.getKey();
             i++;
         }
