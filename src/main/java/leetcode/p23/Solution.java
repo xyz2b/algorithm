@@ -1,6 +1,7 @@
 package leetcode.p23;
 
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 class ListNode {
     int val;
@@ -13,43 +14,38 @@ class ListNode {
 // 最小堆解决merge K问题（合并k个有序数组）
 // 其实在归并排序法中，我们之前都是一次merge两个数组，其实也可以使用该方法一次merge k个数组
 public class Solution {
+    // 优先队列，最小堆
     public ListNode mergeKLists(ListNode[] lists) {
-        if(lists.length == 0) {
-            return null;
-        }
 
-        ListNode head = null;
-        ListNode tail = null;
+        Queue<ListNode> queue = new PriorityQueue<>((ListNode node1, ListNode node2) -> {
+            return node1.val - node2.val;
+        });
 
-        // 使用最小堆
-        // Java中的优先队列默认为最小堆
-        PriorityQueue<ListNode> priorityQueue = new PriorityQueue<>((x, y) -> x.val - y.val);
-
-        // lists中所有的链表第一个节点放入最小堆(不为空的节点)
-        for(int i = 0; i < lists.length; i++) {
-            if(lists[i] != null) {
-                priorityQueue.offer(lists[i]);
+        // 将多个链表的头都加入到队列中，注意过滤掉NULL的链表
+        for (ListNode list : lists) {
+            if (list != null) {
+                queue.add(list);
             }
         }
 
-        while (!priorityQueue.isEmpty()) {
-            // k个node中的取出最小node
-            ListNode listNode = priorityQueue.poll();
-            if(listNode.next != null) { // 如果取出的node next不为空，即表明它所在的链表还有节点，就将其下一个节点放入堆中
-                priorityQueue.offer(listNode.next);
-                listNode.next = null;   // 注意别忘了这一步
+        ListNode dummyHead = new ListNode();
+        ListNode cur = dummyHead;
+        while (!queue.isEmpty()) {
+            // 拿出来的都是最小的node
+            ListNode node = queue.poll();
+            // 如果从队列中拿出的node.next不为空，继续加入队列
+            if(node.next != null) {
+                queue.add(node.next);
+                node.next = null; // 注意要断开当前node的next
             }
-            // 将取出的最小node插入结果集的tail处
-            if(head == null) {
-                head = tail = listNode;
-            } else {
-                tail.next = listNode;
-                tail = listNode;
-            }
-
+            // 将当前node加入到结果集
+            cur.next = node;
+            cur = cur.next;
         }
 
-        return head;
+        ListNode rst = dummyHead.next;
+        dummyHead.next = null;
+        return rst;
     }
 
     public static void main(String[] args) {
