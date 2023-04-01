@@ -29,7 +29,8 @@ public class Solution {
     }
 
     // 自底向上的递归
-    // 返回以node为根的二叉树左右子树中的最大高度
+    // 返回以node为根的二叉树的最大高度
+    // 即 左子树和右子树中的最大高度+1(1是node节点本身)
     private int height2(TreeNode node) {
         if(node == null) return 0;
 
