@@ -4,6 +4,7 @@ import leetcode.p144.TreeNode;
 
 public class Solution {
     // 返回以root为根的二叉树的节点个数
+    // 计算普通二叉树节点数的方法
     public int countNodes(TreeNode root) {
         if(root == null) return 0;
 
@@ -14,6 +15,8 @@ public class Solution {
     }
 
     // 满二叉树的节点个数为 2 ^ h - 1，h为层数
+    // 计算完全二叉树节点数的方法
+    // 满二叉树就直接算出层数，然后2 ^ h - 1即可
     public int countNodes2(TreeNode root) {
         if(root == null){
             return 0;
@@ -28,6 +31,7 @@ public class Solution {
         }
     }
 
+    // 计算完全二叉树层数的方法，因为其是先填充左子树，再填充右子树，所以最后一层的左子树永远不为空
     private int countLevel(TreeNode root){
         int level = 0;
         while(root != null){
@@ -37,4 +41,11 @@ public class Solution {
         return level;
     }
 
+    // 计算普通二叉树层数的方法
+    private int countLevel2(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        return Math.max(countLevel(root.left),countLevel(root.right)) + 1;
+    }
 }
