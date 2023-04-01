@@ -20,4 +20,32 @@ public class Solution {
 
         return Math.max(left, right) + 1;
     }
+
+
+    private boolean isBalanced = true;
+    public boolean isBalanced2(TreeNode root) {
+        height2(root);
+        return isBalanced;
+    }
+
+    // 自底向上的递归
+    // 返回以node为根的二叉树左右子树中的最大高度
+    private int height2(TreeNode node) {
+        if(node == null) return 0;
+
+        int left = height2(node.left);
+        int right = height2(node.right);
+
+        if(Math.abs(left - right) >= 2) {
+            isBalanced = false;
+        }
+
+        return Math.max(left, right) + 1;
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(1, null, new TreeNode(2, new TreeNode(4), new TreeNode(3)));
+        Solution solution = new Solution();
+        System.out.println(solution.isBalanced2(root));
+    }
 }
