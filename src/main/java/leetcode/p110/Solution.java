@@ -29,15 +29,15 @@ public class Solution {
     }
 
     // 自底向上的递归
-    // 返回以node为根的二叉树的最大高度
-    // 即 左子树和右子树中的最大高度+1(1是node节点本身)
+    // 返回以node为根的二叉树的高度
+    // 即 左子树高度和右子树高度的最大值+1(1是node节点本身)
     private int height2(TreeNode node) {
         if(node == null) return 0;
 
         int left = height2(node.left);
         int right = height2(node.right);
 
-        if(Math.abs(left - right) >= 2) {
+        if(Math.abs(left - right) >= 2) {   // 在自底向上的遍历过程中，如果发现左右子树的高度差大于1，那就置位
             isBalanced = false;
         }
 
