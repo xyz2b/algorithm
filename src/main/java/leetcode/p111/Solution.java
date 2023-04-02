@@ -13,7 +13,7 @@ public class Solution {
         int leftDepth = minDepth(root.left);
         int rightDepth = minDepth(root.right);
 
-        if(leftDepth == 0 && rightDepth == 0) { // 左右深度都是0，是叶子节点
+        if(leftDepth == 0 && rightDepth == 0) { // 左右深度都是0，才是真正的叶子节点，真正的递归终止条件
             return 1;
         } else if(leftDepth == 0) { // 不是叶子节点
             return rightDepth + 1;
