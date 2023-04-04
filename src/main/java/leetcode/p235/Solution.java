@@ -54,9 +54,8 @@ public class Solution {
             return lowestCommonAncestor2(root.right, p, q);
         }  else if(p.val < root.val && q.val < root.val) {   // 两个节点的值都小于root.val，则最近公共祖先必定不是root，而是在root.left子树中
             return lowestCommonAncestor2(root.left, p, q);
-        } else { // 只要p和q不是同时大于或小于root，那么root就是它俩的最近公共祖先
+        } else { // 只要p和q不是同时大于或小于root，那么root就是它俩的最近公共祖先（因为p和q保证存在于二叉树中，不然的话还需要考虑不存在于二叉树的情况，需要return null）
             return root;
         }
     }
-
 }
