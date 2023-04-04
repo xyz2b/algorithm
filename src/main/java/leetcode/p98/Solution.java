@@ -65,8 +65,8 @@ public class Solution {
             return false;
         }
 
-        // 左子树的值应该小于node的值
-        // 右子树的值应该大于node的值
+        // 左子树的值应该小于node的值，大于lower
+        // 右子树的值应该大于node的值，小于upper
         return isValidBST(node.left, lower, node.val) && isValidBST(node.right, node.val, upper);
     }
 
