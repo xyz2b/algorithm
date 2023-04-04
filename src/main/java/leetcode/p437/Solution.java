@@ -11,7 +11,7 @@ public class Solution {
         pSum += findPath(root, targetSum);  // 以root为根的二叉树中，从根节点开始往下遍历，存在节点和等于targetSum的路径数量，路径中包含root
         // 如果findPath为0，说明root节点不在满足条件的路径中，就继续向其left和right节点看
 
-        // 递归调用，以二叉树中每个节点为根节点，判断这样的子二叉树中存在节点和等于targetSum的路径数量，root.left或root.right不一定在路径中
+        // 递归调用，以二叉树中每个节点为根节点，判断这样的子二叉树中存在节点和等于targetSum的路径数量，root.left或root.right不一定在路径中（此时root已经必然不在路径中了）
         pSum += pathSum(root.left, targetSum);
         pSum += pathSum(root.right, targetSum);
 
@@ -24,7 +24,7 @@ public class Solution {
         int pathCount = 0;
         if(node == null) return pathCount;
 
-        if(node.val == targetSum) { // 不能直接返回，还需要继续往下递归，可能下面还有节点和等于0的
+        if(node.val == targetSum) { // 不能直接返回，还需要继续往下递归，可能下面还有多个节点和等于0的，这样包含下面的多个节点所得到的和也是等于targetSum的，也是符合要求的路径
             pathCount += 1;
         }
 
