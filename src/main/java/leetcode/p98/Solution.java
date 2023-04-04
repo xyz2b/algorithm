@@ -48,6 +48,28 @@ public class Solution {
         return greater(node.left, target) && greater(node.right, target);
     }
 
+
+    // 如果该二叉树的左子树不为空，则左子树上所有节点的值均小于它的根节点的值；
+    // 若它的右子树不空，则右子树上所有节点的值均大于它的根节点的值；
+    // 它的左右子树也为二叉搜索树
+    public boolean isValidBST2(TreeNode root) {
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    // 以node为根的二叉树中，所有节点的值是否都在lower和upper之间
+    public boolean isValidBST(TreeNode node, long lower, long upper) {
+        if (node == null) {
+            return true;
+        }
+        if (node.val <= lower || node.val >= upper) {
+            return false;
+        }
+
+        // 左子树的值应该小于node的值
+        // 右子树的值应该大于node的值
+        return isValidBST(node.left, lower, node.val) && isValidBST(node.right, node.val, upper);
+    }
+
     public static void main(String[] args) {
         TreeNode root = new TreeNode(5, new TreeNode(1), new TreeNode(7, new TreeNode(6), new TreeNode(8)));
         Solution solution = new Solution();
