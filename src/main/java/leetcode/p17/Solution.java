@@ -3,7 +3,11 @@ package leetcode.p17;
 import java.util.*;
 
 public class Solution {
-    // 树型结构，递归
+    // 树形结构，递归
+    //                  2
+    //      a           b           c
+    //      3           3           3
+    //  d   e   f   d   e   f    d  e  f
     private Map<Character, List<String>> maps = new HashMap<>();
     private int length;
     public List<String> letterCombinations(String digits) {
