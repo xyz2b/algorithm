@@ -8,39 +8,66 @@ public class Solution {
     //      a           b           c
     //      3           3           3
     //  d   e   f   d   e   f    d  e  f
-    private Map<Character, List<String>> maps = new HashMap<>();
-    private int length;
     public List<String> letterCombinations(String digits) {
-        maps.put('2', new ArrayList<>(Arrays.asList("a", "b", "c")));
-        maps.put('3', new ArrayList<>(Arrays.asList("d", "e", "f")));
-        maps.put('4', new ArrayList<>(Arrays.asList("g", "h", "i")));
-        maps.put('5', new ArrayList<>(Arrays.asList("j", "k", "l")));
-        maps.put('6', new ArrayList<>(Arrays.asList("m", "n", "o")));
-        maps.put('7', new ArrayList<>(Arrays.asList("p", "q", "r", "s")));
-        maps.put('8', new ArrayList<>(Arrays.asList("t", "u", "v")));
-        maps.put('9', new ArrayList<>(Arrays.asList("w", "x", "y", "z")));
-        length = digits.length();
-
         return letter(digits, 0);
     }
 
-    // 返回从digits的index索引开始到结尾的数字对应的字母组合的列表
+    // 自底向上的递归
+    // 返回digits[index, digits.length()-1]翻译所得来的字母字符串列表
     private List<String> letter(String digits, int index) {
         List<String> rst = new ArrayList<>();
-        if(index >= length) return rst;
+        if(index == digits.length()) return rst;
 
-        for(String s : maps.get(digits.charAt(index))) {
+        char c = digits.charAt(index);
+        String letters = letterMap[c - '0'];
+        for(int i = 0; i < letters.length(); i++) {
             List<String> list = letter(digits, index + 1);
             if(list.size() > 0) {
                 for(String s1 : list) {
-                    rst.add(s + s1);
+                    rst.add(letters.charAt(i) + s1);
                 }
             } else {
-                rst.add(s);
+                rst.add(String.valueOf(letters.charAt(i)));
             }
-
         }
+
         return rst;
+    }
+
+    private List<String> rst = new ArrayList<>();
+    private static final String[] letterMap = new String[] {
+            "",
+            "",
+            "abc",
+            "def",
+            "ghi",
+            "jkl",
+            "mno",
+            "pqrs",
+            "tuv",
+            "wxyz"
+    };
+    public List<String> letterCombinations2(String digits) {
+        if(digits.equals("")) return rst;
+        letter2(digits, 0, "");
+        return rst;
+    }
+
+    // 自顶向下的递归
+    // s中保存了digits[0,index-1]翻译所得来的字母字符串
+    // 寻找和digits[index]匹配的字母，获得digits[0,index]翻译得到的解
+    private void letter2(String digits, int index, String s) {
+        if(index == digits.length()) {
+            rst.add(s);
+            return;
+        }
+
+        char c = digits.charAt(index);
+        String letters = letterMap[c - '0'];
+        for(int i = 0; i < letters.length(); i++) {
+            letter2(digits, index + 1, s + letters.charAt(i));
+        }
+        return;
     }
 
     public static void main(String[] args) {
