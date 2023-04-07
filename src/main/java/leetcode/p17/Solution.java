@@ -57,23 +57,27 @@ public class Solution {
     // s中保存了digits[0,index-1]翻译所得来的字母字符串
     // 寻找和digits[index]匹配的字母，获得digits[0,index]翻译得到的解
     private void letter2(String digits, int index, String s) {
+        System.out.println(index + " : " + s);
         if(index == digits.length()) {
             rst.add(s);
+            System.out.println("get " + s + ", return");
             return;
         }
 
         char c = digits.charAt(index);
         String letters = letterMap[c - '0'];
         for(int i = 0; i < letters.length(); i++) {
+            System.out.println("digits[" + index + "] = " + c + ", use " +  letters.charAt(i));
             letter2(digits, index + 1, s + letters.charAt(i));
         }
+        System.out.println("digits[" + index + "] = " + c + " complete, return");
         return;
     }
 
     public static void main(String[] args) {
-        String digits = "2";
+        String digits = "234";
         Solution solution = new Solution();
-        for(String s : solution.letterCombinations(digits)) {
+        for(String s : solution.letterCombinations2(digits)) {
             System.out.println(s);
         }
     }
