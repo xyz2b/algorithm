@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Solution {
+    // 暴力解法，遍历所有可能
     private List<String> rst = new ArrayList<>();
     public List<String> restoreIpAddresses(String s) {
         if(s.equals("")) return rst;

@@ -3,6 +3,7 @@ package leetcode.p17;
 import java.util.*;
 
 public class Solution {
+    // 暴力解法，遍历所有可能
     // 树形结构，递归
     //                  2
     //      a           b           c
