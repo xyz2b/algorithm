@@ -40,6 +40,29 @@ public class Solution {
         return;
     }
 
+
+    public List<List<Integer>> combine2(int n, int k) {
+        combine2(n, k, 1, new ArrayList<>());
+        return rst;
+    }
+
+    // 求解C(n,k)，当前已经找到的组合存储在c中，需要从start开始搜索新的元素
+    private void combine2(int n, int k, int start, List<Integer> c) {
+        if(c.size() == k) {
+            rst.add(new ArrayList<>(c));
+            return;
+        }
+
+        for(int i = start; i <= n; i++) {
+            c.add(i);
+            // start之前包含start的元素已经遍历过了，不需要再遍历了，存在start之前包含start元素的组合已经都尝试过了，所以在下一次寻找过程中，只需要从i+1开始往后寻找
+            combine2(n, k, i + 1, c);
+            // 回溯
+            c.remove(c.size() - 1);
+        }
+        return;
+    }
+
     public static void main(String[] args) {
         int n = 1;
         int k = 1;
