@@ -22,7 +22,7 @@ public class Solution {
             return;
         }
 
-        // 记录下当前层遍历了哪些元素
+        // 记录下当前层遍历了哪些元素，为了后面一层遍历完之后回溯used状态
         List<Integer> curLevelNums = new ArrayList<>();
         for(int i = 1; i <= n; i++) {
             if(!used[i - 1]) {
@@ -33,7 +33,7 @@ public class Solution {
                 p.remove(p.size() - 1);
             }
         }
-        // 整个一层遍历完了，再回溯used状态
+        // 整个一层遍历完了，再回溯这一层遍历过的元素的used状态
         for(int i : curLevelNums) {
             used[i - 1] = false;
         }
