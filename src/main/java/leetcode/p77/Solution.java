@@ -53,7 +53,10 @@ public class Solution {
             return;
         }
 
-        for(int i = start; i <= n; i++) {
+        // 回溯法的剪枝
+        // c中还有k - c.size()个空位，所以[i,n]中至少要有k - c.size()个元素
+        // i最多为 n - (k - c.size()) + 1
+        for(int i = start; i <= n - (k - c.size()) + 1; i++) {
             c.add(i);
             // start之前包含start的元素已经遍历过了，不需要再遍历了，存在start之前包含start元素的组合已经都尝试过了，所以在下一次寻找过程中，只需要从i+1开始往后寻找
             combine2(n, k, i + 1, c);
