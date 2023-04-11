@@ -15,6 +15,7 @@ public class Solution {
     private void subsets(int[] nums, int startIndex, List<Integer> s) {
         rst.add(new ArrayList<>(s));
 
+        // 给出的数字集合中，无重复数字
         for(int i = startIndex; i < nums.length; i++) {
             s.add(nums[i]);
             subsets(nums, i + 1, s);
