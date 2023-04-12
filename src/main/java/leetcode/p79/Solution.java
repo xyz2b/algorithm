@@ -10,9 +10,8 @@ public class Solution {
     private int R;
     private int C;
 
-    private int[][] dirs = {{1,0},{-1,0},{0,1},{0,-1}};
+    private int[][] dirs = {{-1,0},{0,1},{1,0},{0,-1}};
 
-    private boolean rst;
 
     public boolean exist(char[][] board, String word) {
         this.board = board;
@@ -22,29 +21,56 @@ public class Solution {
         C = board[0].length;
         visited = new boolean[R][C];
 
-        dfs(0, 0, new ArrayList<>());
-        return rst;
+        for(int i = 0; i < R; i++) {
+            for(int j = 0; j < C; j++) {
+                if(dfs(i, j, 0))
+                    return true;
+            }
+        }
+        return false;
     }
 
-    // 返回board[x,y]
-    private void dfs(int x, int y, List<Character> s) {
-        visited[x][y] = true;
+    // 从board[x][y]开始，寻找word[index,word.length()]
+    private boolean dfs(int x, int y, int index) {
         char c = board[x][y];
-        if(c == word[s.size()]) {
-            s.add(board[x][y]);
+
+        // 字符不等，直接返回false
+        if(c != word[index]) {
+            return false;
         }
 
+        // 如果遍历到了word最后，所有字符都相等，返回true
+        if(index == word.length - 1) {
+            return true;
+        }
+
+        visited[x][y] = true;
         for(int d = 0; d < dirs.length; d++) {
             int nextx = x + dirs[d][0];
             int nexty = y + dirs[d][1];
 
-            dfs(nextx, nexty, s);
+            // 在区域内，同时又没有被访问过
+            if(inArea(nextx, nexty) && !visited[nextx][nexty]) {
+                if(dfs(nextx, nexty, index + 1)) {
+                    return true;
+                }
+            }
         }
+        // 回溯
+        // (x, y)此时需要回溯成未访问状态
+        visited[x][y] = false;
 
+        return false;
     }
 
     private boolean inArea(int x, int y) {
         return x >= 0 && x < R && y >= 0 && y < C;
     }
 
+    public static void main(String[] args) {
+        char[][] board = new char[][]{{'A','B','C','E'},{'S','F','C','S'},{'A','D','E','E'}};
+        String word = "ABCCED";
+        Solution solution = new Solution();
+        System.out.println(solution.exist(board,word));
+    }
 }
