@@ -14,9 +14,9 @@ public class Solution {
     }
 
     // 目前已经亮了num个灯，这些灯所表示的小时数为h，分钟数为m
-    // 继续从start开始搜寻下一个亮的灯(最终使得亮灯数等于turnedOn)，然后计算所有亮着的灯所表示的时间
+    // 继续从start(binary数组的索引)开始搜寻下一个亮的灯(最终使得亮灯数等于turnedOn)。搜寻到需要亮的灯(可能是小时灯，也可能是分钟等，看在binary中的索引位置)，然后将其对应的时间累加到h或m上
     private void readBinaryWatch(int turnedOn, int start, int num, int h, int m) {
-        // 因为小时在0-11之间，分钟在0-59之间，递归终止条件一
+        // 递归终止条件一: 小时在0-11之间，分钟在0-59之间
         if(h > 11 || m > 59) {
             return;
         }
