@@ -6,6 +6,7 @@ public class Solution {
     private char[][] grid;
     private int R;
     private int C;
+    // 有可能题目中对搜索顺序比较敏感，比如要求顺时针，逆时针等，那么这里的dirs数组的元素要按照对应的搜索顺序进行设置
     private int[][] dirs = {{1,0},{-1,0},{0,1},{0,-1}};
 
     public int numIslands(char[][] grid) {
