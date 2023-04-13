@@ -31,6 +31,8 @@ public class Solution {
         return ccCount;
     }
 
+    // 从grid[x][y]的位置开始，进行floodfill
+    // 保证(x,y)合法，且grid[x][y]是没有被访问过的陆地，递归终止条件被融入了if语句中
     private void dfs(int x, int y) {
         visited[x][y] = true;
 
