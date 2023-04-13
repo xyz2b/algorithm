@@ -56,6 +56,7 @@ public class Solution {
 
         int[] space = spaces.get(index);
         int i = space[0], j = space[1];
+        // valid起到剪枝作用，找到了解，就不需要再继续遍历下去了，直接返回即可
         for(char c = '1'; c <= '9' && !valid; c++) {
             if(!row[c - '1'][i] && !col[c - '1'][j] && !palace[c - '1'][(i/3)*(R/3) + (j/3)]) {
                 board[i][j] = c;
@@ -66,6 +67,7 @@ public class Solution {
                 row[c - '1'][i] = false;
                 col[c - '1'][j] = false;
                 palace[c - '1'][(i/3)*(R/3) + (j/3)] = false;
+                // 这里不需要回溯，因为如果当前遍历的c不能放置在(i,j)位置，putNum会返回，然后会继续循环遍历下一个c，如果下一个c能够放置在该位置，会覆盖掉之前该位置设置的上一个遍历的c（board[i][j] = c）
 //                board[i][j] = '.';
             }
         }
