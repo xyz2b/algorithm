@@ -20,6 +20,7 @@ public class Solution {
 
     // 尝试在一个N皇后问题中，摆放第index行的皇后位置之后解的数量
     // 返回摆放index行到n-1行皇后位置之后符合要求的解的数量
+    // 要求解摆放0行到n-1行皇后位置之后解的数量，就要求解摆放1到n-1行皇后位置之后解的数量，依次类推
     private int putQueen(int n, int index) {
         int count = 0;
         if(n == index) {
