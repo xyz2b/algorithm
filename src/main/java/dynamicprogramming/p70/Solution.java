@@ -5,8 +5,8 @@ public class Solution {
         if(n == 0) {
             return 1;
         }
-        if(n < 0) {
-            return 0;
+        if(n == 1) {
+            return 1;
         }
 
         // 走到n-1和走到n-2有多少种方法(退一步和退两步)
@@ -28,8 +28,8 @@ public class Solution {
         if(n == 0) {
             return 1;
         }
-        if(n < 0) {
-            return 0;
+        if(n == 1) {
+            return 1;
         }
 
         if(memo[n] == 0) {
@@ -40,14 +40,13 @@ public class Solution {
         return memo[n];
     }
 
-    // 动态规划 - 自下而上
     public int climbStairs3(int n) {
         memo = new int[n+1];
 
         return climb3(n);
     }
 
-    // 记忆化搜索 - 自上而下
+    // 动态规划 - 自下而上
     private int climb3(int n) {
         memo[0] = 1;
         memo[1] = 1;
