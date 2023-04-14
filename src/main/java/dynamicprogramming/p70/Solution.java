@@ -54,10 +54,6 @@ public class Solution {
         return memo[n];
     }
 
-    private int climb3(int n) {
-
-    }
-
     public static void main(String[] args) {
         Solution solution = new Solution();
         System.out.println(solution.climbStairs(3));
