@@ -40,14 +40,9 @@ public class Solution {
         return memo[n];
     }
 
+    // 动态规划 - 自下而上
     public int climbStairs3(int n) {
         memo = new int[n+1];
-
-        return climb3(n);
-    }
-
-    // 动态规划 - 自下而上
-    private int climb3(int n) {
         memo[0] = 1;
         memo[1] = 1;
 
@@ -57,6 +52,10 @@ public class Solution {
         }
 
         return memo[n];
+    }
+
+    private int climb3(int n) {
+
     }
 
     public static void main(String[] args) {
