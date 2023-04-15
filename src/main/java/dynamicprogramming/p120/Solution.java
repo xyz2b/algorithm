@@ -25,7 +25,7 @@ public class Solution {
     }
 
     // 记忆搜索 - 自上而下
-    // 返回第index层，第i个元素的最小路径和
+    // 返回从(index,i)到达最后一层的最小路径和
     private int min(int index, int i) {
         if(index == triangle.size()) {
             return 0;
@@ -59,7 +59,7 @@ public class Solution {
             memo.add(l);
         }
 
-        // (index, i)的最小和路径等于 (index + 1, i)最小路径和 与 (index + 1, i + 1)最小路径和中的较小值 + (index, i)的值
+        // (index, i)到达最后一层的最小和路径等于 (index + 1, i)最小路径和 与 (index + 1, i + 1)最小路径和中的较小值 + (index, i)的值
         for(int i = triangle.size() - 2; i >= 0; i--) {
             for(int j = 0; j < triangle.get(i).size(); j++) {
                 int min = Math.min(memo.get(i + 1).get(j), memo.get(i + 1).get(j + 1));

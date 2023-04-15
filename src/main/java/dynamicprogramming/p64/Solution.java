@@ -18,6 +18,7 @@ public class Solution {
     }
 
     // 记忆化搜索 - 自上而下
+    // 返回到达从(x,y)到达(R-1,C-1)的最小路径和
     private int dfs(int x, int y) {
         // 到达终点
         if(x == R - 1 && y == C - 1) {
@@ -60,6 +61,8 @@ public class Solution {
 
         memo[0][0] = grid[0][0];
 
+        // (0,0)到达(i, j)的最小和路径等于 (i - 1, j)最小路径和 与 (i, j - 1)最小路径和中的较小值 + (i, j)的值
+        // (i - 1, j) 和 (i, j - 1) 需要去除越界的情况
         for(int i = 0; i < R; i++) {
             for(int j = 0; j < C; j++) {
                 if(i == 0 && j == 0) continue;
