@@ -73,8 +73,8 @@ public class Solution {
         int[] memo = new int[s.length() + 1];
 
         // 求解s[0, s.length() - 1]的解码方法数量 = s[1, s.length() - 1] 和 s[2, s.length() - 2]的解码方法数量之和，当然是有条件的
-        // s[0]不能为0，后面s[1, s.length() - 1] 和 s[2, s.length() - 2]才能成功解码
-        // s[1, 2]不能大于26，后面s[2, s.length() - 2]才能成功解码
+        // s[0]不能为0能成功解码，才会进行后面s[1, s.length() - 1] 和 s[2, s.length() - 2]的解码
+        // s[1, 2]不能大于26才能成功解码，才会进行后面s[2, s.length() - 2]的解码
         if(s.charAt(s.length() - 1) != '0') {
             memo[s.length() - 1] = 1;
         }
