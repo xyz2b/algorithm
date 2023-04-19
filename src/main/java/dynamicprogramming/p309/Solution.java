@@ -30,6 +30,8 @@ public class Solution {
     }
 
     // 记忆化搜索
+    // memo(0, i) 考虑(i, n - 1)卖出操作最大利益
+    // memo(1, i) 考虑(i, n - 1)买入操作最大利益
     private int[][] memo;
     public int maxProfit2(int[] prices) {
         if(prices.length <= 1) return 0;
