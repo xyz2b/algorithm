@@ -1,40 +1,76 @@
 package dynamicprogramming.p309;
 
-import java.io.LineNumberReader;
+
+import java.util.Arrays;
 
 public class Solution {
+    // 暴力解法
     public int maxProfit(int[] prices) {
-        return dfs(prices, 0, 1);
+        if(prices.length <= 1) return 0;
+        return dfs(prices, 0, false);
     }
 
-    private int dfs(int[] prices, int day, int status) {
+    // 尝试在[day, n-1]中进行买卖操作，获取最大利益
+    // hold表示当前是否持有股票
+    private int dfs(int[] prices, int day, boolean hold) {
         if(day >= prices.length) {
             return 0;
         }
 
-        int rst = Integer.MIN_VALUE;
+        int rst = 0;
         for(int i = day; i < prices.length; i++) {
-            if(status == 0) { // 持有时候，只能卖和不做任何操作
-                // 卖，下一个状态冷冻
-                rst = Math.max(dfs(prices, day + 1, 2) + prices[day], rst);
-                // 不做任何操作，继续持有
-                rst = Math.max(dfs(prices, day + 1, status), rst);
-            } else if(status == 1) { // 非持有时候，只能买和不做任何操作
-                // 买
-                rst = Math.max(dfs(prices, day + 1, 1) - prices[day], rst);
-                // 不做任何操作
-                rst = Math.max(dfs(prices, day + 1, status), rst);
-            } else { // 冷冻期，不能做任何操作
-                rst = Math.max(dfs(prices, day + 1, status), rst);
+            if(hold) {  // 卖出
+                rst = Math.max(rst, dfs(prices, i + 2, false) + prices[i]);
+            } else {    // 买入
+                rst = Math.max(rst, dfs(prices, i + 1, true) - prices[i]);
             }
         }
 
         return rst;
     }
 
+    // 记忆化搜索
+    private int[][] memo;
+    public int maxProfit2(int[] prices) {
+        if(prices.length <= 1) return 0;
+        memo = new int[2][prices.length];
+
+        return dfs2(prices, 0, false);
+    }
+
+    // 尝试在[day, n-1]中进行买卖操作，获取最大利益
+    // hold表示当前是否持有股票
+    private int dfs2(int[] prices, int day, boolean hold) {
+        if(day >= prices.length) {
+            return 0;
+        }
+
+        if(hold && memo[0][day] != 0) {
+            return memo[0][day];
+        }
+
+        if(!hold && memo[1][day] != 0) {
+            return memo[1][day];
+        }
+
+        for(int i = day; i < prices.length; i++) {
+            if(hold) {  // 卖出
+                memo[0][day] = Math.max(memo[0][day], dfs2(prices, i + 2, false) + prices[i]);
+            } else {    // 买入
+                memo[1][day] = Math.max(memo[1][day], dfs2(prices, i + 1, true) - prices[i]);
+            }
+        }
+
+        if(hold) {
+            return memo[0][day];
+        } else {
+            return memo[1][day];
+        }
+    }
+
     public static void main(String[] args) {
         int[] prices = {1,2,3,0,2};
         Solution solution = new Solution();
-        System.out.println(solution.maxProfit(prices));
+        System.out.println(solution.maxProfit2(prices));
     }
 }
