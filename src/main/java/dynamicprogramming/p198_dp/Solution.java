@@ -1,4 +1,4 @@
-package dynamicprogramming.p198;
+package dynamicprogramming.p198_dp;
 
 import java.util.Arrays;
 
@@ -67,6 +67,8 @@ public class Solution {
 
      状态就是定义了这个函数要做什么
      而状态转移就是定义了这个函数要怎么做
+
+     通常函数的参数个数意味着要解决这个问题所要满足的约束条件个数
      **/
     public int rob3(int[] nums) {
         if(nums.length == 0) return 0;
