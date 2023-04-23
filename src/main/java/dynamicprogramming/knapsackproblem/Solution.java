@@ -44,6 +44,9 @@ public class Solution {
             return memo[index][c];
         }
 
+        // 考虑将[0, index]范围内的物品放进容量为c的背包的最大价值
+        // 情况一: 考虑将[0, index-1]范围内的物品放进容量为c的背包的最大价值（丢弃index物品）
+        // 情况二：考虑将[0, index-1]范围内的物品放进容量为c - w[index]的背包的最大价值（将index物品放入背包如果能放进去的话(c >= w[index])）
         int res = knapsack01(index - 1, c);
         if(c >= w[index]) {
             res = Math.max(res, knapsack01(index - 1, c - w[index]) + v[index]);
