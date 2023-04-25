@@ -105,4 +105,30 @@ public class Solution {
 
         return memo[(n - 1) % 2][C];
     }
+
+
+    // 动态规划 - 优化空间2
+    // F(i,c) = max{F(i-1,c), v(i) + F(i-1,c-w(i))}
+    // 因为求解第i行，永远只使用到了第i-1行和第i行同列的元素以及同列左侧的第w[0...n]-w[i]个元素，永远不会使用同列右侧的元素，
+    //      所以可以只使用一行空间，然后从右至左的刷新这一行
+    public int knapsack0104(int[] w, int[] v, int C) {
+        int n = w.length;
+        int[] memo = new int[C+1];
+        Arrays.fill(memo, -1);
+
+        // 基本问题，将第0号物品放入容量为c的背包中的最大价值
+        for(int c = 0; c <= C; c++) {
+            memo[c] = c >= w[0] ? v[0] : 0;
+        }
+
+        for(int index = 1; index < n; index++) {
+            for(int c = C; c >= w[index]; c--) {
+                // 考虑将[0, index]范围内的物品放进容量为c的背包的最大价值
+                // 由于memo物理上只有2行，所以逻辑上第index行应该对应到物理上memo的第index%2行
+                memo[c] = Math.max(memo[c], memo[c - w[index]] + v[index]);
+            }
+        }
+
+        return memo[C];
+    }
 }
