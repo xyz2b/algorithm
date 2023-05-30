@@ -44,7 +44,7 @@ public class Solution {
         int n = nums.length;
 
         memo = new int[n][sum/2 + 1];
-        // -1表示没有考虑过
+        // -1表示没有计算过这种情况
         // 1表示可以
         // 0表示不可以
         for(int i = 0; i < memo.length; i++) {
@@ -63,10 +63,8 @@ public class Solution {
             return false;
         }
 
-        if(memo[index][sum] == 0) {
-            return false;
-        } else if(memo[index][sum] == 1) {
-            return true;
+        if(memo[index][sum] == -1) {
+            return memo[index][sum] == 1;
         }
 
         // f(index, sum) = f(index-1,sum) || f(index-1, sum-nums[index])
@@ -108,7 +106,33 @@ public class Solution {
     }
 
 
+    // 动态规划 内存优化
+    public boolean canPartition4(int[] nums) {
+        if(nums.length == 0) {
+            return false;
+        }
+        int sum = Arrays.stream(nums).sum();
+        if(sum % 2 != 0) {
+            return false;
+        }
+        int n = nums.length;
 
+        sum = sum / 2;
+        boolean[] memo = new boolean[sum + 1];
+
+        for(int s = 0; s <= sum; s++) {
+            memo[s] = (nums[0] == s);
+        }
+
+        for(int index = 1; index < n; index++) {
+            // s >= nums[index] 提前终止
+            for(int s = sum; s >= nums[index]; s--) {
+                memo[s] = memo[s] || memo[s-nums[index]];
+            }
+        }
+
+        return memo[sum];
+    }
 
     public static void main(String[] args) {
         int[] nums = {1,1};
