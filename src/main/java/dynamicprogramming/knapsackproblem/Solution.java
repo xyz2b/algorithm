@@ -69,10 +69,13 @@ public class Solution {
             memo[0][c] = c >= w[0] ? v[0] : 0;
         }
 
-        for(int index = n - 1; index >= 0; index--) {
+        for(int index = 1; index < n; index++) {
             for(int c = 0; c <= C; c++) {
                 // 考虑将[0, index]范围内的物品放进容量为c的背包的最大价值
-                memo[index][c] = Math.max(memo[index - 1][c], c >= w[index] ? memo[index - 1][c - w[index]] + v[index] : -1);
+                memo[index][c] = memo[index - 1][c];
+                if(c >= w[index]) {
+                    memo[index][c] = Math.max(memo[index][c], memo[index - 1][c - w[index]] + v[index]);
+                }
             }
         }
 
