@@ -14,8 +14,8 @@ public class Solution {
      *
      * 状态转移函数，两种情况取最大值
      * F(i,c) = F(i-1,c) : 不考虑第i个物品(直接丢弃)，从i-1个物品开始考虑
-     *        = v(i) + F(i-1, c-w(i)) : 将第i个物品装进背包(价值为v(i),重量为w(i))，之后考虑的问题是 从第i-1个物品开始考虑将它们放进容量为c-w(i)的背包中，使得价值最大
-     * F(i,c) = max{F(i-1,c), v(i) + F(i-1,c-w(i))}
+     *        = Solution(i) + F(i-1, c-w(i)) : 将第i个物品装进背包(价值为v(i),重量为w(i))，之后考虑的问题是 从第i-1个物品开始考虑将它们放进容量为c-w(i)的背包中，使得价值最大
+     * F(i,c) = max{F(i-1,c), Solution(i) + F(i-1,c-w(i))}
      * */
     private int[] w;
     private int[] v;
@@ -83,7 +83,7 @@ public class Solution {
     }
 
     // 动态规划 - 优化空间
-    // F(i,c) = max{F(i-1,c), v(i) + F(i-1,c-w(i))}
+    // F(i,c) = max{F(i-1,c), Solution(i) + F(i-1,c-w(i))}
     // 求解第i行，只需要依赖第i-1行的数据即可，不需要前面的数据
     // 只需要两行即可，第一行永远在处理i为偶数的情况，第二行永远在处理i为奇数的情况
     public int knapsack0103(int[] w, int[] v, int C) {
@@ -111,7 +111,7 @@ public class Solution {
 
 
     // 动态规划 - 优化空间2
-    // F(i,c) = max{F(i-1,c), v(i) + F(i-1,c-w(i))}
+    // F(i,c) = max{F(i-1,c), Solution(i) + F(i-1,c-w(i))}
     // 因为求解第i行，永远只使用到了第i-1行和第i行同列的元素以及同列左侧的第w[0...n]-w[i]个元素，永远不会使用同列右侧的元素，
     //      所以可以只使用一行空间，然后从右至左的刷新这一行
     public int knapsack0104(int[] w, int[] v, int C) {

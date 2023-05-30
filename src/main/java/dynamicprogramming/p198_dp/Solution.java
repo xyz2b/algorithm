@@ -58,11 +58,11 @@ public class Solution {
      这两个状态是不一样的，可以理解成这两个递归函数的定义是不一样的
 
      根据对状态的定义，决定状态的转移
-     f(0) = max{v(0) + f(2), v(1) + f(3), v(2) + f(4), ..., v(n-3) + f(n-1), v(n-2), v(n-1) }    (状态转移方程)
+     f(0) = max{Solution(0) + f(2), Solution(1) + f(3), Solution(2) + f(4), ..., Solution(n-3) + f(n-1), Solution(n-2), Solution(n-1) }    (状态转移方程)
      f(0): 考虑偷取[0, n-1]范围里的所有房子所能获得的最大金钱
-     v(0): 取出0号房子的金钱
-     v(0) + f(2): 取出0号房子的金钱 + 考虑偷取[2, n-1]范围里的所有房子所能获得的最大金钱。
-     v(n-2) + f(n): 但是对于f(n)来说，[n,n-1]是个空集，没有意义
+     Solution(0): 取出0号房子的金钱
+     Solution(0) + f(2): 取出0号房子的金钱 + 考虑偷取[2, n-1]范围里的所有房子所能获得的最大金钱。
+     Solution(n-2) + f(n): 但是对于f(n)来说，[n,n-1]是个空集，没有意义
      max: 取{}里面所有情况的最大值，每种情况以逗号分隔
 
      状态就是定义了这个函数要做什么
@@ -81,7 +81,7 @@ public class Solution {
         memo[nums.length - 1] = nums[nums.length - 1];
 
         // 考虑偷取[i, n-1]范围里的房子，最大能够偷取多少钱。最终是求出[0, n-1]
-        // 状态转移方程: f(i) = max{v(i) + f(i+2), v(i+1) + f(i+1+2), v(i+2) + f(i+2+2), ..., v(n-3) + f(n-1), v(n-2), v(n-1) }
+        // 状态转移方程: f(i) = max{Solution(i) + f(i+2), Solution(i+1) + f(i+1+2), Solution(i+2) + f(i+2+2), ..., Solution(n-3) + f(n-1), Solution(n-2), Solution(n-1) }
         for(int i = nums.length - 2; i >= 0; i--) {
             // memo[i]
             for(int j = i; j < nums.length; j++) {
@@ -93,7 +93,7 @@ public class Solution {
     }
 
     // 改变对状态的定义: 考虑偷取[0, i]范围里的房子（递归函数的定义）。最终是求出[0, n-1]
-    // 状态转移方程: f(i) = max{v(0), v(1), v(2) + f(0), ..., v(i-1) + f(i-1-2), v(i) + f(i-2) }
+    // 状态转移方程: f(i) = max{Solution(0), Solution(1), Solution(2) + f(0), ..., Solution(i-1) + f(i-1-2), Solution(i) + f(i-2) }
     public int rob4(int[] nums) {
         // memo[i]表示考虑偷取nums[0, i]所能获得的最大收益
         memo = new int[nums.length];
@@ -130,7 +130,7 @@ public class Solution {
         memo[0] = nums[0];
 
         // 改变对状态的定义: 考虑偷取[0, i]范围里的房子（递归函数的定义）。最终是求出[0, n-1]
-        // 状态转移方程: f(i) = max{v(0), v(1), v(2) + f(0), ..., v(i-1) + f(i-1-2), v(i) + f(i-2) }
+        // 状态转移方程: f(i) = max{Solution(0), Solution(1), Solution(2) + f(0), ..., Solution(i-1) + f(i-1-2), Solution(i) + f(i-2) }
         for(int i = 1; i < nums.length; i++) {
             // memo[i]
             for(int j = i; j >= 0; j--) {
