@@ -69,8 +69,10 @@ public class Solution {
         int[] memo = new int[amount + 1];
         Arrays.fill(memo, -2);
 
+        // -2表示还未计算，-1表示面值不能正好凑够a，>=0的数值表示面值正好凑够a所需要的硬币最小数
         for(int a = 0; a <= amount; a++) {
             if(a == 0) {
+                // 总和等0，所需的硬币最小数为0个
                 memo[a] = 0;
             } else {
                 memo[a] = (c[0] == a) ? 1 : -1;
