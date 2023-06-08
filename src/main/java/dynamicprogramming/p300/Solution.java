@@ -24,6 +24,9 @@ import java.util.Arrays;
  * */
 public class Solution {
     public int lengthOfLIS(int[] nums) {
+        if(nums.length == 0) return 0;
+
+        // lis[i] 表示以 nums[i] 为结尾的最长上升子序列的长度
         int[] lis = new int[nums.length];
         Arrays.fill(lis, 1);
 
