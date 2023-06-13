@@ -2,7 +2,7 @@ package dynamicprogramming.longestCommonSequence;
 
 import java.util.Arrays;
 
-// LCS 最长公共子序列
+// LCS 最长公共子序列（子序列不需要连续）
 // 给出两个字符串S1和S2，求这两个字符串的最长公共子序列的长度
 // LCS(m, n): S1[0...m] 和 S2[0...n] 的最长公共子序列的长度
 //  S1[m] == S2[n]: LCS(m, n) = 1 + LCS(m-1,n-1)
