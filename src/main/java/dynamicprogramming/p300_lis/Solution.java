@@ -1,4 +1,4 @@
-package dynamicprogramming.p300;
+package dynamicprogramming.p300_lis;
 
 import java.util.Arrays;
 
