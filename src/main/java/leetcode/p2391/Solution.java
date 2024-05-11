@@ -46,6 +46,36 @@ public class Solution {
         return ret;
     }
 
+
+    // 因为每个房间的垃圾都要收集，所以收集所有房间的垃圾花费的时间就是所有房间各种垃圾的总数，仅需要总数即可
+    // 然后就是需要每种垃圾车到达每种垃圾最后出现的房间所需要的时间，这两种时间分开考虑
+    // 用hash表存储到达每种垃圾最后出现的位置所需要的时间，一次遍历即可
+    public int garbageCollection2(String[] garbage, int[] travel) {
+        int[] last = new int[3];
+
+        int ret = 0;
+        int cur = 0;    // 记录走到当前的房子需要花费的时间
+        for(int i = 0; i < garbage.length; i++) {
+            ret += garbage[i].length();
+
+            if(i > 0) {
+                cur += travel[i-1];
+            }
+
+            for(char c : garbage[i].toCharArray()) {
+                if(c == 'M') {
+                    last[0] = cur;
+                } else if(c == 'P') {
+                    last[1] = cur;
+                } else { // 'G'
+                    last[2] = cur;
+                }
+            }
+        }
+
+        return ret + Arrays.stream(last).sum();
+    }
+
     public static void main(String[] args) {
         String[] garbage = new String[]{"MMM","PGM","GP"};
         int[] travel = new int[]{3, 10};
