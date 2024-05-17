@@ -47,6 +47,41 @@ public class Solution {
         return ret;
     }
 
+    // 排序 + 双指针
+    /**
+     * 我们首先对工人按照能力大小排序，对工作按照难度排序。
+     * 我们使用「双指针」的方法，一个指针指向工人数组，一个指向任务数组，从低难度的任务开始遍历。
+     *      对于每个工人，我们继续遍历任务，直到难度大于其能力，并把可以完成任务中的最大利润更新到结果中。
+     * 最后返回所有工人能得到的利润总和。
+     * */
+    public int maxProfitAssignment2(int[] difficulty, int[] profit, int[] worker) {
+        // 按工作难度进行排序
+        int[][] dp = new int[difficulty.length][2];
+        for(int i = 0; i < difficulty.length; i++) {
+            int d = difficulty[i];
+            int p = profit[i];
+            dp[i] = new int[] {d, p};
+        }
+
+        // 前一个小于后一个为正 倒序，前一个大于后一个为正 正序
+        Arrays.sort(dp, (int[] o1, int[] o2) -> o1[0] - o2[0]);
+        Arrays.sort(worker);
+
+        int ret = 0;
+        int best = 0;
+        int d = 0;
+        // 双指针，一个指向排序后的worker数组，一个指向排序后的dp数组
+        for(int w = 0; w < worker.length; w++) {
+            while (d < difficulty.length && dp[d][0] <= worker[w]) {
+                best = Math.max(best, dp[d][1]);
+                d++;
+            }
+            ret += best;
+        }
+
+        return ret;
+    }
+
     public static void main(String[] args) {
         int[] difficulty = new int[] {68,35,52,47,86};
         int[] profit = new int[] {67,17,1,81,3};
