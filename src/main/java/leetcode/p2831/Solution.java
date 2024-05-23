@@ -21,7 +21,6 @@ public class Solution {
         // 滑动窗口
         for(List<Integer> pos : poses.values()) {
             // 可以利用滑动窗口的思路，只需枚举区间的右端点 j, 当区间[pos[i], pos[j]] 需要删除的元素大于 k 时我们再移动 i, 直到区间需要删除的元素小于等于 k
-            // 慢慢缩小范围，直到数组元素直接的间隔小于等于k
             // 左端点i 右端点j
             for(int j = 0, i = 0; j < pos.size(); j++) {
                 // pos.get(j) - pos.get(i) + 1就是相同元素中间总共有多少个元素
