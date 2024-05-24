@@ -23,6 +23,7 @@ public class Solution {
             stack.push(nums[i]);
         }
 
+        // 有可能有多余的元素要删掉
         while (stack.size() > k) {
             stack.pop();
         }
