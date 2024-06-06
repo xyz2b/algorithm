@@ -30,4 +30,22 @@ class Solution {
         }
         return ret;
     }
+
+    /**
+     * 贪心
+     * 交换完后的最终状态一定是形如 00001111，那么遍历字符串的时候每碰到一个 0 就贪心的将其往左交换直到它最终的位置。
+     * 在遍历到这个 0 时，因为它左边的 0 已经都交换到最终位置了，所以它的左边是一串连续的 1，那么只要加上遍历时碰到 1 的个数即可。
+     * */
+    public long minimumSteps1(String s) {
+        long ans = 0;
+        int sum = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '1') {
+                sum++;
+            } else {
+                ans += sum;
+            }
+        }
+        return ans;
+    }
 }
