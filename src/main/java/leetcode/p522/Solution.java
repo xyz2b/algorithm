@@ -3,6 +3,8 @@ package leetcode.p522;
 import java.util.Arrays;
 
 public class Solution {
+    // 一个字符串的子序列不是其他字符串的子序列，那么它本身也不是其他字符串的子序列，因为将其子序列加上其他字符也不可能是其他字符串的子序列
+    // 所以该题目可以直接判断哪个字符串不是其他字符串的子序列，然后找到最长的那个（遍历）
     public int findLUSlength(String[] strs) {
         int rst = -1;
         for(int i = 0; i < strs.length; i++) {
