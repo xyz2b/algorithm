@@ -16,7 +16,7 @@ public class Solution {
         for(List<String> account : accounts) {
             String name = account.get(0);
 
-            for(int i = 0; i < account.size(); i++) {
+            for(int i = 1; i < account.size(); i++) {
                 if(!emailToIndex.containsKey(account.get(i))) {
                     String email = account.get(i);
                     emailToIndex.put(email, emailCount++);
@@ -52,7 +52,7 @@ public class Solution {
             List<String> account = new ArrayList<>();
             account.add(name);
             account.addAll(emails);
-            merged.addAll(accounts);
+            merged.add(account);
         }
         return merged;
     }
