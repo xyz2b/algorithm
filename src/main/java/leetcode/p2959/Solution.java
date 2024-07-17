@@ -18,8 +18,7 @@ public class Solution {
             }
 
             for(int i = 0; i < n; i++) {
-                // 不能设置为Integer.MAX_VALUE，因为之后的加法运算会溢出，导致结果为负，设置的比所有节点之间的距离最大值之和大即可
-                Arrays.fill(d[i], 100000);
+                Arrays.fill(d[i], Integer.MAX_VALUE);
                 d[i][i] = 0;
             }
 
@@ -37,7 +36,7 @@ public class Solution {
 
             // Floyd 算法，求解所有点对的最短路径
             /**
-             * 初始，如果v-b有边，d[v][b] = vb，d[v][v] = 0；否则 d[v][b] = 正无穷
+             * 初始，如果v-b有边，d[v][b] = vb，d[v][v] = 0；否则 d[v][b] = 正无穷，表示v-b不可达
              * v-b 的最短路径 + b-a 的最短路径 小于 v-a 的最短路径，说明 v-b-a 的路径比直接由 v-a 的路径短，此时更新 v-a 的最短路径
              * if(d[v][b] + d[b][a] < d[v][a]) {
              *     d[v][a] = d[a][v] = d[v][b] + d[b][a];
@@ -49,7 +48,10 @@ public class Solution {
                         if(opened[b] > 0) {
                             for(int a = 0 ; a < n; a++) {
                                 if(opened[a] > 0) {
-                                    if(d[v][b] + d[b][a] < d[v][a]) {
+                                    // v-b和b-a不能为Integer.MAX_VALUE，因为之后的加法运算会溢出，导致结果为负。
+                                    //  从逻辑上讲两点之间距离为正无穷，即两点之间不连通，所以需要过滤掉
+                                    // v-b不连通，v就不能通过b走到a。同样，b-a不连通，v也不能通过b走到a
+                                    if(d[v][b] != Integer.MAX_VALUE && d[b][a] != Integer.MAX_VALUE && d[v][b] + d[b][a] < d[v][a]) {
                                         d[v][a] = d[a][v] = d[v][b] + d[b][a];
                                     }
                                 }
