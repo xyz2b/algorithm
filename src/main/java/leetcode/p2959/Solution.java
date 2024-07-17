@@ -41,11 +41,12 @@ public class Solution {
              * if(d[v][b] + d[b][a] < d[v][a]) {
              *     d[v][a] = d[a][v] = d[v][b] + d[b][a];
              * }
+             * 内两层循环一直在找v-a的最短路径，最外层循环b是为了：v-a是不是可以从b多绕一个弯，v-a经过b能够得到一个更短的路径
              * */
-            for(int v = 0; v < n; v++) {
-                if(opened[v] > 0) {
-                    for(int b = 0; b < n; b++) {
-                        if(opened[b] > 0) {
+            for(int b = 0; b < n; b++) {
+                if(opened[b] > 0) {
+                    for(int v = 0; v < n; v++) {
+                        if(opened[v] > 0) {
                             for(int a = 0 ; a < n; a++) {
                                 if(opened[a] > 0) {
                                     // v-b和b-a不能为Integer.MAX_VALUE，因为之后的加法运算会溢出，导致结果为负。
