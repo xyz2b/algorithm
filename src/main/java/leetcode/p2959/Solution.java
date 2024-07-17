@@ -37,11 +37,13 @@ public class Solution {
             // Floyd 算法，求解所有点对的最短路径
             /**
              * 初始，如果v-a有边，d[v][a] = va，d[v][v] = 0；否则 d[v][a] = 正无穷，表示v-a不可达
-             * v-a 的最短路径 + a-b 的最短路径 小于 v-b 的最短路径，说明 v-a-b 的路径比直接由 v-b 的路径短，此时更新 v-b 的最短路径
-             * if(d[v][a] + d[a][b] < d[v][b]) {
-             *     d[v][b] = d[b][v] = d[v][a] + d[a][b];
+             * v-b 的最短路径 + b-a 的最短路径 小于 v-a 的最短路径，说明 v-b-a 的路径比直接由 v-a 的路径短，此时更新 v-a 的最短路径
+             * if(d[v][b] + d[b][a] < d[v][a]) {
+             *     d[v][a] = d[v][b] + d[b][a];
              * }
              * 内两层循环一直在找v-a的最短路径，最外层循环b是为了：v-a是不是可以从b多绕一个弯，v-a经过b能够得到一个更短的路径
+             *
+             * 注意循环的顺序以及更新逻辑的索引顺序要对应
              * */
             for(int b = 0; b < n; b++) {
                 if(opened[b] > 0) {
@@ -53,7 +55,7 @@ public class Solution {
                                     //  从逻辑上讲两点之间距离为正无穷，即两点之间不连通，所以需要过滤掉
                                     // v-b不连通，v就不能通过b走到a。同样，b-a不连通，v也不能通过b走到a
                                     if(d[v][b] != Integer.MAX_VALUE && d[b][a] != Integer.MAX_VALUE && d[v][b] + d[b][a] < d[v][a]) {
-                                        d[v][a] = d[a][v] = d[v][b] + d[b][a];
+                                        d[v][a] = d[v][b] + d[b][a];
                                     }
                                 }
                             }
