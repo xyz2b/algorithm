@@ -13,12 +13,14 @@ public class Solution {
             int c = variables[i][2];
             int m = variables[i][3];
 
+            // ab = (a ^ b) % 10
             int lessA = a % 10;
             int ab = lessA;
             for(int j = 2; j <= b; j++) {
                 ab = (ab * lessA) % 10;
             }
 
+            // abc = (ab ^ c) % m
             int lessAb = ab % m;
             int abc = lessAb;
             for(int j = 2; j <= c; j++) {
