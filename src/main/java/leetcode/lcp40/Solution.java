@@ -60,7 +60,7 @@ public class Solution {
     }
 
     public int maxmiumScore2(int[] cards, int cnt) {
-        // 桶排序
+        // 计数排序
         int[] val = new int[1001];
         for(int i = 0; i < cards.length; i++) {
             val[cards[i]]++;
