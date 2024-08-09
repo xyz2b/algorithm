@@ -1,0 +1,9 @@
+    // hash法，渐进的计算hash，O(1)复杂度
+    // 把字符串看成一个高进制的数值，然后求解其hash值，然后用hash值来解决很多字符串匹配问题
+    // MOD = 1e9 + 7
+    // 在末尾加新字符：(hashcode * B + newchar) % MOD
+    // 在开头加新字符: (newchar * B ^ (len - 1) + hashcode) % MOD
+    // 在开头减旧字符：(hashcode - oldchar * (B ^ (len - 1)) % MOD + MOD) % MOD
+    // 但是在末尾减字符，就不行，因为要用到除法，但是 ((hashcode - oldchar) / B) % M != ((hashcode - oldchar) % M) / B，所以hash法不适用于除法减字符
+    // hash法只能处理 + * - 相关的运算，/ 运算不行，如果需要在末尾减字符，只能记录下所有长度字符串的hash值
+    // 有取模的运算中，需要解决hash冲突，即hash值相等的字符串不一定相等，还需要比较原本的字符串是否相等，如果原本的字符串也相等，就表示两个字符串相等

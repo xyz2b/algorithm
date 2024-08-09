@@ -1,6 +1,4 @@
-package leetcode.p1392;
-
-import java.util.List;
+package stringmatch.hash.p1392;
 
 public class Solution {
     // 暴力法

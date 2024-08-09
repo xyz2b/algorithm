@@ -1,4 +1,4 @@
-package leetcode.p1147;
+package stringmatch.hash.p1147;
 
 public class Solution {
     // 暴力
