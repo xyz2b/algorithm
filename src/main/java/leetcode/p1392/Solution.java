@@ -30,8 +30,9 @@ public class Solution {
     // 如果是在末尾或者开头加新字符
     // 在末尾加新字符：(hashcode * B + newchar) % M
     // 在开头加新字符: (newchar * B ^ (len - 1) + hashcode) % M
-    // 但是在末尾和开头减字符，就不行，要用到除法，但是 ((hashcode - oldchar) / B) % M != ((hashcode - oldchar) % M) / B，所以hash法不适用于除法减字符
-    // hash法只能处理 + * 相关的运算，/ 运算不行，所以要记录下所有长度字符串的hash值
+    // 在开头减字符：(hashcode - oldchar * (B ^ (len - 1)) % MOD + MOD) % MOD
+    // 但是在末尾减字符，就不行，要用到除法，但是 ((hashcode - oldchar) / B) % M != ((hashcode - oldchar) % M) / B，所以hash法不适用于除法减字符
+    // hash法只能处理 + * - 相关的运算，/ 运算不行，所以要记录下所有长度字符串的hash值
     private long MOD = (long)(1e9 + 7);
     public String longestPrefix2(String s) {
         // 预处理
