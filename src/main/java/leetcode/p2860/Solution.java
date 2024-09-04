@@ -8,7 +8,7 @@ class Solution {
         int ret = 0;
         Collections.sort(nums);
 
-        // 从一个人都不选，逐步到选所有人
+        // 从一个人都不选，逐步到选所有人，k是选中的人数个数
         // 选中人数 要小于 没被选中 中的最小值，选中人数 要大于 被选中 中的最大值
         for(int selectNum = 0; selectNum <= nums.size(); selectNum++) {
             if(selectNum == 0) {    // 一个人都不选
@@ -57,4 +57,35 @@ class Solution {
 
         return ret;
     }
+
+
+    /**
+     * 根据题意可知，假设数组 nums 的长度为 n，此时设选中学生人数为 k，此时 k∈[0,n]，k 应满足如下：
+     *     所有满足 nums[i]<k 的学生应被选中；
+     *     所有满足 nums[i]>k 的学生不应被选中；
+     *     不能存在 nums[i]=k 的学生；
+     * 这意味着在确定当前已择中学生人数的前提下，则此时选择方案是唯一的，为方便判断，我们把 nums 从小到大排序。
+     * 我们枚举选中的人数 k，由于 nums 已有序，此时最优分组一定是前 k 个学生被选中，剩余的 n−k 个学生不被选中，
+     *  此时只需要检测选中的 k 个学生中的最大值是否满足小于 k，未被选中的学生中的最小值是否满足大于 k 即可，
+     *  如果同时满足上述两个条件，则该分配方案可行，最终返回可行的方案计数即可，需要注意处理好边界 0 与 n。
+     * */
+    public int countWays2(List<Integer> nums) {
+        int n = nums.size();
+        int res = 0;
+        Collections.sort(nums);
+        // 从一个人都不选，逐步到选所有人，k是选中的人数个数
+        for (int k = 0; k <= n; k++) {
+            // 前 k 个元素的最大值是否小于 k（前k个元素就是被选择中的人，选中人数 要大于 被选中 中的最大值，如果不满足就是不符合条件）
+            if (k > 0 && nums.get(k - 1) >= k) {
+                continue;
+            }
+            // 后 n - k 个元素的最小值是否大于 k（后n-k个元素就是没被选中的，选中人数 要小于 没被选中 中的最小值，如果不满足就是不符合条件）
+            if (k < n && nums.get(k) <= k) {
+                continue;
+            }
+            res++;
+        }
+        return res;
+    }
+
 }
